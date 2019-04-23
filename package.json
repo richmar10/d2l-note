@@ -40,6 +40,7 @@
     "frau-ci": "^1.37.0",
     "lit-element": "^2.1.0",
     "mocha": "^5.2.0",
+    "polymer-cli": "^1.9.8",
     "tsc-watch": "^2.1.2",
     "typescript": "^3.4.4",
     "wct-mocha": "^1.0.0"

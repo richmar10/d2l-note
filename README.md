@@ -30,5 +30,5 @@ Commits and PR merges to master will automatically do a minor version bump which
 
 By using either **[increment major]** or **[increment patch]** notation inside your merge message, you can overwrite the default version upgrade of minor to the position of your choice.
 
-[ci-url]: https://travis-ci.org/Brightspace/d2l-note
-[ci-image]: https://travis-ci.org/Brightspace/d2l-note.svg?branch=master
+[ci-url]: https://travis-ci.com/Brightspace/d2l-note
+[ci-image]: https://travis-ci.com/Brightspace/d2l-note.svg?branch=master
