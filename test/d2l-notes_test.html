@@ -77,7 +77,7 @@
 				assert.equal(elementNoteEdit, null);
 			});
 
-			test('renders d2l-note for each item in "notes" property', () => {
+			test('renders d2l-note for each item in "notes" property', async() => {
 				const element = fixture('BasicTestFixture');
 				const createdAt = new Date().toISOString();
 				element.notes = [{
@@ -100,7 +100,7 @@
 				assert.notEqual(elementNote[0], null);
 			});
 
-			test('shows load more button when there are more than 4 notes', () => {
+			test('shows load more button when there are more than 4 notes', async() => {
 				const element = fixture('BasicTestFixture');
 				const createdAt = new Date().toISOString();
 				const note = {
@@ -125,7 +125,7 @@
 				assert.equal(elementMoreLess.textContent, 'Load More Notes');
 			});
 
-			test('shows load less button when there are more than 4 notes and collapsed is set false', () => {
+			test('shows load less button when there are more than 4 notes and collapsed is set false', async() => {
 				const element = fixture('BasicTestFixture');
 				const createdAt = new Date().toISOString();
 				const note = {
@@ -152,7 +152,7 @@
 				assert.equal(elementMoreLess.textContent, 'Load Less Notes');
 			});
 
-			test('dispatches d2l-notes-load-more when "collapsed" and load more/less button is tapped', () => {
+			test('dispatches d2l-notes-load-more when "collapsed" and load more/less button is tapped', async() => {
 				const element = fixture('BasicTestFixture');
 				const createdAt = new Date().toISOString();
 				const note = {
@@ -179,7 +179,7 @@
 				assert.equal(element.collasped, false);
 			});
 
-			test('dispatches d2l-notes-load-less when not "collapsed" and load more/less button is tapped', () => {
+			test('dispatches d2l-notes-load-less when not "collapsed" and load more/less button is tapped', async() => {
 				const element = fixture('BasicTestFixture');
 				const createdAt = new Date().toISOString();
 				const note = {
