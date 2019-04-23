@@ -13,7 +13,7 @@
       import '@polymer/iron-demo-helpers/demo-snippet';
     </script>
 
-    <script type="module" src="../dist/d2l-note.js"></script>
+	<script type="module" src="../dist/d2l-notes.js"></script>
 
     <custom-style>
       <style is="custom-style" include="demo-pages-shared-styles">
@@ -71,6 +71,16 @@
 			created-at="2019-04-23T17:08:33.839Z"
 			text="This is some text"
 		  ></d2l-note>
+        </template>
+      </demo-snippet>
+
+      <h3>d2l-notes demo</h3>
+      <demo-snippet>
+        <template>
+          <d2l-notes
+            notes="[{}, {}, {}, {}, {}]"
+            can-create
+          ></d2l-notes>
         </template>
       </demo-snippet>
     </div>
