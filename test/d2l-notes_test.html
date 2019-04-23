@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>d2l-note test</title>
+
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/@polymer/test-fixture/test-fixture.js"></script>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script src="../node_modules/wct-mocha/wct-mocha.js"></script>
+
+    <script type="module" src="../dist/d2l-note.js"></script>
+  </head>
+  <body>
+
+    <test-fixture id="BasicTestFixture">
+      <template>
+        <d2l-notes></d2l-notes>
+      </template>
+    </test-fixture>
+
+    <script type="module">
+		suite('d2l-notes', () => {
+
+			test('instantiating the element with default properties works', async() => {
+				const element = fixture('BasicTestFixture');
+				await element.updateComplete;
+			});
+
+			test('renders d2l-note for each item in "notes" property', () => {
+				const element = fixture('BasicTestFixture');
+				const createdAt = new Date().toISOString();
+				element.notes = [{
+					user: {
+						name:'Username',
+						pic: {
+							url: 'fixtures/user.png'
+						}
+					},
+					createdAt,
+					text: 'foozleberries',
+					canEdit: true,
+					canDelete: true,
+					private: false
+				}];
+				await element.updateComplete;
+				const elementShadowRoot = element.shadowRoot;
+				const elementNote = elementShadowRoot.querySelectorAll('d2l-note');
+				assert.equal(elementNote.length, 1);
+				assert.notEqual(elementNote[0], null);
+			});
+
+			test('shows load more button when there are more than 4 notes', () => {
+				const element = fixture('BasicTestFixture');
+				const createdAt = new Date().toISOString();
+				const note = {
+					user: {
+						name:'Username',
+						pic: {
+							url: 'fixtures/user.png'
+						}
+					},
+					createdAt,
+					text: 'foozleberries',
+					canEdit: true,
+					canDelete: true,
+					private: false
+				};
+				element.notes = [note, note, note, note, note];
+				await element.updateComplete;
+				assert.equal(element.collasped, true);
+				const elementShadowRoot = element.shadowRoot;
+				const elementMoreLess = elementShadowRoot.querySelectorAll('.d2l-notes-load-more-less');
+				assert.notEqual(elementMoreLess, null);
+				assert.equal(elementMoreLess.textContent, 'Load More Notes');
+			});
+
+			test('shows load less button when there are more than 4 notes and collapsed is set false', () => {
+				const element = fixture('BasicTestFixture');
+				const createdAt = new Date().toISOString();
+				const note = {
+					user: {
+						name:'Username',
+						pic: {
+							url: 'fixtures/user.png'
+						}
+					},
+					createdAt,
+					text: 'foozleberries',
+					canEdit: true,
+					canDelete: true,
+					private: false
+				};
+				element.notes = [note, note, note, note, note];
+				await element.updateComplete;
+				assert.equal(element.collasped, true);
+				element.collapsed = false;
+				await element.updateComplete;
+				const elementShadowRoot = element.shadowRoot;
+				const elementMoreLess = elementShadowRoot.querySelectorAll('.d2l-notes-load-more-less');
+				assert.notEqual(elementMoreLess, null);
+				assert.equal(elementMoreLess.textContent, 'Load Less Notes');
+			});
+
+			test('dispatches d2l-notes-load-more when "collapsed" and load more/less button is tapped', () => {
+				const element = fixture('BasicTestFixture');
+				const createdAt = new Date().toISOString();
+				const note = {
+					user: {
+						name:'Username',
+						pic: {
+							url: 'fixtures/user.png'
+						}
+					},
+					createdAt,
+					text: 'foozleberries',
+					canEdit: true,
+					canDelete: true,
+					private: false
+				};
+				element.notes = [note, note, note, note, note];
+				await element.updateComplete;
+				assert.equal(element.collasped, true);
+				const elementShadowRoot = element.shadowRoot;
+				const elementMoreLess = elementShadowRoot.querySelectorAll('.d2l-notes-load-more-less');
+				elementMoreLess.click();
+
+				await element.updateComplete;
+				assert.equal(element.collasped, false);
+			});
+
+			test('dispatches d2l-notes-load-less when not "collapsed" and load more/less button is tapped', () => {
+				const element = fixture('BasicTestFixture');
+				const createdAt = new Date().toISOString();
+				const note = {
+					user: {
+						name:'Username',
+						pic: {
+							url: 'fixtures/user.png'
+						}
+					},
+					createdAt,
+					text: 'foozleberries',
+					canEdit: true,
+					canDelete: true,
+					private: false
+				};
+				element.notes = [note, note, note, note, note];
+				await element.updateComplete;
+				assert.equal(element.collasped, true);
+				element.collapsed = false;
+				await element.updateComplete;
+				const elementShadowRoot = element.shadowRoot;
+				const elementMoreLess = elementShadowRoot.querySelectorAll('.d2l-notes-load-more-less');
+				elementMoreLess.click();
+
+				await element.updateComplete;
+				assert.equal(element.collasped, true);
+			});
+
+		});
+    </script>
+
+  </body>
+</html>

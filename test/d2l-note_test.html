@@ -84,6 +84,18 @@
 				assert.equal(elementUser.name, 'Username');
 			});
 
+			test('has "Me" user name instead of supplied by "user" property when me is true', async() => {
+				const element = fixture('BasicTestFixture');
+				element.user = {
+					name: 'Username'
+				};
+				element.me = true;
+				await element.updateComplete;
+				const elementShadowRoot = element.shadowRoot;
+				const elementUser = elementShadowRoot.querySelector('d2l-user');
+				assert.equal(elementUser.name, 'Me');
+			});
+
 			test('has localized createdAt date supplied by "createdAt" property', async() => {
 				const element = fixture('BasicTestFixture');
 				const date = new Date();

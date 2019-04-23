@@ -36,7 +36,7 @@
         </template>
       </demo-snippet>
 
-	  <h3>not private d2l-note demo</h3>
+	  <h3>shared d2l-note demo</h3>
       <demo-snippet>
         <template>
           <d2l-note
@@ -45,6 +45,20 @@
 			text="This is some text"
 			can-edit
 			can-delete
+		  ></d2l-note>
+        </template>
+      </demo-snippet>
+
+      <h3>my shared d2l-note demo</h3>
+      <demo-snippet>
+        <template>
+          <d2l-note
+		  	user="{\"name\":\"Username\",\"pic\":{\"url\":\"avatar.png\"}}"
+			created-at="2019-04-23T17:08:33.839Z"
+			text="This is some text"
+			can-edit
+			can-delete
+            me
 		  ></d2l-note>
         </template>
       </demo-snippet>
