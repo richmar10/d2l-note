@@ -169,7 +169,7 @@
 					await element.updateComplete;
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
-					assert.isTrue(elementMenuItems.some(item => item.textContent.contains('Edit')));
+					assert.isTrue([].some.call(elementMenuItems, item => item.textContent.contains('Edit')));
 				});
 
 				test('does not have edit action if "canEdit" is not true', async() => {
@@ -178,7 +178,7 @@
 					await element.updateComplete;
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
-					assert.isFalse(elementMenuItems.some(item => item.textContent.contains('Edit')));
+					assert.isFalse([].some.call(elementMenuItems, item => item.textContent.contains('Edit')));
 				});
 
 				test('has delete action if "canDelete" is true', async() => {
@@ -187,7 +187,7 @@
 					await element.updateComplete;
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
-					assert.isTrue(elementMenuItems.some(item => item.textContent.contains('Delete')));
+					assert.isTrue([].some.call(elementMenuItems, item => item.textContent.contains('Delete')));
 				});
 
 				test('does not have delete action if "canDelete" is not true', async() => {
@@ -196,7 +196,7 @@
 					await element.updateComplete;
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
-					assert.isFalse(elementMenuItems.some(item => item.textContent.contains('Delete')));
+					assert.isFalse([].some.call(elementMenuItems, item => item.textContent.contains('Delete')));
 				});
 
 				suite('edit', async() => {
@@ -209,7 +209,7 @@
 						const elementDropdown = elementShadowRoot.querySelectorAll('d2l-dropdown');
 						const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
 						elementDropdown.opened = true;
-						const editItem = elementMenuItems.find(item => item.textContent.contains('Edit'));
+						const editItem = [].find.call(elementMenuItems, item => item.textContent.contains('Edit'));
 						editItem.click();
 
 						await element.updateComplete;

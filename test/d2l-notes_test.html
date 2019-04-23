@@ -120,7 +120,7 @@
 				await element.updateComplete;
 				assert.equal(element.collasped, true);
 				const elementShadowRoot = element.shadowRoot;
-				const elementMoreLess = elementShadowRoot.querySelectorAll('.d2l-notes-load-more-less');
+				const elementMoreLess = elementShadowRoot.querySelector('.d2l-notes-load-more-less');
 				assert.notEqual(elementMoreLess, null);
 				assert.equal(elementMoreLess.textContent, 'Load More Notes');
 			});
@@ -147,7 +147,7 @@
 				element.collapsed = false;
 				await element.updateComplete;
 				const elementShadowRoot = element.shadowRoot;
-				const elementMoreLess = elementShadowRoot.querySelectorAll('.d2l-notes-load-more-less');
+				const elementMoreLess = elementShadowRoot.querySelector('.d2l-notes-load-more-less');
 				assert.notEqual(elementMoreLess, null);
 				assert.equal(elementMoreLess.textContent, 'Load Less Notes');
 			});
@@ -172,7 +172,7 @@
 				await element.updateComplete;
 				assert.equal(element.collasped, true);
 				const elementShadowRoot = element.shadowRoot;
-				const elementMoreLess = elementShadowRoot.querySelectorAll('.d2l-notes-load-more-less');
+				const elementMoreLess = elementShadowRoot.querySelector('.d2l-notes-load-more-less');
 				elementMoreLess.click();
 
 				await element.updateComplete;
@@ -201,7 +201,7 @@
 				element.collapsed = false;
 				await element.updateComplete;
 				const elementShadowRoot = element.shadowRoot;
-				const elementMoreLess = elementShadowRoot.querySelectorAll('.d2l-notes-load-more-less');
+				const elementMoreLess = elementShadowRoot.querySelector('.d2l-notes-load-more-less');
 				elementMoreLess.click();
 
 				await element.updateComplete;
