@@ -30,6 +30,27 @@
 				await element.updateComplete;
 			});
 
+			test('shows skeleton', async() => {
+				const element = fixture('BasicTestFixture');
+				await element.updateComplete;
+
+				const elementShadowRoot = element.shadowRoot;
+				const elementUser = elementShadowRoot.querySelector('d2l-user');
+				const elementUserSkeleton = elementShadowRoot.querySelector('.d2l-note-user-skeleton');
+				assert.equal(elementUser, null);
+				assert.notEqual(elementUserSkeleton, null);
+
+				const elementDate = elementShadowRoot.querySelector('.d2l-note-created-date-time');
+				const elementDateSkeleton = elementShadowRoot.querySelector('.d2l-note-created-date-time-skeleton');
+				assert.equal(elementDate, null);
+				assert.notEqual(elementDateSkeleton, null);
+
+				const elementText = elementShadowRoot.querySelector('.d2l-note-text');
+				const elementTextSkeleton = elementShadowRoot.querySelector('.d2l-note-text-skeleton');
+				assert.equal(elementText, null);
+				assert.notEqual(elementTextSkeleton, null);
+			});
+
 			test('has avatar supplied by "user" property', async() => {
 				const element = fixture('BasicTestFixture');
 				element.user = {
@@ -40,7 +61,9 @@
 				await element.updateComplete;
 				const elementShadowRoot = element.shadowRoot;
 				const elementUser = elementShadowRoot.querySelector('d2l-user');
+				const elementUserSkeleton = elementShadowRoot.querySelector('.d2l-note-user-skeleton');
 				assert.equal(elementUser.imageUrl, 'fixtures/user.png');
+				assert.equal(elementUserSkeleton, null);
 			});
 
 			test('has avatar supplied by "user" property using specified "token"', async() => {
@@ -103,7 +126,9 @@
 				await element.updateComplete;
 				const elementShadowRoot = element.shadowRoot;
 				const elementDate = elementShadowRoot.querySelector('.d2l-note-created-date-time');
+				const elementDateSkeleton = elementShadowRoot.querySelector('.d2l-note-created-date-time-skeleton');
 				assert.equal(elementDate.textContent, date.toLocaleString());
+				assert.equal(elementDateSkeleton, null);
 			});
 
 			test('has note text supplied by "text" property', async() => {
@@ -112,7 +137,9 @@
 				await element.updateComplete;
 				const elementShadowRoot = element.shadowRoot;
 				const elementText = elementShadowRoot.querySelector('.d2l-note-text');
+				const elementTextSkeleton = elementShadowRoot.querySelector('.d2l-note-text-skeleton');
 				assert.equal(elementText.textContent, 'foozleberries');
+				assert.equal(elementTextSkeleton, null);
 			});
 
 			test('has no privacy indicator if "private" is false', async() => {
