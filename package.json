@@ -1,6 +1,10 @@
 {
-  "name": "d2l-note",
+  "name": "@d2l/note",
   "description": "A Note",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Brightspace/d2l-note.git"
+  },
   "version": "0.0.0",
   "main": "dist/d2l-note.js",
   "types": "dist/d2l-note.d.ts",
@@ -16,6 +20,8 @@
     "test": "npm run test:local",
     "lint": "eslint src/** test/**"
   },
+  "author": "D2L",
+  "license": "UNLICENSED",
   "dependencies": {
     "@polymer/polymer": "^3.0.0"
   },
@@ -31,6 +37,7 @@
     "eslint-config-brightspace": "^0.5.3",
     "eslint-plugin-html": "^5.0.3",
     "eslint-plugin-lit": "^0.6.0",
+    "frau-ci": "^1.37.0",
     "lit-element": "^2.1.0",
     "mocha": "^5.2.0",
     "tsc-watch": "^2.1.2",
