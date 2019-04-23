@@ -1,0 +1,40 @@
+{
+  "name": "d2l-note",
+  "description": "A Note",
+  "version": "0.0.0",
+  "main": "dist/d2l-note.js",
+  "types": "dist/d2l-note.d.ts",
+  "scripts": {
+    "start": "tsc-watch --onFirstSuccess \"npm run serve\"",
+    "serve": "polymer serve",
+    "build": "tsc",
+    "prepare": "npm run build",
+    "pretest:sauce": "npm run build",
+    "pretest:local": "npm run build",
+    "test:sauce": "polymer test --skip-plugin local",
+    "test:local": "polymer test --skip-plugin sauce",
+    "test": "npm run test:local",
+    "lint": "eslint src/** test/**"
+  },
+  "dependencies": {
+    "@polymer/polymer": "^3.0.0"
+  },
+  "devDependencies": {
+    "@polymer/iron-demo-helpers": "^3.0.0-pre.19",
+    "@polymer/test-fixture": "^4.0.2",
+    "@typescript-eslint/eslint-plugin": "^1.7.0",
+    "@typescript-eslint/parser": "^1.7.0",
+    "@webcomponents/webcomponentsjs": "^2.0.0",
+    "babel-eslint": "^10.0.1",
+    "chai": "^4.2.0",
+    "eslint": "^5.16.0",
+    "eslint-config-brightspace": "^0.5.3",
+    "eslint-plugin-html": "^5.0.3",
+    "eslint-plugin-lit": "^0.6.0",
+    "lit-element": "^2.1.0",
+    "mocha": "^5.2.0",
+    "tsc-watch": "^2.1.2",
+    "typescript": "^3.4.4",
+    "wct-mocha": "^1.0.0"
+  }
+}
