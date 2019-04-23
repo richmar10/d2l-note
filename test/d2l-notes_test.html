@@ -22,12 +22,59 @@
       </template>
     </test-fixture>
 
+	<test-fixture id="DescriptionAndSettingsTestFixture">
+      <template>
+        <d2l-notes>
+			<div slot="settings">Settings</div>
+			<p slot="description">Description</p>
+		</d2l-notes>
+      </template>
+    </test-fixture>
+
     <script type="module">
 		suite('d2l-notes', () => {
 
 			test('instantiating the element with default properties works', async() => {
 				const element = fixture('BasicTestFixture');
 				await element.updateComplete;
+			});
+
+			test('has d2l-note-edit if "canCreate" is true', async() => {
+				const element = fixture('BasicTestFixture');
+				element.canCreate = true;
+				await element.updateComplete;
+
+				const elementShadowRoot = element.shadowRoot;
+				const elementNoteEdit = elementShadowRoot.querySelector('d2l-note-edit');
+				assert.notEqual(elementNoteEdit, null);
+				assert.equal(elementNoteEdit.new, true);
+			});
+
+			test('passes description and settings slots to d2l-note-edit if "canCreate" is true', async() => {
+				const element = fixture('DescriptionAndSettingsTestFixture');
+				element.canCreate = true;
+				await element.updateComplete;
+
+				const elementShadowRoot = element.shadowRoot;
+				const elementNoteEdit = elementShadowRoot.querySelector('d2l-note-edit');
+				assert.notEqual(elementNoteEdit, null);
+				assert.equal(elementNoteEdit.new, true);
+
+				const editShadowRoot = elementNoteEdit.shadowRoot;
+				const description = editShadowRoot.querySelector('slot[name="description"]');
+				assert.equal(description.textContent, 'Description');
+				const settings = editShadowRoot.querySelector('slot[name="settings"]');
+				assert.equal(settings.textContent, 'Settings');
+			});
+
+			test('does not have d2l-note-edit if "canCreate" is false', async() => {
+				const element = fixture('BasicTestFixture');
+				element.canCreate = false;
+				await element.updateComplete;
+
+				const elementShadowRoot = element.shadowRoot;
+				const elementNoteEdit = elementShadowRoot.querySelector('d2l-note-edit');
+				assert.equal(elementNoteEdit, null);
 			});
 
 			test('renders d2l-note for each item in "notes" property', () => {

@@ -32,6 +32,16 @@
       </template>
     </test-fixture>
 
+	<test-fixture id="SettingsTestFixture">
+      <template>
+        <d2l-note-edit>
+			<div slot="settings">
+				Settings
+			</div>
+		</d2l-note-edit>
+      </template>
+    </test-fixture>
+
     <script type="module">
 		suite('d2l-note-edit', () => {
 
@@ -46,6 +56,14 @@
 				const elementShadowRoot = element.shadowRoot;
 				const elementDescription = elementShadowRoot.querySelector('slot[name="description"]');
 				assert.equal(elementDescription.textContent, 'Description');
+			});
+
+			test('has settings slot', async() => {
+				const element = fixture('SettingsTestFixture');
+				await element.updateComplete;
+				const elementShadowRoot = element.shadowRoot;
+				const elementSettings = elementShadowRoot.querySelector('slot[name="settings"]');
+				assert.equal(elementSettings.textContent, 'Settings');
 			});
 
 			test('has edit field set by "value" property', async() => {
