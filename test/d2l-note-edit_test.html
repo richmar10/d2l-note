@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>d2l-note test</title>
+
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/@polymer/test-fixture/test-fixture.js"></script>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/chai/chai.js"></script>
+    <script src="../node_modules/wct-mocha/wct-mocha.js"></script>
+
+    <script type="module" src="../dist/d2l-note-edit.js"></script>
+  </head>
+  <body>
+
+    <test-fixture id="BasicTestFixture">
+      <template>
+        <d2l-note-edit></d2l-note-edit>
+      </template>
+    </test-fixture>
+
+	<test-fixture id="DescriptionTestFixture">
+      <template>
+        <d2l-note-edit>
+			<p slot="description">
+				Description
+			</p>
+		</d2l-note-edit>
+      </template>
+    </test-fixture>
+
+    <script type="module">
+		suite('d2l-note-edit', () => {
+
+			test('instantiating the element with default properties works', async() => {
+				const element = fixture('BasicTestFixture');
+				await element.updateComplete;
+			});
+
+			test('has description slot', async() => {
+				const element = fixture('DescriptionTestFixture');
+				await element.updateComplete;
+				const elementShadowRoot = element.shadowRoot;
+				const elementDescription = elementShadowRoot.querySelector('slot[name="description"]');
+				assert.equal(elementDescription.textContent, 'Description');
+			});
+
+			test('has edit field set by "value" property', async() => {
+				const element = fixture('BasicTestFixture');
+				element.value = 'foozleberries';
+				await element.updateComplete;
+				const elementShadowRoot = element.shadowRoot;
+				const elementInputText = elementShadowRoot.querySelector('d2l-input-text');
+				assert.equal(elementInputText.value, 'foozleberries');
+			});
+
+			test('has add button when [new]', async() => {
+				const element = fixture('BasicTestFixture');
+				element.new = true;
+				await element.updateComplete;
+				const elementShadowRoot = element.shadowRoot;
+				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-button');
+				assert.equal(elementButton.textContent, 'Add');
+				assert.equal(elementButton.primary, true);
+			});
+
+			test('has edit button when :not([new])', async() => {
+				const element = fixture('BasicTestFixture');
+				element.new = false;
+				await element.updateComplete;
+				const elementShadowRoot = element.shadowRoot;
+				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-button');
+				assert.equal(elementButton.textContent, 'Edit');
+				assert.equal(elementButton.primary, true);
+			});
+
+			test('has discard button', async() => {
+				const element = fixture('BasicTestFixture');
+				await element.updateComplete;
+				const elementShadowRoot = element.shadowRoot;
+				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-discard-button');
+				assert.equal(elementButton.icon, 'tier1:remove');
+				assert.equal(elementButton.text, 'Discard');
+			});
+
+			test('dispatches d2l-note-add when "Add" is tapped', async() => {
+				const element = fixture('BasicTestFixture');
+				const addPromise = new Promise((resolve) => element.addEventListener('d2l-note-add', resolve));
+				element.new = true;
+				await element.updateComplete;
+				const elementShadowRoot = element.shadowRoot;
+				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-button');
+				elementButton.click();
+
+				await addPromise;
+			});
+
+			test('dispatches d2l-note-edit when "Edit" is tapped', async() => {
+				const element = fixture('BasicTestFixture');
+				const editPromise = new Promise((resolve) => element.addEventListener('d2l-note-edit', resolve));
+				element.new = false;
+				await element.updateComplete;
+				const elementShadowRoot = element.shadowRoot;
+				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-button');
+				elementButton.click();
+
+				await editPromise;
+			});
+
+			test('dispatches d2l-note-discard when "discard" is tapped', async() => {
+				const element = fixture('BasicTestFixture');
+				const discardPromise = new Promise((resolve) => element.addEventListener('d2l-note-discard', resolve));
+				await element.updateComplete;
+				const elementShadowRoot = element.shadowRoot;
+				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-discard-button');
+				elementButton.click();
+
+				await discardPromise;
+			});
+
+		});
+    </script>
+
+  </body>
+</html>

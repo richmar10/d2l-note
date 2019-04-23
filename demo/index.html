@@ -22,10 +22,41 @@
   </head>
   <body>
     <div class="vertical-section-container centered">
-      <h3>Basic d2l-note demo</h3>
+      <h3>private d2l-note demo</h3>
       <demo-snippet>
         <template>
-          <d2l-note></d2l-note>
+          <d2l-note
+		  	user="{\"name\":\"Username\",\"pic\":{\"url\":\"avatar.png\"}}"
+			created-at="2019-04-23T17:08:33.839Z"
+			text="This is some text"
+			can-edit
+			can-delete
+			private
+		  ></d2l-note>
+        </template>
+      </demo-snippet>
+
+	  <h3>not private d2l-note demo</h3>
+      <demo-snippet>
+        <template>
+          <d2l-note
+		  	user="{\"name\":\"Username\",\"pic\":{\"url\":\"avatar.png\"}}"
+			created-at="2019-04-23T17:08:33.839Z"
+			text="This is some text"
+			can-edit
+			can-delete
+		  ></d2l-note>
+        </template>
+      </demo-snippet>
+
+	  <h3>readonly d2l-note demo</h3>
+      <demo-snippet>
+        <template>
+          <d2l-note
+		  	user="{\"name\":\"Username\",\"pic\":{\"url\":\"avatar.png\"}}"
+			created-at="2019-04-23T17:08:33.839Z"
+			text="This is some text"
+		  ></d2l-note>
         </template>
       </demo-snippet>
     </div>
