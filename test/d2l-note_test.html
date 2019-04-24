@@ -239,7 +239,7 @@
 						elementDropdown.toggleOpen();
 						await openPromise;
 						// Wait for menu to become visible
-						await new Promise((resolve) => setTimeout(resolve, 10));
+						await new Promise((resolve) => setTimeout(resolve, 100));
 						const editItem = [].filter.call(elementMenuItems, item => item.text.indexOf('Edit') !== -1)[0];
 						editItem.click();
 
@@ -264,7 +264,7 @@
 						elementDropdown.toggleOpen();
 						await openPromise;
 						// Wait for menu to become visible
-						await new Promise((resolve) => setTimeout(resolve, 10));
+						await new Promise((resolve) => setTimeout(resolve, 100));
 						const deleteItem = [].filter.call(elementMenuItems, item => item.text.indexOf('Delete') !== -1)[0];
 
 						const deletePromise = new Promise((resolve) => element.addEventListener('d2l-note-delete', resolve));
