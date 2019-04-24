@@ -194,7 +194,7 @@
 					await element.resourceFetchComplete;
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
-					assert.isTrue([].some.call(elementMenuItems, item => item.text.includes('Edit')));
+					assert.isTrue([].some.call(elementMenuItems, item => item.text.indexOf('Edit') !== -1));
 				});
 
 				test('does not have edit action if "canedit" is not true', async() => {
@@ -203,7 +203,7 @@
 					await element.resourceFetchComplete;
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
-					assert.isFalse([].some.call(elementMenuItems, item => item.text.includes('Edit')));
+					assert.isFalse([].some.call(elementMenuItems, item => item.text.indexOf('Edit') !== -1));
 				});
 
 				test('has delete action if "candelete" is true', async() => {
@@ -212,7 +212,7 @@
 					await element.resourceFetchComplete;
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
-					assert.isTrue([].some.call(elementMenuItems, item => item.text.includes('Delete')));
+					assert.isTrue([].some.call(elementMenuItems, item => item.text.indexOf('Delete') !== -1));
 				});
 
 				test('does not have delete action if "candelete" is not true', async() => {
@@ -221,7 +221,7 @@
 					await element.resourceFetchComplete;
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
-					assert.isFalse([].some.call(elementMenuItems, item => item.text.includes('Delete')));
+					assert.isFalse([].some.call(elementMenuItems, item => item.text.indexOf('Delete') !== -1));
 				});
 
 				suite('edit', async() => {
@@ -240,7 +240,7 @@
 						await openPromise;
 						// Wait for menu to become visible
 						await new Promise((resolve) => setTimeout(resolve, 10));
-						const editItem = [].find.call(elementMenuItems, item => item.text.includes('Edit'));
+						const editItem = [].filter.call(elementMenuItems, item => item.text.indexOf('Edit') !== -1)[0];
 						editItem.click();
 
 						await element.updateComplete;
@@ -265,7 +265,7 @@
 						await openPromise;
 						// Wait for menu to become visible
 						await new Promise((resolve) => setTimeout(resolve, 10));
-						const deleteItem = [].find.call(elementMenuItems, item => item.text.includes('Delete'));
+						const deleteItem = [].filter.call(elementMenuItems, item => item.text.indexOf('Delete') !== -1)[0];
 
 						const deletePromise = new Promise((resolve) => element.addEventListener('d2l-note-delete', resolve));
 						deleteItem.click();
