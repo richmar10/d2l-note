@@ -45,6 +45,10 @@ export function LocalizeMixin<B extends Constructor<{
 
 		_observer?: MutationObserver;
 
+		resourceFetchComplete: Promise<void>;
+		__resourceFetchCompleteResolve?: () => void;
+		__resourceFetchCompleteReject?: () => void;
+
 		abstract getLangResources(lang?: string): Promise<{ [key: string]: string }>
 		abstract getLanguage(possibleLanguages: string[]): string | undefined;
 
@@ -61,6 +65,10 @@ export function LocalizeMixin<B extends Constructor<{
 			this.__overrides = this._tryParseHtmlElemAttr('d2l-intl-overrides', {});
 			this.__timezoneObject = this._tryParseHtmlElemAttr('data-timezone', {name: '', identifier: ''});
 			this.__timezone = this._computeTimezone();
+			this.resourceFetchComplete = new Promise((resolve, reject) => {
+				this.__resourceFetchCompleteResolve = resolve;
+				this.__resourceFetchCompleteReject = reject;
+			});
 
 			this._startObserver();
 		}
@@ -78,13 +86,19 @@ export function LocalizeMixin<B extends Constructor<{
 					this.checkLocalizationCache(proto);
 					proto.__localizationCache.messages = {};
 
+					this.resourceFetchComplete = new Promise((resolve, reject) => {
+						this.__resourceFetchCompleteResolve = resolve;
+						this.__resourceFetchCompleteReject = reject;
+					});
+
 					this.getLangResources(this.__language)
 						.then((res) => {
 							if (!res || !this.__language) {
 								return;
 							}
 							this._onRequestResponse(res, this.__language);
-						});
+						})
+						.then(this.__resourceFetchCompleteResolve, this.__resourceFetchCompleteReject);
 				} else if (propName === '__timezoneObject') {
 					this._timezoneChange();
 				}

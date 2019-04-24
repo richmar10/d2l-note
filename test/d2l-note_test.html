@@ -109,9 +109,7 @@
 					name: 'Username'
 				};
 				element.me = true;
-				await element.updateComplete;
-				await element.getLangResources();
-				await element.updateComplete;
+				await element.resourceFetchComplete;
 				const elementShadowRoot = element.shadowRoot;
 				const elementUser = elementShadowRoot.querySelector('d2l-user');
 				assert.equal(elementUser.name, 'Me');
@@ -193,9 +191,7 @@
 				test('has edit action if "canedit" is true', async() => {
 					const element = fixture('BasicTestFixture');
 					element.canedit = true;
-					await element.updateComplete;
-					await element.getLangResources();
-					await element.updateComplete;
+					await element.resourceFetchComplete;
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
 					assert.isTrue([].some.call(elementMenuItems, item => item.text.includes('Edit')));
@@ -204,9 +200,7 @@
 				test('does not have edit action if "canedit" is not true', async() => {
 					const element = fixture('BasicTestFixture');
 					element.canedit = false;
-					await element.updateComplete;
-					await element.getLangResources();
-					await element.updateComplete;
+					await element.resourceFetchComplete;
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
 					assert.isFalse([].some.call(elementMenuItems, item => item.text.includes('Edit')));
@@ -215,9 +209,7 @@
 				test('has delete action if "candelete" is true', async() => {
 					const element = fixture('BasicTestFixture');
 					element.candelete = true;
-					await element.updateComplete;
-					await element.getLangResources();
-					await element.updateComplete;
+					await element.resourceFetchComplete;
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
 					assert.isTrue([].some.call(elementMenuItems, item => item.text.includes('Delete')));
@@ -226,9 +218,7 @@
 				test('does not have delete action if "candelete" is not true', async() => {
 					const element = fixture('BasicTestFixture');
 					element.candelete = false;
-					await element.updateComplete;
-					await element.getLangResources();
-					await element.updateComplete;
+					await element.resourceFetchComplete;
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
 					assert.isFalse([].some.call(elementMenuItems, item => item.text.includes('Delete')));
@@ -239,9 +229,7 @@
 					test('shows d2l-note-edit when edit button is tapped', async() => {
 						const element = fixture('BasicTestFixture');
 						element.canedit = true;
-						await element.updateComplete;
-						await element.getLangResources();
-						await element.updateComplete;
+						await element.resourceFetchComplete;
 						const elementShadowRoot = element.shadowRoot;
 						const hiddenElementNoteEdit = elementShadowRoot.querySelector('d2l-note-edit');
 						assert.equal(hiddenElementNoteEdit, null);
@@ -268,9 +256,7 @@
 					test('fires d2l-note-delete when delete button is tapped', async() => {
 						const element = fixture('BasicTestFixture');
 						element.candelete = true;
-						await element.updateComplete;
-						await element.getLangResources();
-						await element.updateComplete;
+						await element.resourceFetchComplete;
 						const elementShadowRoot = element.shadowRoot;
 						const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown-more');
 						const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
