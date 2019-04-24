@@ -23,6 +23,7 @@
     </test-fixture>
 
     <script type="module">
+		import d2lIntl from 'd2l-intl';
 		suite('d2l-note', () => {
 
 			test('instantiating the element with default properties works', async() => {
@@ -109,6 +110,8 @@
 				};
 				element.me = true;
 				await element.updateComplete;
+				await element.getLangResources();
+				await element.updateComplete;
 				const elementShadowRoot = element.shadowRoot;
 				const elementUser = elementShadowRoot.querySelector('d2l-user');
 				assert.equal(elementUser.name, 'Me');
@@ -121,10 +124,11 @@
 					name: 'Username'
 				};
 				element.createdat = date.toISOString();
+				const formatter = new d2lIntl.DateTimeFormat('en', { format: 'medium' });
 				await element.updateComplete;
 				const elementShadowRoot = element.shadowRoot;
 				const elementUser = elementShadowRoot.querySelector('d2l-user');
-				assert.equal(elementUser.subText, date.toLocaleString());
+				assert.equal(elementUser.subText, formatter.format(date));
 			});
 
 			test('has note text supplied by "text" property', async() => {
@@ -163,7 +167,7 @@
 					element.canedit = true;
 					await element.updateComplete;
 					const elementShadowRoot = element.shadowRoot;
-					const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown');
+					const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown-more');
 					assert.notEqual(elementDropdown, null);
 				});
 
@@ -172,7 +176,7 @@
 					element.candelete = true;
 					await element.updateComplete;
 					const elementShadowRoot = element.shadowRoot;
-					const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown');
+					const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown-more');
 					assert.notEqual(elementDropdown, null);
 				});
 
@@ -182,7 +186,7 @@
 					element.candelete = false;
 					await element.updateComplete;
 					const elementShadowRoot = element.shadowRoot;
-					const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown');
+					const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown-more');
 					assert.equal(elementDropdown, null);
 				});
 
@@ -190,36 +194,44 @@
 					const element = fixture('BasicTestFixture');
 					element.canedit = true;
 					await element.updateComplete;
+					await element.getLangResources();
+					await element.updateComplete;
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
-					assert.isTrue([].some.call(elementMenuItems, item => item.textContent.contains('Edit')));
+					assert.isTrue([].some.call(elementMenuItems, item => item.text.includes('Edit')));
 				});
 
 				test('does not have edit action if "canedit" is not true', async() => {
 					const element = fixture('BasicTestFixture');
 					element.canedit = false;
 					await element.updateComplete;
+					await element.getLangResources();
+					await element.updateComplete;
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
-					assert.isFalse([].some.call(elementMenuItems, item => item.textContent.contains('Edit')));
+					assert.isFalse([].some.call(elementMenuItems, item => item.text.includes('Edit')));
 				});
 
 				test('has delete action if "candelete" is true', async() => {
 					const element = fixture('BasicTestFixture');
 					element.candelete = true;
 					await element.updateComplete;
+					await element.getLangResources();
+					await element.updateComplete;
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
-					assert.isTrue([].some.call(elementMenuItems, item => item.textContent.contains('Delete')));
+					assert.isTrue([].some.call(elementMenuItems, item => item.text.includes('Delete')));
 				});
 
 				test('does not have delete action if "candelete" is not true', async() => {
 					const element = fixture('BasicTestFixture');
 					element.candelete = false;
 					await element.updateComplete;
+					await element.getLangResources();
+					await element.updateComplete;
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
-					assert.isFalse([].some.call(elementMenuItems, item => item.textContent.contains('Delete')));
+					assert.isFalse([].some.call(elementMenuItems, item => item.text.includes('Delete')));
 				});
 
 				suite('edit', async() => {
@@ -228,15 +240,52 @@
 						const element = fixture('BasicTestFixture');
 						element.canedit = true;
 						await element.updateComplete;
+						await element.getLangResources();
+						await element.updateComplete;
 						const elementShadowRoot = element.shadowRoot;
-						const elementDropdown = elementShadowRoot.querySelectorAll('d2l-dropdown');
+						const hiddenElementNoteEdit = elementShadowRoot.querySelector('d2l-note-edit');
+						assert.equal(hiddenElementNoteEdit, null);
+						const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown-more');
 						const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
-						elementDropdown.opened = true;
-						const editItem = [].find.call(elementMenuItems, item => item.textContent.contains('Edit'));
+						const openPromise = new Promise((resolve) => elementDropdown.addEventListener('d2l-dropdown-open', resolve));
+						elementDropdown.toggleOpen();
+						await openPromise;
+						// Wait for menu to become visible
+						await new Promise((resolve) => setTimeout(resolve, 10));
+						const editItem = [].find.call(elementMenuItems, item => item.text.includes('Edit'));
 						editItem.click();
 
 						await element.updateComplete;
 						assert.equal(element.editting, true);
+						const elementNoteEdit = elementShadowRoot.querySelector('d2l-note-edit');
+						assert.notEqual(elementNoteEdit, null);
+					});
+
+				});
+
+				suite('delete', async() => {
+
+					test('fires d2l-note-delete when delete button is tapped', async() => {
+						const element = fixture('BasicTestFixture');
+						element.candelete = true;
+						await element.updateComplete;
+						await element.getLangResources();
+						await element.updateComplete;
+						const elementShadowRoot = element.shadowRoot;
+						const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown-more');
+						const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
+						const openPromise = new Promise((resolve) => elementDropdown.addEventListener('d2l-dropdown-open', resolve));
+						elementDropdown.toggleOpen();
+						await openPromise;
+						// Wait for menu to become visible
+						await new Promise((resolve) => setTimeout(resolve, 10));
+						const deleteItem = [].find.call(elementMenuItems, item => item.text.includes('Delete'));
+
+						const deletePromise = new Promise((resolve) => element.addEventListener('d2l-note-delete', resolve));
+						deleteItem.click();
+
+						await element.updateComplete;
+						await deletePromise;
 					});
 
 				});
