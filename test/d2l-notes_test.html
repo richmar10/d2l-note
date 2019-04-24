@@ -39,9 +39,9 @@
 				await element.updateComplete;
 			});
 
-			test('has d2l-note-edit if "canCreate" is true', async() => {
+			test('has d2l-note-edit if "cancreate" is true', async() => {
 				const element = fixture('BasicTestFixture');
-				element.canCreate = true;
+				element.cancreate = true;
 				await element.updateComplete;
 
 				const elementShadowRoot = element.shadowRoot;
@@ -50,9 +50,9 @@
 				assert.equal(elementNoteEdit.new, true);
 			});
 
-			test('passes description and settings slots to d2l-note-edit if "canCreate" is true', async() => {
+			test('passes description and settings slots to d2l-note-edit if "cancreate" is true', async() => {
 				const element = fixture('DescriptionAndSettingsTestFixture');
-				element.canCreate = true;
+				element.cancreate = true;
 				await element.updateComplete;
 
 				const elementShadowRoot = element.shadowRoot;
@@ -67,9 +67,9 @@
 				assert.equal(settings.textContent, 'Settings');
 			});
 
-			test('does not have d2l-note-edit if "canCreate" is false', async() => {
+			test('does not have d2l-note-edit if "cancreate" is false', async() => {
 				const element = fixture('BasicTestFixture');
-				element.canCreate = false;
+				element.cancreate = false;
 				await element.updateComplete;
 
 				const elementShadowRoot = element.shadowRoot;

@@ -18,7 +18,7 @@
     "test:sauce": "polymer test --skip-plugin local",
     "test:local": "polymer test --skip-plugin sauce",
     "test": "npm run test:local",
-    "lint": "eslint src/** test/**"
+    "lint": "eslint --ext html,js,ts demo src test"
   },
   "author": "D2L",
   "license": "UNLICENSED",
@@ -26,6 +26,7 @@
     "@polymer/polymer": "^3.0.0"
   },
   "devDependencies": {
+    "@d2l/user-elements": "^2.1.0",
     "@polymer/iron-demo-helpers": "^3.0.0-pre.19",
     "@polymer/test-fixture": "^4.0.2",
     "@typescript-eslint/eslint-plugin": "^1.7.0",
@@ -33,11 +34,16 @@
     "@webcomponents/webcomponentsjs": "^2.0.0",
     "babel-eslint": "^10.0.1",
     "chai": "^4.2.0",
+    "d2l-dropdown": "BrightspaceUI/dropdown#semver:^7",
+    "d2l-icons": "BrightspaceUI/icons#semver:^6",
+    "d2l-intl": "^2.0.0",
+    "d2l-menu": "BrightspaceUI/menu#semver:^2",
     "eslint": "^5.16.0",
     "eslint-config-brightspace": "^0.5.3",
     "eslint-plugin-html": "^5.0.3",
     "eslint-plugin-lit": "^0.6.0",
     "frau-ci": "^1.37.0",
+    "intl-messageformat": "^2.2.0",
     "lit-element": "^2.1.0",
     "mocha": "^5.2.0",
     "polymer-cli": "^1.9.8",

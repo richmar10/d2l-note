@@ -23,6 +23,7 @@
     </test-fixture>
 
     <script type="module">
+		import d2lIntl from 'd2l-intl';
 		suite('d2l-note', () => {
 
 			test('instantiating the element with default properties works', async() => {
@@ -39,11 +40,6 @@
 				const elementUserSkeleton = elementShadowRoot.querySelector('.d2l-note-user-skeleton');
 				assert.equal(elementUser, null);
 				assert.notEqual(elementUserSkeleton, null);
-
-				const elementDate = elementShadowRoot.querySelector('.d2l-note-created-date-time');
-				const elementDateSkeleton = elementShadowRoot.querySelector('.d2l-note-created-date-time-skeleton');
-				assert.equal(elementDate, null);
-				assert.notEqual(elementDateSkeleton, null);
 
 				const elementText = elementShadowRoot.querySelector('.d2l-note-text');
 				const elementTextSkeleton = elementShadowRoot.querySelector('.d2l-note-text-skeleton');
@@ -82,14 +78,14 @@
 				assert.equal(elementUser.imageToken, 'foozleberries');
 			});
 
-			test('has no avatar supplied by "user" property when "showAvatar" is false', async() => {
+			test('has no avatar supplied by "user" property when "showavatar" is false', async() => {
 				const element = fixture('BasicTestFixture');
 				element.user = {
 					pic: {
 						url: 'fixtures/user.png'
 					}
 				};
-				element.showAvatar = false;
+				element.showavatar = false;
 				await element.updateComplete;
 				const elementShadowRoot = element.shadowRoot;
 				const elementUser = elementShadowRoot.querySelector('d2l-user');
@@ -113,22 +109,24 @@
 					name: 'Username'
 				};
 				element.me = true;
-				await element.updateComplete;
+				await element.resourceFetchComplete;
 				const elementShadowRoot = element.shadowRoot;
 				const elementUser = elementShadowRoot.querySelector('d2l-user');
 				assert.equal(elementUser.name, 'Me');
 			});
 
-			test('has localized createdAt date supplied by "createdAt" property', async() => {
+			test('has localized createdat date supplied by "createdat" property', async() => {
 				const element = fixture('BasicTestFixture');
 				const date = new Date();
-				element.createdAt = date.toISOString();
+				element.user = {
+					name: 'Username'
+				};
+				element.createdat = date.toISOString();
+				const formatter = new d2lIntl.DateTimeFormat('en', { format: 'medium' });
 				await element.updateComplete;
 				const elementShadowRoot = element.shadowRoot;
-				const elementDate = elementShadowRoot.querySelector('.d2l-note-created-date-time');
-				const elementDateSkeleton = elementShadowRoot.querySelector('.d2l-note-created-date-time-skeleton');
-				assert.equal(elementDate.textContent, date.toLocaleString());
-				assert.equal(elementDateSkeleton, null);
+				const elementUser = elementShadowRoot.querySelector('d2l-user');
+				assert.equal(elementUser.subText, formatter.format(date));
 			});
 
 			test('has note text supplied by "text" property', async() => {
@@ -162,85 +160,118 @@
 
 			suite('context menu', async() => {
 
-				test('has context menu if "canEdit" is true', async() => {
+				test('has context menu if "canedit" is true', async() => {
 					const element = fixture('BasicTestFixture');
-					element.canEdit = true;
+					element.canedit = true;
 					await element.updateComplete;
 					const elementShadowRoot = element.shadowRoot;
-					const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown');
+					const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown-more');
 					assert.notEqual(elementDropdown, null);
 				});
 
-				test('has context menu if "canDelete" is true', async() => {
+				test('has context menu if "candelete" is true', async() => {
 					const element = fixture('BasicTestFixture');
-					element.canDelete = true;
+					element.candelete = true;
 					await element.updateComplete;
 					const elementShadowRoot = element.shadowRoot;
-					const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown');
+					const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown-more');
 					assert.notEqual(elementDropdown, null);
 				});
 
-				test('does not have context menu if "canEdit"/"canDelete" are not true', async() => {
+				test('does not have context menu if "canedit"/"candelete" are not true', async() => {
 					const element = fixture('BasicTestFixture');
-					element.canEdit = false;
-					element.canDelete = false;
+					element.canedit = false;
+					element.candelete = false;
 					await element.updateComplete;
 					const elementShadowRoot = element.shadowRoot;
-					const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown');
+					const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown-more');
 					assert.equal(elementDropdown, null);
 				});
 
-				test('has edit action if "canEdit" is true', async() => {
+				test('has edit action if "canedit" is true', async() => {
 					const element = fixture('BasicTestFixture');
-					element.canEdit = true;
-					await element.updateComplete;
+					element.canedit = true;
+					await element.resourceFetchComplete;
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
-					assert.isTrue([].some.call(elementMenuItems, item => item.textContent.contains('Edit')));
+					assert.isTrue([].some.call(elementMenuItems, item => item.text.indexOf('Edit') !== -1));
 				});
 
-				test('does not have edit action if "canEdit" is not true', async() => {
+				test('does not have edit action if "canedit" is not true', async() => {
 					const element = fixture('BasicTestFixture');
-					element.canEdit = false;
-					await element.updateComplete;
+					element.canedit = false;
+					await element.resourceFetchComplete;
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
-					assert.isFalse([].some.call(elementMenuItems, item => item.textContent.contains('Edit')));
+					assert.isFalse([].some.call(elementMenuItems, item => item.text.indexOf('Edit') !== -1));
 				});
 
-				test('has delete action if "canDelete" is true', async() => {
+				test('has delete action if "candelete" is true', async() => {
 					const element = fixture('BasicTestFixture');
-					element.canDelete = true;
-					await element.updateComplete;
+					element.candelete = true;
+					await element.resourceFetchComplete;
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
-					assert.isTrue([].some.call(elementMenuItems, item => item.textContent.contains('Delete')));
+					assert.isTrue([].some.call(elementMenuItems, item => item.text.indexOf('Delete') !== -1));
 				});
 
-				test('does not have delete action if "canDelete" is not true', async() => {
+				test('does not have delete action if "candelete" is not true', async() => {
 					const element = fixture('BasicTestFixture');
-					element.canDelete = false;
-					await element.updateComplete;
+					element.candelete = false;
+					await element.resourceFetchComplete;
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
-					assert.isFalse([].some.call(elementMenuItems, item => item.textContent.contains('Delete')));
+					assert.isFalse([].some.call(elementMenuItems, item => item.text.indexOf('Delete') !== -1));
 				});
 
 				suite('edit', async() => {
 
 					test('shows d2l-note-edit when edit button is tapped', async() => {
 						const element = fixture('BasicTestFixture');
-						element.canEdit = true;
-						await element.updateComplete;
+						element.canedit = true;
+						await element.resourceFetchComplete;
 						const elementShadowRoot = element.shadowRoot;
-						const elementDropdown = elementShadowRoot.querySelectorAll('d2l-dropdown');
+						const hiddenElementNoteEdit = elementShadowRoot.querySelector('d2l-note-edit');
+						assert.equal(hiddenElementNoteEdit, null);
+						const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown-more');
 						const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
-						elementDropdown.opened = true;
-						const editItem = [].find.call(elementMenuItems, item => item.textContent.contains('Edit'));
+						const openPromise = new Promise((resolve) => elementDropdown.addEventListener('d2l-dropdown-open', resolve));
+						elementDropdown.toggleOpen();
+						await openPromise;
+						// Wait for menu to become visible
+						await new Promise((resolve) => setTimeout(resolve, 100));
+						const editItem = [].filter.call(elementMenuItems, item => item.text.indexOf('Edit') !== -1)[0];
 						editItem.click();
 
 						await element.updateComplete;
 						assert.equal(element.editting, true);
+						const elementNoteEdit = elementShadowRoot.querySelector('d2l-note-edit');
+						assert.notEqual(elementNoteEdit, null);
+					});
+
+				});
+
+				suite('delete', async() => {
+
+					test('fires d2l-note-delete when delete button is tapped', async() => {
+						const element = fixture('BasicTestFixture');
+						element.candelete = true;
+						await element.resourceFetchComplete;
+						const elementShadowRoot = element.shadowRoot;
+						const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown-more');
+						const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
+						const openPromise = new Promise((resolve) => elementDropdown.addEventListener('d2l-dropdown-open', resolve));
+						elementDropdown.toggleOpen();
+						await openPromise;
+						// Wait for menu to become visible
+						await new Promise((resolve) => setTimeout(resolve, 100));
+						const deleteItem = [].filter.call(elementMenuItems, item => item.text.indexOf('Delete') !== -1)[0];
+
+						const deletePromise = new Promise((resolve) => element.addEventListener('d2l-note-delete', resolve));
+						deleteItem.click();
+
+						await element.updateComplete;
+						await deletePromise;
 					});
 
 				});
