@@ -18,7 +18,7 @@
     "test:sauce": "polymer test --skip-plugin local",
     "test:local": "polymer test --skip-plugin sauce",
     "test": "npm run test:local",
-    "lint": "eslint src/** test/**"
+    "lint": "eslint --ext html,js,ts demo src test"
   },
   "author": "D2L",
   "license": "UNLICENSED",
