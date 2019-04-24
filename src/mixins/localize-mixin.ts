@@ -86,11 +86,6 @@ export function LocalizeMixin<B extends Constructor<{
 					this.checkLocalizationCache(proto);
 					proto.__localizationCache.messages = {};
 
-					this.resourceFetchComplete = new Promise((resolve, reject) => {
-						this.__resourceFetchCompleteResolve = resolve;
-						this.__resourceFetchCompleteReject = reject;
-					});
-
 					this.getLangResources(this.__language)
 						.then((res) => {
 							if (!res || !this.__language) {
