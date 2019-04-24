@@ -2,6 +2,9 @@ language: node_js
 node_js: node
 addons:
   chrome: stable
+before_install:
+- npm config set @d2l:registry "${ARTIFACTORY_NPM_REGISTRY}"
+- echo "$( echo ${ARTIFACTORY_NPM_REGISTRY} | sed 's/^http\(s\)\?://'):_authToken=${ARTIFACTORY_NPM_RO_TOKEN}" >> ~/.npmrc
 script:
 - npm run lint
 - |
