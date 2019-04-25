@@ -22,16 +22,9 @@
       </template>
     </test-fixture>
 
-	<test-fixture id="DescriptionAndSettingsTestFixture">
-      <template>
-        <d2l-notes>
-			<div slot="settings">Settings</div>
-			<p slot="description">Description</p>
-		</d2l-notes>
-      </template>
-    </test-fixture>
-
     <script type="module">
+		import { html } from 'lit-element';
+
 		suite('d2l-notes', () => {
 
 			test('instantiating the element with default properties works', async() => {
@@ -51,19 +44,24 @@
 			});
 
 			test('passes description and settings slots to d2l-note-edit if "cancreate" is true', async() => {
-				const element = fixture('DescriptionAndSettingsTestFixture');
+				const element = fixture('BasicTestFixture');
 				element.cancreate = true;
+				element.description = html`<p>Description</p>`;
+				element.settings = html`<span>Settings</span>`;
 				await element.updateComplete;
 
 				const elementShadowRoot = element.shadowRoot;
 				const elementNoteEdit = elementShadowRoot.querySelector('d2l-note-edit');
+				await elementNoteEdit.updateComplete;
 				assert.notEqual(elementNoteEdit, null);
 				assert.equal(elementNoteEdit.new, true);
 
 				const editShadowRoot = elementNoteEdit.shadowRoot;
-				const description = editShadowRoot.querySelector('slot[name="description"]');
+				const descriptionSlot = editShadowRoot.querySelector('slot[name="description"]');
+				const description = descriptionSlot.assignedElements()[0];
 				assert.equal(description.textContent, 'Description');
-				const settings = editShadowRoot.querySelector('slot[name="settings"]');
+				const settingsSlot = editShadowRoot.querySelector('slot[name="settings"]');
+				const settings = settingsSlot.assignedElements()[0];
 				assert.equal(settings.textContent, 'Settings');
 			});
 

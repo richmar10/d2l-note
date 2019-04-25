@@ -48,9 +48,6 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 	updatedat?: string;
 
 	@property({ type: String })
-	dateformat?: string;
-
-	@property({ type: String })
 	text?: string;
 
 	@property({ type: Boolean })
@@ -136,6 +133,37 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 					align-items: center;
 					justify-content: space-between;
 				}
+
+				.skeleton.skeleton-avatar {
+					width: 48px;
+				    height: 48px;
+				}
+
+				.skeleton {
+					background: var(--d2l-color-sylvite);
+					border-radius: 6px;
+				}
+
+				.skeleton-user {
+					display: flex;
+				}
+
+				.skeleton-user .skeleton-info-container {
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+				}
+
+				.skeleton-user .skeleton-name {
+					width: 80px;
+					height: 18px;
+					margin-bottom: 5px;
+				}
+
+				.skeleton-user .skeleton-subtext {
+					width: 140px;
+					height: 18px;
+				}
 			</style>
 			<div class="d2l-note-main">
 				${this.user ? html`
@@ -146,8 +174,19 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 				        name=${userName}
 				        sub-text=${subText}
 						></d2l-user>` : html`
-					<div class="d2l-note-user-skeleton"></div>`}
-				${this.editting ? html`<d2l-note-edit></d2l-note-edit>` : this.text ? convertText(this.text) : html`<div class="d2l-note-text-skeleton"></div>`}
+					<div class="d2l-note-user-skeleton skeleton-user">
+						<div class="skeleton skeleton-avatar"></div>
+						<div class="skeleton-info-container">
+							<div class="skeleton skeleton-name"></div>
+							<div class="skeleton skeleton-subtext"></div>
+						</div>
+					</div>`}
+				${this.editting ? html`
+					<d2l-note-edit @d2l-note-edit-discard=${this._handleDiscard} value=${this.text}>
+						<slot name="description" slot="description"></slot>
+						<slot name="settings" slot="settings"></slot>
+					</d2l-note-edit>` : this.text ? convertText(this.text) : html`
+					<div class="d2l-note-text-skeleton"></div>`}
 			</div>
 
 			${!this.editting ? html`
@@ -168,6 +207,10 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 
 	editSelectHandler() {
 		this.editting = true;
+	}
+
+	_handleDiscard() {
+		this.editting = false;
 	}
 
 	deleteSelectHandler() {

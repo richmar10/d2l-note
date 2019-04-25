@@ -25,14 +25,17 @@
       <h3>private d2l-note demo</h3>
       <demo-snippet>
         <template>
-          <d2l-note
+		  <d2l-note
 		  	user='{"name":"Username","pic":{"url":"avatar.png"}}'
 			createdat="2019-04-23T17:08:33.839Z"
 			text="This is some text"
 			canedit
 			candelete
 			private
-		  ></d2l-note>
+		  >
+		    <p slot="description">Description</p>
+		    <span slot="settings">Settings</span>
+		  </d2l-note>
         </template>
       </demo-snippet>
 

@@ -4,7 +4,7 @@ import './d2l-note';
  * and TypeScript decorators
  **/
 import {
-	customElement, html, LitElement, property
+	customElement, html, LitElement, property, TemplateResult
 } from 'lit-element';
 
 /**
@@ -17,8 +17,34 @@ export class D2LNotes extends LitElement {
 	/**
 	 * Create an observed property. Triggers update on change.
 	 */
-	@property()
-	prop1 = 'd2l-notes';
+	@property({ type: Array })
+	notes: {
+		user: {
+			name: string;
+			pic: {
+				url: string;
+				requireTokenAuth?: boolean;
+			};
+		};
+		token: string;
+		showAvatar: boolean;
+		me: boolean;
+		createdAt: string;
+		updatedAt: string;
+		text: string;
+		canEdit: boolean;
+		canDelete: boolean;
+		private: boolean;
+	}[] = [];
+
+	@property({ type: Boolean })
+	cancreate: boolean = false;
+
+	@property({ type: TemplateResult })
+	description?: TemplateResult;
+
+	@property({ type: TemplateResult })
+	settings?: TemplateResult;
 
 	/**
 	 * Implement `render` to define a template for your element.
@@ -28,6 +54,42 @@ export class D2LNotes extends LitElement {
 		 * Use JavaScript expressions to include property values in
 		 * the element template.
 		 */
-		return html`<p>Hello ${this.prop1}!</p>`;
+		return html`
+			<style>
+				ol {
+					margin: 0;
+					padding: 0;
+				}
+				li {
+					display: block;
+				}
+			</style>
+			<ol>
+			${this.notes.map(note => html`
+				<li>
+					<d2l-note
+						.user=${note.user}
+						.token=${note.token}
+						.showavatar=${note.showAvatar ? note.showAvatar : false}
+						.me=${note.me ? note.me : false}
+						.createdat=${note.createdAt}
+						.updatedat=${note.updatedAt}
+						.text=${note.text}
+						.canedit=${note.canEdit ? note.canEdit : false}
+						.candelete=${note.canDelete ? note.canDelete : false}
+						.private=${note.private ? note.private : false}
+					>
+						<div slot="description">${this.description}</div>
+						<div slot="settings">${this.settings}</div>
+					</d2l-note>
+				</li>
+			`)}
+			</ol>
+
+			${this.cancreate ? html`<d2l-note-edit new>
+				<div slot="description">${this.description}</div>
+				<div slot="settings">${this.settings}</div>
+			</d2l-note-edit>` : null}
+		`;
 	}
 }
