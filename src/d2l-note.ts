@@ -67,6 +67,9 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	@property({ type: Boolean })
 	candelete: boolean = false;
 
+	@property({ type: String })
+	dateformat: string = 'medium';
+
 	@property({ attribute: false })
 	editting: boolean = false;
 
@@ -144,7 +147,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 		const useImageAuthentication = !!(this.showavatar && this.user && this.user.pic && this.user.pic.requireTokenAuth);
 		const userName = this.me ? this.localize('me') : this.user ? this.user.name : undefined;
 
-		const date = this.createdat ? this.formatDateTime(new Date(this.createdat), { format: 'medium' }) : '';
+		const date = this.createdat ? this.formatDateTime(new Date(this.createdat), { format: this.dateformat || 'medium' }) : '';
 		const subText = this.updatedat ? this.localize('SubtextEdited', date) : date;
 		const showDropdown = this.canedit || this.candelete;
 		return html`

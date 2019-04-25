@@ -64,6 +64,9 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	collapsedsize: number = 4;
 
 	@property({ type: String })
+	dateformat?: string;
+
+	@property({ type: String })
 	loadmorestring?: string;
 
 	@property({ type: String })
@@ -189,6 +192,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 							.canedit=${note.canEdit ? note.canEdit : false}
 							.candelete=${note.canDelete ? note.canDelete : false}
 							.private=${note.private ? note.private : false}
+							.dateformat=${this.dateformat}
 							.contextmenulabel=${this.contextmenulabel}
 							.editstring=${this.editstring}
 							.deletestring=${this.deletestring}
