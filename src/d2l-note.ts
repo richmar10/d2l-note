@@ -155,6 +155,14 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					justify-content: space-between;
 				}
 
+				d2l-user {
+					margin-bottom: 18px;
+				}
+
+				.d2l-note-text {
+					margin-bottom: 18px;
+				}
+
 				.skeleton {
 					background: var(--d2l-color-sylvite);
 					border-radius: 6px;
@@ -169,6 +177,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					display: flex;
 					justify-content: space-between;
 					width: 193px;
+					margin-bottom: 18px;
 				}
 
 				.skeleton-user .skeleton-info-container {
@@ -191,8 +200,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				.d2l-note-text-skeleton {
 					width: 100%;
 					height: 1.4rem;
-					margin-top: 5px;
-					margin-bottom: 5px;
+					margin-bottom: 18px;
 				}
 			</style>
 			<div class="d2l-note-main d2l-typography">

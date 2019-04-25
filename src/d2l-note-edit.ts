@@ -92,7 +92,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					line-height: 0;
 				}
 				.d2l-note-edit-bottom {
-					margin-top: 0.5rem;
+					margin-top: 12px;
 					display: flex;
 					flex-direction: row;
 					justify-content: space-between;
