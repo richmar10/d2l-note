@@ -40,11 +40,11 @@ export class D2LNotes extends LitElement {
 	@property({ type: Boolean })
 	cancreate: boolean = false;
 
-	@property({ type: TemplateResult })
-	description?: TemplateResult;
+	@property({ type: Object })
+	description: TemplateResult = html`<div></div>`;
 
-	@property({ type: TemplateResult })
-	settings?: TemplateResult;
+	@property({ type: Object })
+	settings: TemplateResult = html`<div></div>`;
 
 	/**
 	 * Implement `render` to define a template for your element.
