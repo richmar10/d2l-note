@@ -184,7 +184,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 						<d2l-note
 							.user=${note.user}
 							.token=${note.token}
-							.showavatar=${note.showAvatar ? note.showAvatar : false}
+							.showavatar=${typeof note.showAvatar === 'boolean' ? note.showAvatar : true}
 							.me=${note.me ? note.me : false}
 							.createdat=${note.createdAt}
 							.updatedat=${note.updatedAt}
