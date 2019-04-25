@@ -66,6 +66,33 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	@property({ type: String })
 	loadlessstring?: string;
 
+	@property({ type: String })
+	contextmenulabel?: string;
+
+	@property({ type: String })
+	editstring?: string;
+
+	@property({ type: String })
+	deletestring?: string;
+
+	@property({ type: String })
+	privatelabel?: string;
+
+	@property({ type: String })
+	addnotestring?: string;
+
+	@property({ type: String })
+	addarialabel?: string;
+
+	@property({ type: String })
+	savenotestring?: string;
+
+	@property({ type: String })
+	savearialabel?: string;
+
+	@property({ type: String })
+	discardnotestring?: string;
+
 	__langResources = {
 		'en': {
 			'more': 'Load More Notes',
@@ -122,6 +149,17 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				}
 				li {
 					display: block;
+
+					margin-bottom: 6px;
+				}
+
+				li:last-child {
+					margin-bottom: 24px;
+				}
+
+				hr {
+					margin-top: 36px;
+					margin-bottom: 18px
 				}
 
 				.d2l-notes-more-less {
@@ -154,6 +192,15 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 							.canedit=${note.canEdit ? note.canEdit : false}
 							.candelete=${note.canDelete ? note.canDelete : false}
 							.private=${note.private ? note.private : false}
+							.contextmenulabel=${this.contextmenulabel}
+							.editstring=${this.editstring}
+							.deletestring=${this.deletestring}
+							.privatelabel=${this.privatelabel}
+							.addnotestring=${this.addnotestring}
+							.addarialabel=${this.addarialabel}
+							.savenotestring=${this.savenotestring}
+							.savearialabel=${this.savearialabel}
+							.discardnotestring=${this.discardnotestring}
 						>
 							<div slot="description">${this.description}</div>
 							<div slot="settings">${this.settings}</div>
@@ -177,7 +224,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				</div>
 				` : null}
 
-				${hasmore && this.notes.length && this.cancreate ? html`<hr>` : null}
+				${(hasmore || this.notes.length) && this.cancreate ? html`<hr>` : null}
 
 				${this.cancreate ? html`<d2l-note-edit new>
 					<div slot="description">${this.description}</div>

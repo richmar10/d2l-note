@@ -79,6 +79,21 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	@property({ type: String })
 	privatelabel?: string;
 
+	@property({ type: String })
+	addnotestring?: string;
+
+	@property({ type: String })
+	addarialabel?: string;
+
+	@property({ type: String })
+	savenotestring?: string;
+
+	@property({ type: String })
+	savearialabel?: string;
+
+	@property({ type: String })
+	discardnotestring?: string;
+
 	__langResources = {
 		'en': {
 			'SubtextEdited': '{0} (edited)',
@@ -155,6 +170,14 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					justify-content: space-between;
 				}
 
+				d2l-user {
+					margin-bottom: 18px;
+				}
+
+				.d2l-note-text {
+					margin-bottom: 18px;
+				}
+
 				.skeleton {
 					background: var(--d2l-color-sylvite);
 					border-radius: 6px;
@@ -169,6 +192,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					display: flex;
 					justify-content: space-between;
 					width: 193px;
+					margin-bottom: 18px;
 				}
 
 				.skeleton-user .skeleton-info-container {
@@ -191,8 +215,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				.d2l-note-text-skeleton {
 					width: 100%;
 					height: 1.4rem;
-					margin-top: 5px;
-					margin-bottom: 5px;
+					margin-bottom: 18px;
 				}
 			</style>
 			<div class="d2l-note-main d2l-typography">
@@ -212,7 +235,14 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 						</div>
 					</div>`}
 				${this.editting ? html`
-					<d2l-note-edit @d2l-note-edit-discard=${this._handleDiscard} value=${this.text}>
+					<d2l-note-edit
+						.addnotestring=${this.addnotestring}
+						.addarialabel=${this.addarialabel}
+						.savenotestring=${this.savenotestring}
+						.savearialabel=${this.savearialabel}
+						.discardnotestring=${this.discardnotestring}
+						@d2l-note-edit-discard=${this._handleDiscard} value=${this.text}
+					>
 						<slot name="description" slot="description"></slot>
 						<slot name="settings" slot="settings"></slot>
 					</d2l-note-edit>` : this.text ? convertText(this.text) : html`
