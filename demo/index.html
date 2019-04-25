@@ -13,7 +13,7 @@
       import '@polymer/iron-demo-helpers/demo-snippet';
     </script>
 
-	<script type="module" src="../dist/d2l-notes.js"></script>
+    <script type="module" src="../dist/d2l-notes.js"></script>
 
     <custom-style>
       <style is="custom-style" include="demo-pages-shared-styles">
@@ -26,26 +26,29 @@
       <demo-snippet>
         <template>
           <d2l-note
-		  	user='{"name":"Username","pic":{"url":"avatar.png"}}'
-			createdat="2019-04-23T17:08:33.839Z"
-			text="This is some text"
-			canedit
-			candelete
-			private
-		  ></d2l-note>
+            user='{"name":"Username","pic":{"url":"avatar.png"}}'
+            createdat="2019-04-23T17:08:33.839Z"
+            text="This is some text"
+            canedit
+            candelete
+            private
+          >
+            <p slot="description">Description</p>
+            <span slot="settings">Settings</span>
+          </d2l-note>
         </template>
       </demo-snippet>
 
-	  <h3>shared d2l-note demo</h3>
+    <h3>shared d2l-note demo</h3>
       <demo-snippet>
         <template>
           <d2l-note
-		  	user='{"name":"Username","pic":{"url":"avatar.png"}}'
-			createdat="2019-04-23T17:08:33.839Z"
-			text="This is some text"
-			canedit
-			candelete
-		  ></d2l-note>
+            user='{"name":"Username","pic":{"url":"avatar.png"}}'
+            createdat="2019-04-23T17:08:33.839Z"
+            text="This is some text"
+            canedit
+            candelete
+          ></d2l-note>
         </template>
       </demo-snippet>
 
@@ -53,24 +56,24 @@
       <demo-snippet>
         <template>
           <d2l-note
-		  	user='{"name":"Username","pic":{"url":"avatar.png"}}'
-			createdat="2019-04-23T17:08:33.839Z"
-			text="This is some text"
-			canedit
-			candelete
+            user='{"name":"Username","pic":{"url":"avatar.png"}}'
+            createdat="2019-04-23T17:08:33.839Z"
+            text="This is some text"
+            canedit
+            candelete
             me
-		  ></d2l-note>
+          ></d2l-note>
         </template>
       </demo-snippet>
 
-	  <h3>readonly d2l-note demo</h3>
+    <h3>readonly d2l-note demo</h3>
       <demo-snippet>
         <template>
           <d2l-note
-		  	user='{"name":"Username","pic":{"url":"avatar.png"}}'
-			createdat="2019-04-23T17:08:33.839Z"
-			text="This is some text"
-		  ></d2l-note>
+            user='{"name":"Username","pic":{"url":"avatar.png"}}'
+            createdat="2019-04-23T17:08:33.839Z"
+            text="This is some text"
+          ></d2l-note>
         </template>
       </demo-snippet>
 
@@ -78,9 +81,17 @@
       <demo-snippet>
         <template>
           <d2l-notes
+            id="notes"
             notes="[{}, {}, {}, {}, {}]"
             cancreate
           ></d2l-notes>
+
+          <script type="module">
+            import { html } from '../../../lit-element/lit-element.js';
+            const notes = document.getElementById('notes');
+            notes.description = html`<p>Description</p>`;
+            notes.settings = html`<p>Settings</p>`;
+          </script>
         </template>
       </demo-snippet>
     </div>
