@@ -15,6 +15,7 @@ import {
 	customElement, html, LitElement, property
 } from 'lit-element';
 
+import { D2LTypographyMixin } from './mixins/d2l-typography-mixin';
 import { LocalizeMixin } from './mixins/localize-mixin';
 
 /**
@@ -22,7 +23,7 @@ import { LocalizeMixin } from './mixins/localize-mixin';
  * a custom element. Registers <my-element> as an HTML tag.
  */
 @customElement('d2l-note')
-export class D2LNote extends LocalizeMixin(LitElement) {
+export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 
 	/**
 	 * Create an observed property. Triggers update on change.
@@ -122,6 +123,7 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 		const subText = this.updatedat ? this.localize('SubtextEdited', date) : date;
 		const showDropdown = this.canedit || this.candelete;
 		return html`
+			<style>${D2LNote.d2lTypographyStyle}</style>
 			<style>
 				:host {
 					position: relative;
@@ -178,7 +180,7 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 					margin-bottom: 5px;
 				}
 			</style>
-			<div class="d2l-note-main">
+			<div class="d2l-note-main d2l-typography">
 				${this.user ? html`
 					<d2l-user
 						image-url="${imageUrl}"

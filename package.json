@@ -42,6 +42,7 @@
     "d2l-intl": "^2.0.0",
     "d2l-menu": "BrightspaceUI/menu#semver:^2",
     "d2l-more-less": "github:BrightspaceUI/more-less#semver:^5",
+    "d2l-typography": "github:BrightspaceUI/typography#semver:^7",
     "eslint": "^5.16.0",
     "eslint-config-brightspace": "^0.5.3",
     "eslint-plugin-html": "^5.0.3",
