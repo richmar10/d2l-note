@@ -96,7 +96,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 
 	__langResources = {
 		'en': {
-			'SubtextEdited': '{0} (edited)',
+			'SubtextEdited': '{0} (Edited)',
 			'me': 'Me',
 			'contextMenu': 'Context Menu',
 			'edit': 'Edit',
