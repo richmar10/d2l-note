@@ -115,12 +115,12 @@
 					private: false
 				};
 				element.notes = [note, note, note, note, note];
-				await element.updateComplete;
-				assert.equal(element.collasped, true);
+				await element.resourceFetchComplete;
+				assert.equal(element.collapsed, true);
 				const elementShadowRoot = element.shadowRoot;
 				const elementMoreLess = elementShadowRoot.querySelector('.d2l-notes-load-more-less');
 				assert.notEqual(elementMoreLess, null);
-				assert.equal(elementMoreLess.textContent, 'Load More Notes');
+				assert.equal(elementMoreLess.text, 'Load More Notes');
 			});
 
 			test('shows load less button when there are more than 4 notes and collapsed is set false', async() => {
@@ -141,13 +141,13 @@
 				};
 				element.notes = [note, note, note, note, note];
 				await element.updateComplete;
-				assert.equal(element.collasped, true);
+				assert.equal(element.collapsed, true);
 				element.collapsed = false;
-				await element.updateComplete;
+				await element.resourceFetchComplete;
 				const elementShadowRoot = element.shadowRoot;
 				const elementMoreLess = elementShadowRoot.querySelector('.d2l-notes-load-more-less');
 				assert.notEqual(elementMoreLess, null);
-				assert.equal(elementMoreLess.textContent, 'Load Less Notes');
+				assert.equal(elementMoreLess.text, 'Load Less Notes');
 			});
 
 			test('dispatches d2l-notes-load-more when "collapsed" and load more/less button is tapped', async() => {
@@ -168,13 +168,15 @@
 				};
 				element.notes = [note, note, note, note, note];
 				await element.updateComplete;
-				assert.equal(element.collasped, true);
+				assert.equal(element.collapsed, true);
 				const elementShadowRoot = element.shadowRoot;
 				const elementMoreLess = elementShadowRoot.querySelector('.d2l-notes-load-more-less');
+				const loadMorePromise = new Promise((resolve) => element.addEventListener('d2l-notes-load-more', resolve));
 				elementMoreLess.click();
 
 				await element.updateComplete;
-				assert.equal(element.collasped, false);
+				assert.equal(element.collapsed, false);
+				await loadMorePromise;
 			});
 
 			test('dispatches d2l-notes-load-less when not "collapsed" and load more/less button is tapped', async() => {
@@ -195,15 +197,17 @@
 				};
 				element.notes = [note, note, note, note, note];
 				await element.updateComplete;
-				assert.equal(element.collasped, true);
+				assert.equal(element.collapsed, true);
 				element.collapsed = false;
 				await element.updateComplete;
 				const elementShadowRoot = element.shadowRoot;
 				const elementMoreLess = elementShadowRoot.querySelector('.d2l-notes-load-more-less');
+				const loadMorePromise = new Promise((resolve) => element.addEventListener('d2l-notes-load-less', resolve));
 				elementMoreLess.click();
 
 				await element.updateComplete;
-				assert.equal(element.collasped, true);
+				assert.equal(element.collapsed, true);
+				await loadMorePromise;
 			});
 
 		});

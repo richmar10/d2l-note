@@ -48,7 +48,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 		const proto = this.constructor.prototype;
 		this.checkLocalizationCache(proto);
 
-		const namespace = `d2l-note:${lang}`;
+		const namespace = `d2l-note-edit:${lang}`;
 
 		if (proto.__localizationCache.requests[namespace]) {
 			return proto.__localizationCache.requests[namespace];

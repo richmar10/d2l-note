@@ -5,6 +5,7 @@ import 'd2l-dropdown/d2l-dropdown-more';
 import 'd2l-dropdown/d2l-dropdown-menu';
 import 'd2l-menu/d2l-menu';
 import 'd2l-menu/d2l-menu-item';
+import 'd2l-more-less/d2l-more-less';
 import './d2l-note-edit';
 /**
  * Import LitElement base class, html helper function,
@@ -104,7 +105,10 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 	 */
 	render() {
 		function convertText(text: string) {
-			return html`<div class="d2l-note-text">${text}</div>`;
+			return html`
+				<d2l-more-less>
+					<div class="d2l-note-text">${text}</div>
+				</d2l-more-less>`;
 		}
 		/**
 		 * Use JavaScript expressions to include property values in
