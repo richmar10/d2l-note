@@ -6,8 +6,8 @@
     "url": "https://github.com/Brightspace/d2l-note.git"
   },
   "version": "0.0.0",
-  "main": "dist/d2l-note.js",
-  "types": "dist/d2l-note.d.ts",
+  "main": "lib/d2l-note.js",
+  "types": "lib/d2l-note.d.ts",
   "scripts": {
     "start": "tsc-watch --onFirstSuccess \"npm run serve\"",
     "serve": "polymer serve",
