@@ -67,13 +67,26 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	@property({ attribute: false })
 	editting: boolean = false;
 
+	@property({ type: String })
+	contextmenulabel?: string;
+
+	@property({ type: String })
+	editstring?: string;
+
+	@property({ type: String })
+	deletestring?: string;
+
+	@property({ type: String })
+	privatelabel?: string;
+
 	__langResources = {
 		'en': {
 			'SubtextEdited': '{0} (edited)',
 			'me': 'Me',
 			'contextMenu': 'Context Menu',
 			'edit': 'Edit',
-			'delete': 'Delete'
+			'delete': 'Delete',
+			'private': 'Private'
 		}
 	}
 
@@ -108,7 +121,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 		function convertText(text: string) {
 			return html`
 				<d2l-more-less>
-					<div class="d2l-note-text">${text}</div>
+					<div class="d2l-note-text d2l-body-standard">${text}</div>
 				</d2l-more-less>`;
 		}
 		/**
@@ -127,10 +140,12 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 			<style>
 				:host {
 					position: relative;
-					display: inline-flex;
+					display: flex;
+					line-height: 0;
 				}
 				.d2l-note-main {
 					flex: 1;
+					line-height: 0;
 				}
 				.d2l-note-sidebar {
 					flex: 0;
@@ -207,15 +222,25 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 			${!this.editting ? html`
 			<div class="d2l-note-sidebar">
 				${showDropdown ? html`
-					<d2l-dropdown-more>
+					<d2l-dropdown-more text="${this.contextmenulabel ? this.contextmenulabel : this.localize('contextMenu')}">
 						<d2l-dropdown-menu>
-							<d2l-menu label="${this.localize('contextMenu')}">
-								${this.canedit ? html`<d2l-menu-item text="${this.localize('edit')}" @d2l-menu-item-select=${this.editSelectHandler}></d2l-menu-item>` : null }
-								${this.candelete ? html`<d2l-menu-item text="${this.localize('delete')}" @d2l-menu-item-select=${this.deleteSelectHandler}></d2l-menu-item>` : null }
+							<d2l-menu label="${this.contextmenulabel ? this.contextmenulabel : this.localize('contextMenu')}">
+								${this.canedit ? html`<d2l-menu-item
+									text="${this.editstring ? this.editstring : this.localize('edit')}"
+									@d2l-menu-item-select=${this.editSelectHandler}
+								></d2l-menu-item>` : null }
+								${this.candelete ? html`<d2l-menu-item
+									text="${this.deletestring ? this.deletestring : this.localize('delete')}"
+									@d2l-menu-item-select=${this.deleteSelectHandler}
+								></d2l-menu-item>` : null }
 							</d2l-menu>
 						</d2l-dropdown-menu>
 					</d2l-dropdown-more>` : null }
-				${this.private ? html`<d2l-icon class="d2l-note-private-indicator" icon="d2l-tier1:visibility-hide"></d2l-icon>` : null }
+				${this.private ? html`<d2l-icon
+					class="d2l-note-private-indicator"
+					icon="d2l-tier1:visibility-hide"
+					aria-label="${this.privatelabel ? this.privatelabel : this.localize('private')}"
+				></d2l-icon>` : null }
 			</div>` : null }
 		`;
 	}

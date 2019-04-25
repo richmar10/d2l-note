@@ -16,17 +16,19 @@
 
     <script type="module" src="../dist/d2l-notes.js"></script>
 
+    <script type="module">
+        const $_documentContainer = document.createElement('template');
+        $_documentContainer.innerHTML = `<custom-style include="d2l-typography">
+            <style is="custom-style" include="d2l-typography"></style>
+        </custom-style>`;
+        document.body.appendChild($_documentContainer.content);
+    </script>
+  </head>
+  <body class="d2l-typography">
     <custom-style>
       <style is="custom-style" include="demo-pages-shared-styles">
       </style>
     </custom-style>
-
-    <custom-style>
-      <style is="custom-style" include="d2l-typography">
-      </style>
-    </custom-style>
-  </head>
-  <body class="d2l-typography">
     <div class="vertical-section-container centered">
       <h3>private d2l-note demo</h3>
       <demo-snippet>
@@ -39,8 +41,8 @@
             candelete
             private
           >
-            <p slot="description">Description</p>
-            <span slot="settings">Settings</span>
+            <p class="d2l-body-standard" slot="description">Description</p>
+            <span class="d2l-body-standard" slot="settings">Settings</span>
           </d2l-note>
         </template>
       </demo-snippet>
@@ -56,8 +58,8 @@
             candelete
             private
           >
-            <p slot="description">Description</p>
-            <span slot="settings">Settings</span>
+          <p class="d2l-body-standard" slot="description">Description</p>
+          <span class="d2l-body-standard" slot="settings">Settings</span>
           </d2l-note>
         </template>
       </demo-snippet>
@@ -144,8 +146,8 @@
   <script type="module">
     import { html } from '../../../lit-element/lit-element.js';
     const notes = document.getElementById('notes');
-    notes.description = html`<p>Description</p>`;
-    notes.settings = html`<p>Settings</p>`;
+    notes.description = html`<p class="d2l-body-standard">Description</p>`;
+    notes.settings = html`<p class="d2l-body-standard">Settings</p>`;
   </script>
   </body>
 </html>

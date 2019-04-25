@@ -28,10 +28,27 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 	@property({ type: String })
 	value: string = '';
 
+	@property({ type: String })
+	addnotestring?: string;
+
+	@property({ type: String })
+	addarialabel?: string;
+
+	@property({ type: String })
+	savenotestring?: string;
+
+	@property({ type: String })
+	savearialabel?: string;
+
+	@property({ type: String })
+	discardnotestring?: string;
+
 	__langResources = {
 		'en': {
 			'add': 'Add',
+			'addAria': 'Add Note',
 			'save': 'Save',
+			'saveAria': 'Save Note',
 			'discard': 'Discard'
 		}
 	}
@@ -70,6 +87,10 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 		 */
 		return html`
 			<style>
+				:host {
+					display: block;
+					line-height: 0;
+				}
 				.d2l-note-edit-bottom {
 					margin-top: 0.5rem;
 					display: flex;
@@ -100,9 +121,10 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					<d2l-button
 						class="d2l-note-edit-button"
 						primary
+						aria-label="${this.new ? this.addarialabel ? this.addarialabel : this.localize('addAria') : this.savearialabel ? this.savearialabel : this.localize('saveAria')}"
 						@click=${this._handleEditClick}
 					>
-						${this.new ? this.localize('add') : this.localize('save')}
+						${this.new ? this.addnotestring ? this.addnotestring : this.localize('add') : this.savenotestring ? this.savenotestring : this.localize('save')}
 					</d2l-button>
 					<div class="d2l-note-edit-settings">
 						<slot name="settings"></slot>
@@ -111,7 +133,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				<d2l-button-icon
 					class="d2l-note-edit-discard-button"
 					icon="d2l-tier2:delete"
-					text="${this.localize('discard')}"
+					text="${this.discardnotestring ? this.discardnotestring : this.localize('discard')}"
 					@click=${this._handleClick}
 				></d2l-button-icon>
 			</div>

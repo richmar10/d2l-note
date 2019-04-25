@@ -110,6 +110,12 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 		return html`
 			<style>${D2LNotes.d2lTypographyStyle}</style>
 			<style>
+				:host {
+					display: block;
+				}
+				.d2l-typography {
+					line-height: 0;
+				}
 				ol {
 					margin: 0;
 					padding: 0;
