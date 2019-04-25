@@ -45,6 +45,9 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	@property({ type: Boolean })
 	cancreate: boolean = false;
 
+	@property({ type: String })
+	editplaceholder: string = '';
+
 	@property({ type: Object })
 	description: TemplateResult = html`<div></div>`;
 
@@ -82,13 +85,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	addnotestring?: string;
 
 	@property({ type: String })
-	addarialabel?: string;
-
-	@property({ type: String })
 	savenotestring?: string;
-
-	@property({ type: String })
-	savearialabel?: string;
 
 	@property({ type: String })
 	discardnotestring?: string;
@@ -197,10 +194,9 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 							.deletestring=${this.deletestring}
 							.privatelabel=${this.privatelabel}
 							.addnotestring=${this.addnotestring}
-							.addarialabel=${this.addarialabel}
 							.savenotestring=${this.savenotestring}
-							.savearialabel=${this.savearialabel}
 							.discardnotestring=${this.discardnotestring}
+							.editplaceholder=${this.editplaceholder}
 						>
 							<div slot="description">${this.description}</div>
 							<div slot="settings">${this.settings}</div>
@@ -226,7 +222,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 
 				${(hasmore || this.notes.length) && this.cancreate ? html`<hr>` : null}
 
-				${this.cancreate ? html`<d2l-note-edit new>
+				${this.cancreate ? html`<d2l-note-edit new placeholder="${this.editplaceholder}">
 					<div slot="description">${this.description}</div>
 					<div slot="settings">${this.settings}</div>
 				</d2l-note-edit>` : null}

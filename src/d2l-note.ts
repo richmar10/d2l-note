@@ -52,6 +52,9 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	@property({ type: String })
 	text?: string;
 
+	@property({ type: String })
+	editplaceholder: string = '';
+
 	@property({ type: Boolean })
 	me: boolean = false;
 
@@ -83,13 +86,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	addnotestring?: string;
 
 	@property({ type: String })
-	addarialabel?: string;
-
-	@property({ type: String })
 	savenotestring?: string;
-
-	@property({ type: String })
-	savearialabel?: string;
 
 	@property({ type: String })
 	discardnotestring?: string;
@@ -236,10 +233,9 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					</div>`}
 				${this.editting ? html`
 					<d2l-note-edit
+						placeholder="${this.editplaceholder}"
 						.addnotestring=${this.addnotestring}
-						.addarialabel=${this.addarialabel}
 						.savenotestring=${this.savenotestring}
-						.savearialabel=${this.savearialabel}
 						.discardnotestring=${this.discardnotestring}
 						@d2l-note-edit-discard=${this._handleDiscard} value=${this.text}
 					>

@@ -29,16 +29,13 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 	value: string = '';
 
 	@property({ type: String })
+	placeholder: string = '';
+
+	@property({ type: String })
 	addnotestring?: string;
 
 	@property({ type: String })
-	addarialabel?: string;
-
-	@property({ type: String })
 	savenotestring?: string;
-
-	@property({ type: String })
-	savearialabel?: string;
 
 	@property({ type: String })
 	discardnotestring?: string;
@@ -46,9 +43,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 	__langResources = {
 		'en': {
 			'add': 'Add',
-			'addAria': 'Add Note',
 			'save': 'Save',
-			'saveAria': 'Save Note',
 			'discard': 'Discard'
 		}
 	}
@@ -114,6 +109,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 			</div>
 			<d2l-input-textarea
 				value="${this.value}"
+				placeholder="${this.placeholder}"
 				@change=${this._handleChange}
 			></d2l-input-textarea>
 			<div class="d2l-note-edit-bottom">
@@ -121,7 +117,6 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					<d2l-button
 						class="d2l-note-edit-button"
 						primary
-						aria-label="${this.new ? this.addarialabel ? this.addarialabel : this.localize('addAria') : this.savearialabel ? this.savearialabel : this.localize('saveAria')}"
 						@click=${this._handleEditClick}
 					>
 						${this.new ? this.addnotestring ? this.addnotestring : this.localize('add') : this.savenotestring ? this.savenotestring : this.localize('save')}
