@@ -39,7 +39,24 @@
         </template>
       </demo-snippet>
 
-    <h3>shared d2l-note demo</h3>
+      <h3>private long d2l-note demo</h3>
+      <demo-snippet>
+        <template>
+          <d2l-note
+            user='{"name":"Username","pic":{"url":"avatar.png"}}'
+            createdat="2019-04-23T17:08:33.839Z"
+            text="This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long"
+            canedit
+            candelete
+            private
+          >
+            <p slot="description">Description</p>
+            <span slot="settings">Settings</span>
+          </d2l-note>
+        </template>
+      </demo-snippet>
+
+      <h3>shared d2l-note demo</h3>
       <demo-snippet>
         <template>
           <d2l-note
