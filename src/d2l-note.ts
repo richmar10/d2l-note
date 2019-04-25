@@ -31,7 +31,7 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 		pic?: {
 			url: string;
 			requireTokenAuth?: boolean;
-		},
+		};
 		name?: string;
 	};
 
