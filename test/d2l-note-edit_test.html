@@ -55,7 +55,7 @@
 				await element.resourceFetchComplete;
 				const elementShadowRoot = element.shadowRoot;
 				const elementDescriptionSlot = elementShadowRoot.querySelector('slot[name="description"]');
-				const elementDescription = elementDescriptionSlot.assignedElements()[0];
+				const elementDescription = elementDescriptionSlot.assignedNodes()[0];
 				assert.equal(elementDescription.textContent.trim(), 'Description');
 			});
 
@@ -64,7 +64,7 @@
 				await element.resourceFetchComplete;
 				const elementShadowRoot = element.shadowRoot;
 				const elementSettingsSlot = elementShadowRoot.querySelector('slot[name="settings"]');
-				const elementSettings = elementSettingsSlot.assignedElements()[0];
+				const elementSettings = elementSettingsSlot.assignedNodes()[0];
 				assert.equal(elementSettings.textContent.trim(), 'Settings');
 			});
 
