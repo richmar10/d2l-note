@@ -89,7 +89,7 @@
         </template>
       </demo-snippet>
 
-    <h3>readonly d2l-note demo</h3>
+      <h3>readonly d2l-note demo</h3>
       <demo-snippet>
         <template>
           <d2l-note
@@ -110,12 +110,42 @@
           ></d2l-notes>
         </template>
       </demo-snippet>
+
+      <h3>d2l-notes no notes demo</h3>
+      <demo-snippet>
+        <template>
+          <d2l-notes
+            cancreate
+          ></d2l-notes>
+        </template>
+      </demo-snippet>
+
+      <h3>d2l-notes hasmore demo</h3>
+      <demo-snippet>
+        <template>
+          <d2l-notes
+        hasmore
+          ></d2l-notes>
+        </template>
+      </demo-snippet>
+
+      <h3>d2l-notes custom load more/less demo</h3>
+      <demo-snippet>
+        <template>
+          <d2l-notes
+            notes="[{}, {}, {}, {}, {}]"
+            cancreate
+            loadmorestring="Load More Comments"
+            loadlessstring="Load Less Comments"
+          ></d2l-notes>
+        </template>
+      </demo-snippet>
     </div>
-	<script type="module">
-	  import { html } from '../../../lit-element/lit-element.js';
-	  const notes = document.getElementById('notes');
-	  notes.description = html`<p>Description</p>`;
-	  notes.settings = html`<p>Settings</p>`;
-	</script>
+  <script type="module">
+    import { html } from '../../../lit-element/lit-element.js';
+    const notes = document.getElementById('notes');
+    notes.description = html`<p>Description</p>`;
+    notes.settings = html`<p>Settings</p>`;
+  </script>
   </body>
 </html>

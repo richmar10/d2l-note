@@ -52,6 +52,9 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	settings: TemplateResult = html`<div></div>`;
 
 	@property({ type: Boolean })
+	hasmore: boolean = false;
+
+	@property({ type: Boolean })
 	collapsed: boolean = true;
 
 	@property({ type: Number })
@@ -98,6 +101,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	 * Implement `render` to define a template for your element.
 	 */
 	render() {
+		const hasmore = this.hasmore || this.notes.length > this.collapsedsize;
 		const notes = this.collapsed ? this.notes.slice(0, this.collapsedsize) : this.notes;
 		/**
 		 * Use JavaScript expressions to include property values in
@@ -152,6 +156,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				`)}
 				</ol>
 
+				${hasmore ? html`
 				<div
 					class="d2l-notes-more-less"
 					@click=${this.handleMoreLess}
@@ -164,6 +169,9 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					></d2l-button-subtle>
 					<div class="d2l-notes-more-less-separator"></div>
 				</div>
+				` : null}
+
+				${hasmore && this.notes.length && this.cancreate ? html`<hr>` : null}
 
 				${this.cancreate ? html`<d2l-note-edit new>
 					<div slot="description">${this.description}</div>

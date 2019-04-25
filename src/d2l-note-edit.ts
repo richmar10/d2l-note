@@ -1,5 +1,5 @@
 import 'd2l-inputs/d2l-input-textarea';
-import 'd2l-icons/tier1-icons';
+import 'd2l-icons/tier2-icons';
 import 'd2l-button/d2l-button';
 import 'd2l-button/d2l-button-icon';
 /**
@@ -110,7 +110,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				</div>
 				<d2l-button-icon
 					class="d2l-note-edit-discard-button"
-					icon="d2l-tier1:delete"
+					icon="d2l-tier2:delete"
 					text="${this.localize('discard')}"
 					@click=${this._handleClick}
 				></d2l-button-icon>
