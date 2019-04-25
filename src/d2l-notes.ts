@@ -149,7 +149,11 @@ export class D2LNotes extends LocalizeMixin(LitElement) {
 			`)}
 			</ol>
 
-			<div class="d2l-notes-more-less" @click=${this.handleMoreLess} @tap=${this.handleMoreLess}>
+			<div
+				class="d2l-notes-more-less"
+				@click=${this.handleMoreLess}
+				@tap=${this.handleMoreLess}
+			>
 				<div class="d2l-notes-more-less-separator"></div>
 				<d2l-button-subtle
 					class="d2l-notes-load-more-less"

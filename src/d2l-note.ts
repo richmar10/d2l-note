@@ -138,18 +138,20 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 					justify-content: space-between;
 				}
 
-				.skeleton.skeleton-avatar {
-					width: 48px;
-				    height: 48px;
-				}
-
 				.skeleton {
 					background: var(--d2l-color-sylvite);
 					border-radius: 6px;
 				}
 
+				.skeleton.skeleton-avatar {
+					width: 48px;
+					height: 48px;
+				}
+
 				.skeleton-user {
 					display: flex;
+					justify-content: space-between;
+					width: 193px;
 				}
 
 				.skeleton-user .skeleton-info-container {
@@ -168,15 +170,22 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 					width: 140px;
 					height: 18px;
 				}
+
+				.d2l-note-text-skeleton {
+					width: 100%;
+					height: 18px;
+					margin-top: 5px;
+					margin-bottom: 5px;
+				}
 			</style>
 			<div class="d2l-note-main">
 				${this.user ? html`
 					<d2l-user
-				        image-url=${imageUrl}
-				        use-image-authentication=${useImageAuthentication}
-				        image-token=${useImageAuthentication ? this.token : ''}
-				        name=${userName}
-				        sub-text=${subText}
+						image-url="${imageUrl}"
+						image-token="${useImageAuthentication ? this.token : ''}"
+						name="${userName}"
+						sub-text="${subText}"
+						.useImageAuthentication=${useImageAuthentication}
 						></d2l-user>` : html`
 					<div class="d2l-note-user-skeleton skeleton-user">
 						<div class="skeleton skeleton-avatar"></div>
@@ -190,7 +199,7 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 						<slot name="description" slot="description"></slot>
 						<slot name="settings" slot="settings"></slot>
 					</d2l-note-edit>` : this.text ? convertText(this.text) : html`
-					<div class="d2l-note-text-skeleton"></div>`}
+					<div class="d2l-note-text-skeleton skeleton"></div>`}
 			</div>
 
 			${!this.editting ? html`
