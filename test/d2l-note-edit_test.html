@@ -73,7 +73,7 @@
 				element.value = 'foozleberries';
 				await element.resourceFetchComplete;
 				const elementShadowRoot = element.shadowRoot;
-				const elementInputText = elementShadowRoot.querySelector('d2l-input-text');
+				const elementInputText = elementShadowRoot.querySelector('d2l-input-textarea');
 				assert.equal(elementInputText.value, 'foozleberries');
 			});
 
@@ -83,7 +83,7 @@
 				await element.resourceFetchComplete;
 				const elementShadowRoot = element.shadowRoot;
 				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-button');
-				assert.equal(elementButton.textContent, 'Add');
+				assert.equal(elementButton.textContent.trim(), 'Add');
 				assert.equal(elementButton.primary, true);
 			});
 
@@ -93,7 +93,7 @@
 				await element.resourceFetchComplete;
 				const elementShadowRoot = element.shadowRoot;
 				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-button');
-				assert.equal(elementButton.textContent, 'Save');
+				assert.equal(elementButton.textContent.trim(), 'Save');
 				assert.equal(elementButton.primary, true);
 			});
 
