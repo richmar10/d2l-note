@@ -11,23 +11,141 @@
     <script type="module">
       import '@polymer/iron-demo-helpers/demo-pages-shared-styles';
       import '@polymer/iron-demo-helpers/demo-snippet';
+      import 'd2l-typography/d2l-typography.js';
     </script>
 
-    <script type="module" src="../dist/d2l-note.js"></script>
+    <script type="module" src="../dist/d2l-notes.js"></script>
 
     <custom-style>
       <style is="custom-style" include="demo-pages-shared-styles">
       </style>
     </custom-style>
+
+    <custom-style>
+      <style is="custom-style" include="d2l-typography">
+      </style>
+    </custom-style>
   </head>
-  <body>
+  <body class="d2l-typography">
     <div class="vertical-section-container centered">
-      <h3>Basic d2l-note demo</h3>
+      <h3>private d2l-note demo</h3>
       <demo-snippet>
         <template>
-          <d2l-note></d2l-note>
+          <d2l-note
+            user='{"name":"Username","pic":{"url":"avatar.png"}}'
+            createdat="2019-04-23T17:08:33.839Z"
+            text="This is some text"
+            canedit
+            candelete
+            private
+          >
+            <p slot="description">Description</p>
+            <span slot="settings">Settings</span>
+          </d2l-note>
+        </template>
+      </demo-snippet>
+
+      <h3>private long d2l-note demo</h3>
+      <demo-snippet>
+        <template>
+          <d2l-note
+            user='{"name":"Username","pic":{"url":"avatar.png"}}'
+            createdat="2019-04-23T17:08:33.839Z"
+            text="This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long. This is some text. Long long long"
+            canedit
+            candelete
+            private
+          >
+            <p slot="description">Description</p>
+            <span slot="settings">Settings</span>
+          </d2l-note>
+        </template>
+      </demo-snippet>
+
+      <h3>shared d2l-note demo</h3>
+      <demo-snippet>
+        <template>
+          <d2l-note
+            user='{"name":"Username","pic":{"url":"avatar.png"}}'
+            createdat="2019-04-23T17:08:33.839Z"
+            text="This is some text"
+            canedit
+            candelete
+          ></d2l-note>
+        </template>
+      </demo-snippet>
+
+      <h3>my shared d2l-note demo</h3>
+      <demo-snippet>
+        <template>
+          <d2l-note
+            user='{"name":"Username","pic":{"url":"avatar.png"}}'
+            createdat="2019-04-23T17:08:33.839Z"
+            text="This is some text"
+            canedit
+            candelete
+            me
+          ></d2l-note>
+        </template>
+      </demo-snippet>
+
+      <h3>readonly d2l-note demo</h3>
+      <demo-snippet>
+        <template>
+          <d2l-note
+            user='{"name":"Username","pic":{"url":"avatar.png"}}'
+            createdat="2019-04-23T17:08:33.839Z"
+            text="This is some text"
+          ></d2l-note>
+        </template>
+      </demo-snippet>
+
+      <h3>d2l-notes demo</h3>
+      <demo-snippet>
+        <template>
+          <d2l-notes
+            id="notes"
+            notes="[{}, {}, {}, {}, {}]"
+            cancreate
+          ></d2l-notes>
+        </template>
+      </demo-snippet>
+
+      <h3>d2l-notes no notes demo</h3>
+      <demo-snippet>
+        <template>
+          <d2l-notes
+            cancreate
+          ></d2l-notes>
+        </template>
+      </demo-snippet>
+
+      <h3>d2l-notes hasmore demo</h3>
+      <demo-snippet>
+        <template>
+          <d2l-notes
+        hasmore
+          ></d2l-notes>
+        </template>
+      </demo-snippet>
+
+      <h3>d2l-notes custom load more/less demo</h3>
+      <demo-snippet>
+        <template>
+          <d2l-notes
+            notes="[{}, {}, {}, {}, {}]"
+            cancreate
+            loadmorestring="Load More Comments"
+            loadlessstring="Load Less Comments"
+          ></d2l-notes>
         </template>
       </demo-snippet>
     </div>
+  <script type="module">
+    import { html } from '../../../lit-element/lit-element.js';
+    const notes = document.getElementById('notes');
+    notes.description = html`<p>Description</p>`;
+    notes.settings = html`<p>Settings</p>`;
+  </script>
   </body>
 </html>
