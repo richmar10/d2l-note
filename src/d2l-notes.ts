@@ -1,4 +1,5 @@
 import 'd2l-button/d2l-button-subtle';
+import 'd2l-colors/d2l-colors';
 import './d2l-note';
 /**
  * Import LitElement base class, html helper function,
@@ -8,6 +9,7 @@ import {
 	customElement, html, LitElement, property, TemplateResult
 } from 'lit-element';
 
+import { D2LTypographyMixin } from './mixins/d2l-typography-mixin';
 import { LocalizeMixin } from './mixins/localize-mixin';
 
 /**
@@ -15,7 +17,7 @@ import { LocalizeMixin } from './mixins/localize-mixin';
  * a custom element. Registers <my-element> as an HTML tag.
  */
 @customElement('d2l-notes')
-export class D2LNotes extends LocalizeMixin(LitElement) {
+export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 
 	/**
 	 * Create an observed property. Triggers update on change.
@@ -48,6 +50,9 @@ export class D2LNotes extends LocalizeMixin(LitElement) {
 
 	@property({ type: Object })
 	settings: TemplateResult = html`<div></div>`;
+
+	@property({ type: Boolean })
+	hasmore: boolean = false;
 
 	@property({ type: Boolean })
 	collapsed: boolean = true;
@@ -96,12 +101,14 @@ export class D2LNotes extends LocalizeMixin(LitElement) {
 	 * Implement `render` to define a template for your element.
 	 */
 	render() {
+		const hasmore = this.hasmore || this.notes.length > this.collapsedsize;
 		const notes = this.collapsed ? this.notes.slice(0, this.collapsedsize) : this.notes;
 		/**
 		 * Use JavaScript expressions to include property values in
 		 * the element template.
 		 */
 		return html`
+			<style>${D2LNotes.d2lTypographyStyle}</style>
 			<style>
 				ol {
 					margin: 0;
@@ -110,47 +117,81 @@ export class D2LNotes extends LocalizeMixin(LitElement) {
 				li {
 					display: block;
 				}
+
+				.d2l-notes-more-less {
+					display: flex;
+					width: 100%;
+					align-items: center;
+				}
+
+				.d2l-notes-load-more-less {
+					flex: 0;
+				}
+
+				.d2l-notes-more-less-separator {
+					flex: 1;
+					border-top: solid 1px var(--d2l-color-celestine);
+				}
 			</style>
-			<ol>
-			${notes.map(note => html`
-				<li>
-					<d2l-note
-						.user=${note.user}
-						.token=${note.token}
-						.showavatar=${note.showAvatar ? note.showAvatar : false}
-						.me=${note.me ? note.me : false}
-						.createdat=${note.createdAt}
-						.updatedat=${note.updatedAt}
-						.text=${note.text}
-						.canedit=${note.canEdit ? note.canEdit : false}
-						.candelete=${note.canDelete ? note.canDelete : false}
-						.private=${note.private ? note.private : false}
-					>
-						<div slot="description">${this.description}</div>
-						<div slot="settings">${this.settings}</div>
-					</d2l-note>
-				</li>
-			`)}
-			</ol>
+			<div class="d2l-typography">
+				<ol>
+				${notes.map(note => html`
+					<li>
+						<d2l-note
+							.user=${note.user}
+							.token=${note.token}
+							.showavatar=${note.showAvatar ? note.showAvatar : false}
+							.me=${note.me ? note.me : false}
+							.createdat=${note.createdAt}
+							.updatedat=${note.updatedAt}
+							.text=${note.text}
+							.canedit=${note.canEdit ? note.canEdit : false}
+							.candelete=${note.canDelete ? note.canDelete : false}
+							.private=${note.private ? note.private : false}
+						>
+							<div slot="description">${this.description}</div>
+							<div slot="settings">${this.settings}</div>
+						</d2l-note>
+					</li>
+				`)}
+				</ol>
 
-			<d2l-button-subtle
-				class="d2l-notes-load-more-less"
-				@click=${this.handleMoreLess}
-				text="${this.collapsed ? this.loadmorestring ? this.loadmorestring : this.localize('more') : this.loadlessstring ? this.loadlessstring : this.localize('less')}"
-			></d2l-button-subtle>
+				${hasmore ? html`
+				<div
+					class="d2l-notes-more-less"
+					@click=${this.handleMoreLess}
+					@tap=${this.handleMoreLess}
+				>
+					<div class="d2l-notes-more-less-separator"></div>
+					<d2l-button-subtle
+						class="d2l-notes-load-more-less"
+						text="${this.collapsed ? this.loadmorestring ? this.loadmorestring : this.localize('more') : this.loadlessstring ? this.loadlessstring : this.localize('less')}"
+					></d2l-button-subtle>
+					<div class="d2l-notes-more-less-separator"></div>
+				</div>
+				` : null}
 
-			${this.cancreate ? html`<d2l-note-edit new>
-				<div slot="description">${this.description}</div>
-				<div slot="settings">${this.settings}</div>
-			</d2l-note-edit>` : null}
+				${hasmore && this.notes.length && this.cancreate ? html`<hr>` : null}
+
+				${this.cancreate ? html`<d2l-note-edit new>
+					<div slot="description">${this.description}</div>
+					<div slot="settings">${this.settings}</div>
+				</d2l-note-edit>` : null}
+			</div>
 		`;
 	}
 
 	handleMoreLess() {
 		if (this.collapsed) {
-			this.dispatchEvent(new CustomEvent('d2l-notes-load-more'));
+			this.dispatchEvent(new CustomEvent('d2l-notes-load-more', {
+				bubbles: true,
+				composed: true
+			}));
 		} else {
-			this.dispatchEvent(new CustomEvent('d2l-notes-load-less'));
+			this.dispatchEvent(new CustomEvent('d2l-notes-load-less', {
+				bubbles: true,
+				composed: true
+			}));
 		}
 		this.collapsed = !this.collapsed;
 	}

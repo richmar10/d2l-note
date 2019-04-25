@@ -58,10 +58,10 @@
 
 				const editShadowRoot = elementNoteEdit.shadowRoot;
 				const descriptionSlot = editShadowRoot.querySelector('slot[name="description"]');
-				const description = descriptionSlot.assignedElements()[0];
+				const description = descriptionSlot.assignedNodes()[0];
 				assert.equal(description.textContent, 'Description');
 				const settingsSlot = editShadowRoot.querySelector('slot[name="settings"]');
-				const settings = settingsSlot.assignedElements()[0];
+				const settings = settingsSlot.assignedNodes()[0];
 				assert.equal(settings.textContent, 'Settings');
 			});
 

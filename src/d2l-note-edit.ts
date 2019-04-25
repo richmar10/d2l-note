@@ -1,5 +1,5 @@
-import 'd2l-inputs/d2l-input-text';
-import 'd2l-icons/tier1-icons';
+import 'd2l-inputs/d2l-input-textarea';
+import 'd2l-icons/tier2-icons';
 import 'd2l-button/d2l-button';
 import 'd2l-button/d2l-button-icon';
 /**
@@ -91,15 +91,29 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 			<div class="d2l-note-edit-description">
 				<slot name="description"></slot>
 			</div>
-			<d2l-input-text value=${this.value} @change=${this._handleChange}></d2l-input-text>
+			<d2l-input-textarea
+				value="${this.value}"
+				@change=${this._handleChange}
+			></d2l-input-textarea>
 			<div class="d2l-note-edit-bottom">
 				<div class="d2l-note-edit-bottom-left">
-					<d2l-button class="d2l-note-edit-button" @click=${this._handleEditClick} primary>${this.new ? this.localize('add') : this.localize('save')}</d2l-button>
+					<d2l-button
+						class="d2l-note-edit-button"
+						primary
+						@click=${this._handleEditClick}
+					>
+						${this.new ? this.localize('add') : this.localize('save')}
+					</d2l-button>
 					<div class="d2l-note-edit-settings">
 						<slot name="settings"></slot>
 					</div>
 				</div>
-				<d2l-button-icon class="d2l-note-edit-discard-button" @click=${this._handleClick} icon="d2l-tier1:delete" text="${this.localize('discard')}"></d2l-button-icon>
+				<d2l-button-icon
+					class="d2l-note-edit-discard-button"
+					icon="d2l-tier2:delete"
+					text="${this.localize('discard')}"
+					@click=${this._handleClick}
+				></d2l-button-icon>
 			</div>
 		`;
 	}
@@ -110,13 +124,26 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 
 	_handleEditClick() {
 		if (this.new) {
-			this.dispatchEvent(new CustomEvent('d2l-note-edit-add'));
+			this.dispatchEvent(new CustomEvent('d2l-note-edit-add', {
+				bubbles: true,
+				composed: true
+			}));
 		} else {
-			this.dispatchEvent(new CustomEvent('d2l-note-edit-save'));
+			this.dispatchEvent(new CustomEvent('d2l-note-edit-save', {
+				bubbles: true,
+				composed: true
+			}));
 		}
 	}
 
 	_handleClick() {
-		this.dispatchEvent(new CustomEvent('d2l-note-edit-discard'));
+		this.dispatchEvent(new CustomEvent('d2l-note-edit-discard', {
+			bubbles: true,
+			composed: true,
+			detail: {
+				value: this.value
+			}
+		}));
+		this.value = '';
 	}
 }
