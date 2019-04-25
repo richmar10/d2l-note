@@ -218,6 +218,9 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 	}
 
 	deleteSelectHandler() {
-		this.dispatchEvent(new CustomEvent('d2l-note-delete'));
+		this.dispatchEvent(new CustomEvent('d2l-note-delete', {
+			bubbles: true,
+			composed: true
+		}));
 	}
 }

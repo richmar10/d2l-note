@@ -1,4 +1,5 @@
 import 'd2l-button/d2l-button-subtle';
+import 'd2l-colors/d2l-colors';
 import './d2l-note';
 /**
  * Import LitElement base class, html helper function,
@@ -110,6 +111,21 @@ export class D2LNotes extends LocalizeMixin(LitElement) {
 				li {
 					display: block;
 				}
+
+				.d2l-notes-more-less {
+					display: flex;
+					width: 100%;
+					align-items: center;
+				}
+
+				.d2l-notes-load-more-less {
+					flex: 0;
+				}
+
+				.d2l-notes-more-less-separator {
+					flex: 1;
+					border-top: solid 1px var(--d2l-color-celestine);
+				}
 			</style>
 			<ol>
 			${notes.map(note => html`
@@ -133,11 +149,14 @@ export class D2LNotes extends LocalizeMixin(LitElement) {
 			`)}
 			</ol>
 
-			<d2l-button-subtle
-				class="d2l-notes-load-more-less"
-				@click=${this.handleMoreLess}
-				text="${this.collapsed ? this.loadmorestring ? this.loadmorestring : this.localize('more') : this.loadlessstring ? this.loadlessstring : this.localize('less')}"
-			></d2l-button-subtle>
+			<div class="d2l-notes-more-less" @click=${this.handleMoreLess} @tap=${this.handleMoreLess}>
+				<div class="d2l-notes-more-less-separator"></div>
+				<d2l-button-subtle
+					class="d2l-notes-load-more-less"
+					text="${this.collapsed ? this.loadmorestring ? this.loadmorestring : this.localize('more') : this.loadlessstring ? this.loadlessstring : this.localize('less')}"
+				></d2l-button-subtle>
+				<div class="d2l-notes-more-less-separator"></div>
+			</div>
 
 			${this.cancreate ? html`<d2l-note-edit new>
 				<div slot="description">${this.description}</div>
@@ -148,9 +167,15 @@ export class D2LNotes extends LocalizeMixin(LitElement) {
 
 	handleMoreLess() {
 		if (this.collapsed) {
-			this.dispatchEvent(new CustomEvent('d2l-notes-load-more'));
+			this.dispatchEvent(new CustomEvent('d2l-notes-load-more', {
+				bubbles: true,
+				composed: true
+			}));
 		} else {
-			this.dispatchEvent(new CustomEvent('d2l-notes-load-less'));
+			this.dispatchEvent(new CustomEvent('d2l-notes-load-less', {
+				bubbles: true,
+				composed: true
+			}));
 		}
 		this.collapsed = !this.collapsed;
 	}

@@ -35,6 +35,7 @@
     "babel-eslint": "^10.0.1",
     "chai": "^4.2.0",
     "d2l-button": "github:BrightspaceUI/button#semver:^5",
+    "d2l-colors": "github:BrightspaceUI/colors#semver:^4",
     "d2l-dropdown": "BrightspaceUI/dropdown#semver:^7",
     "d2l-icons": "BrightspaceUI/icons#semver:^6",
     "d2l-inputs": "github:BrightspaceUI/inputs#semver:^2",

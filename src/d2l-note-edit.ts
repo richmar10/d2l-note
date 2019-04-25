@@ -110,13 +110,22 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 
 	_handleEditClick() {
 		if (this.new) {
-			this.dispatchEvent(new CustomEvent('d2l-note-edit-add'));
+			this.dispatchEvent(new CustomEvent('d2l-note-edit-add', {
+				bubbles: true,
+				composed: true
+			}));
 		} else {
-			this.dispatchEvent(new CustomEvent('d2l-note-edit-save'));
+			this.dispatchEvent(new CustomEvent('d2l-note-edit-save', {
+				bubbles: true,
+				composed: true
+			}));
 		}
 	}
 
 	_handleClick() {
-		this.dispatchEvent(new CustomEvent('d2l-note-edit-discard'));
+		this.dispatchEvent(new CustomEvent('d2l-note-edit-discard', {
+			bubbles: true,
+			composed: true
+		}));
 	}
 }
