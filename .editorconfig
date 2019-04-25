@@ -16,6 +16,6 @@ indent_size = 4
 [*.{sln,njsproj}]
 end_of_line = crlf
 
-[.eslintrc.json]
+[*.json]
 indent_style = space
 indent_size = 2
