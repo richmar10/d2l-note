@@ -102,15 +102,14 @@
             notes="[{}, {}, {}, {}, {}]"
             cancreate
           ></d2l-notes>
-
-          <script type="module">
-            import { html } from '../../../lit-element/lit-element.js';
-            const notes = document.getElementById('notes');
-            notes.description = html`<p>Description</p>`;
-            notes.settings = html`<p>Settings</p>`;
-          </script>
         </template>
       </demo-snippet>
     </div>
+	<script type="module">
+	  import { html } from '../../../lit-element/lit-element.js';
+	  const notes = document.getElementById('notes');
+	  notes.description = html`<p>Description</p>`;
+	  notes.settings = html`<p>Settings</p>`;
+	</script>
   </body>
 </html>
