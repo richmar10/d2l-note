@@ -78,6 +78,21 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	@property({ type: String })
 	privatelabel?: string;
 
+	@property({ type: String })
+	addnotestring?: string;
+
+	@property({ type: String })
+	addarialabel?: string;
+
+	@property({ type: String })
+	savenotestring?: string;
+
+	@property({ type: String })
+	savearialabel?: string;
+
+	@property({ type: String })
+	discardnotestring?: string;
+
 	__langResources = {
 		'en': {
 			'more': 'Load More Notes',
@@ -181,6 +196,11 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 							.editstring=${this.editstring}
 							.deletestring=${this.deletestring}
 							.privatelabel=${this.privatelabel}
+							.addnotestring=${this.addnotestring}
+							.addarialabel=${this.addarialabel}
+							.savenotestring=${this.savenotestring}
+							.savearialabel=${this.savearialabel}
+							.discardnotestring=${this.discardnotestring}
 						>
 							<div slot="description">${this.description}</div>
 							<div slot="settings">${this.settings}</div>
