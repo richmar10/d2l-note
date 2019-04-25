@@ -175,7 +175,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 
 				.d2l-note-text-skeleton {
 					width: 100%;
-					height: 18px;
+					height: 1.4rem;
 					margin-top: 5px;
 					margin-bottom: 5px;
 				}
