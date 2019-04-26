@@ -9,10 +9,9 @@ import {
 	customElement, html, LitElement, property, TemplateResult
 } from 'lit-element';
 
-import { repeat } from 'lit-html/directives/repeat';
-
 import { D2LTypographyMixin } from './mixins/d2l-typography-mixin';
 import { LocalizeMixin } from './mixins/localize-mixin';
+import { repeat } from 'lit-html/directives/repeat';
 
 /**
  * Use the customElement decorator to define your class as
@@ -94,10 +93,14 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	@property({ type: String })
 	discardnotestring?: string;
 
+	@property({ type: String })
+	emptystring?: string;
+
 	__langResources = {
 		'en': {
 			'more': 'Load More Notes',
-			'less': 'Load Less Notes'
+			'less': 'Load Less Notes',
+			'empty': 'No Notes'
 		}
 	}
 
@@ -130,7 +133,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	 */
 	render() {
 		const hasmore = this.hasmore || this.notes.length > this.collapsedsize;
-		const notes = this.collapsed ? this.notes.slice(0, this.collapsedsize) : this.notes;
+		const notes = this.notes && this.collapsed ? this.notes.slice(0, this.collapsedsize) : this.notes;
 		/**
 		 * Use JavaScript expressions to include property values in
 		 * the element template.
@@ -179,37 +182,39 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				}
 			</style>
 			<div class="d2l-typography">
-				<ol>
-				${repeat(notes, (note) => html`
-					<li>
-						<d2l-note
-							id="${note.id}"
-							.user=${note.user}
-							.token=${note.token}
-							.showavatar=${typeof note.showAvatar === 'boolean' ? note.showAvatar : true}
-							.me=${note.me ? note.me : false}
-							.createdat=${note.createdAt}
-							.updatedat=${note.updatedAt}
-							.text=${note.text}
-							.canedit=${note.canEdit ? note.canEdit : false}
-							.candelete=${note.canDelete ? note.canDelete : false}
-							.private=${note.private ? note.private : false}
-							.dateformat=${this.dateformat}
-							.contextmenulabel=${note.contextmenulabel}
-							.editstring=${this.editstring}
-							.deletestring=${this.deletestring}
-							.privatelabel=${this.privatelabel}
-							.addnotestring=${this.addnotestring}
-							.savenotestring=${this.savenotestring}
-							.discardnotestring=${this.discardnotestring}
-							.editplaceholder=${this.editplaceholder}
-						>
-							<div slot="description">${this.description}</div>
-							<div slot="settings">${this.settings}</div>
-						</d2l-note>
-					</li>
-				`)}
-				</ol>
+				${notes.length > 0 ? html`
+					<ol>${repeat(notes, (note) => html`
+						<li>
+							<d2l-note
+								id="${note.id}"
+								.user=${note.user}
+								.token=${note.token}
+								.showavatar=${typeof note.showAvatar === 'boolean' ? note.showAvatar : true}
+								.me=${note.me ? note.me : false}
+								.createdat=${note.createdAt}
+								.updatedat=${note.updatedAt}
+								.text=${note.text}
+								.canedit=${note.canEdit ? note.canEdit : false}
+								.candelete=${note.canDelete ? note.canDelete : false}
+								.private=${note.private ? note.private : false}
+								.dateformat=${this.dateformat}
+								.contextmenulabel=${note.contextmenulabel}
+								.editstring=${this.editstring}
+								.deletestring=${this.deletestring}
+								.privatelabel=${this.privatelabel}
+								.addnotestring=${this.addnotestring}
+								.savenotestring=${this.savenotestring}
+								.discardnotestring=${this.discardnotestring}
+								.editplaceholder=${this.editplaceholder}
+							>
+								<div slot="description">${this.description}</div>
+								<div slot="settings">${this.settings}</div>
+							</d2l-note>
+						</li>
+					`)}
+					</ol>` : html`
+						<span class="d2l-body-standard">${this.emptystring ? this.emptystring : this.localize('empty')}</span>
+					`}
 
 				${hasmore ? html`
 				<div
