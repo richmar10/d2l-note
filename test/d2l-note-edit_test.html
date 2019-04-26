@@ -143,7 +143,23 @@
 
 				await new Promise((resolve) => setTimeout(resolve, 1));
 
-				await assert.isTrue(finishedDispatched);
+				await assert.isFalse(finishedDispatched);
+			});
+
+			test('dispatches d2l-note-edit-finished when "Add" is tapped and d2l-note-edit-add is prevent defaulted and e.detail.finish is called', async() => {
+				const element = fixture('BasicTestFixture');
+				element.addEventListener('d2l-note-edit-add', e => {
+					e.preventDefault();
+					e.detail.finish();
+				});
+				const addPromise = new Promise((resolve) => element.addEventListener('d2l-note-edit-finished', resolve));
+				element.new = true;
+				await element.resourceFetchComplete;
+				const elementShadowRoot = element.shadowRoot;
+				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-button');
+				elementButton.click();
+
+				await addPromise;
 			});
 
 			test('dispatches d2l-note-edit-save when "Save" is tapped', async() => {
@@ -183,7 +199,23 @@
 
 				await new Promise((resolve) => setTimeout(resolve, 1));
 
-				await assert.isTrue(finishedDispatched);
+				await assert.isFalse(finishedDispatched);
+			});
+
+			test('dispatches d2l-note-edit-finished when "Save" is tapped and d2l-note-edit-save is prevent defaulted and e.detail.finish is called', async() => {
+				const element = fixture('BasicTestFixture');
+				element.addEventListener('d2l-note-edit-save', e => {
+					e.preventDefault();
+					e.detail.finish();
+				});
+				const editPromise = new Promise((resolve) => element.addEventListener('d2l-note-edit-finished', resolve));
+				element.new = false;
+				await element.resourceFetchComplete;
+				const elementShadowRoot = element.shadowRoot;
+				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-button');
+				elementButton.click();
+
+				await editPromise;
 			});
 
 			test('dispatches d2l-note-edit-discard when "discard" is tapped', async() => {
