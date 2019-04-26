@@ -269,6 +269,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				</div>
 				${this.editting ? html`
 					<d2l-note-edit
+						id="${this.id}"
 						placeholder="${this.editplaceholder}"
 						.addnotestring=${this.addnotestring}
 						.savenotestring=${this.savenotestring}
@@ -299,7 +300,10 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	deleteSelectHandler() {
 		this.dispatchEvent(new CustomEvent('d2l-note-delete', {
 			bubbles: true,
-			composed: true
+			composed: true,
+			detail: {
+				id: this.id
+			}
 		}));
 	}
 }

@@ -145,6 +145,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				bubbles: true,
 				composed: true,
 				detail: {
+					id: this.id,
 					text: this.value
 				}
 			}));
@@ -153,6 +154,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				bubbles: true,
 				composed: true,
 				detail: {
+					id: this.id,
 					text: this.value
 				}
 			}));
@@ -164,6 +166,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 			bubbles: true,
 			composed: true,
 			detail: {
+				id: this.id,
 				value: this.value
 			}
 		}));
