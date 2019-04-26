@@ -70,7 +70,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	@property({ type: String })
 	dateformat: string = 'medium';
 
-	@property({ attribute: false })
+	@property({ type: Boolean })
 	editting: boolean = false;
 
 	@property({ type: String })

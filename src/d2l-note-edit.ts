@@ -143,12 +143,18 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 		if (this.new) {
 			this.dispatchEvent(new CustomEvent('d2l-note-edit-add', {
 				bubbles: true,
-				composed: true
+				composed: true,
+				detail: {
+					text: this.value
+				}
 			}));
 		} else {
 			this.dispatchEvent(new CustomEvent('d2l-note-edit-save', {
 				bubbles: true,
-				composed: true
+				composed: true,
+				detail: {
+					text: this.value
+				}
 			}));
 		}
 	}
