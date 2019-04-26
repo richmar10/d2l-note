@@ -234,7 +234,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				${(hasmore || this.notes.length) && this.cancreate ? html`<hr>` : null}
 
 				${this.cancreate ? html`<d2l-note-edit new placeholder="${this.editplaceholder}">
-					<div slot="description">${this.description}</div>
+					<slot name="description" slot="description"><div>${this.description}</div></slot>
 					<div slot="settings">${this.settings}</div>
 				</d2l-note-edit>` : null}
 			</div>
