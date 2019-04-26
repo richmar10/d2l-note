@@ -102,6 +102,12 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					margin-left: 0.5rem;
 					margin-right: 0.5rem;
 				}
+
+				d2l-input-textarea {
+					--d2l-input-textarea: {
+						font-size: 1rem;
+					}
+				}
 			</style>
 
 			<div class="d2l-note-edit-description">
