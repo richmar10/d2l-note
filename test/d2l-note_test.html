@@ -54,6 +54,7 @@
 						url: 'fixtures/user.png'
 					}
 				};
+				element.showavatar = true;
 				await element.updateComplete;
 				const elementShadowRoot = element.shadowRoot;
 				const elementUser = elementShadowRoot.querySelector('d2l-user');
@@ -71,6 +72,7 @@
 						requireTokenAuth: true
 					}
 				};
+				element.showavatar = true;
 				await element.updateComplete;
 				const elementShadowRoot = element.shadowRoot;
 				const elementUser = elementShadowRoot.querySelector('d2l-user');

@@ -41,7 +41,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	token?: string;
 
 	@property({ type: Boolean })
-	showavatar = true;
+	showavatar = false;
 
 	@property({ type: String })
 	createdat?: string;
