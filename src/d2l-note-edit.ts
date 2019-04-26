@@ -140,8 +140,9 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 	}
 
 	_handleEditClick() {
+		let succeeded = false;
 		if (this.new) {
-			this.dispatchEvent(new CustomEvent('d2l-note-edit-add', {
+			succeeded = this.dispatchEvent(new CustomEvent('d2l-note-edit-add', {
 				bubbles: true,
 				composed: true,
 				detail: {
@@ -150,7 +151,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				}
 			}));
 		} else {
-			this.dispatchEvent(new CustomEvent('d2l-note-edit-save', {
+			succeeded = this.dispatchEvent(new CustomEvent('d2l-note-edit-save', {
 				bubbles: true,
 				composed: true,
 				detail: {
@@ -159,10 +160,20 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				}
 			}));
 		}
+		if (succeeded) {
+			this.dispatchEvent(new CustomEvent('d2l-note-edit-finished', {
+				bubbles: true,
+				composed: true,
+				detail: {
+					id: this.id,
+					value: this.value
+				}
+			}));
+		}
 	}
 
 	_handleClick() {
-		this.dispatchEvent(new CustomEvent('d2l-note-edit-discard', {
+		const discarded = this.dispatchEvent(new CustomEvent('d2l-note-edit-discard', {
 			bubbles: true,
 			composed: true,
 			detail: {
@@ -170,6 +181,17 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				value: this.value
 			}
 		}));
-		this.value = '';
+
+		if (discarded) {
+			this.dispatchEvent(new CustomEvent('d2l-note-edit-finished', {
+				bubbles: true,
+				composed: true,
+				detail: {
+					id: this.id,
+					value: this.value
+				}
+			}));
+			this.value = '';
+		}
 	}
 }

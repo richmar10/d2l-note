@@ -25,7 +25,7 @@ export interface FormatOpts {
 
 export function LocalizeMixin<B extends Constructor<{
 	connectedCallback(): void;
-	dispatchEvent(evt: Event): void;
+	dispatchEvent(evt: Event): boolean;
 }>>(superClass: B) {
 	abstract class LocalizeMixinClass extends superClass {
 		@property({ type: String })
