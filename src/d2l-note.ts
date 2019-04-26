@@ -147,8 +147,12 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 		const useImageAuthentication = !!(this.showavatar && this.user && this.user.pic && this.user.pic.requireTokenAuth);
 		const userName = this.me ? this.localize('me') : this.user ? this.user.name : undefined;
 
-		const date = this.createdat ? this.formatDateTime(new Date(this.createdat), { format: this.dateformat || 'medium' }) : undefined;
-		const subText = this.updatedat ? this.localize('SubtextEdited', date) : date;
+		const createdAtDate = this.createdat ? new Date(this.createdat) : null;
+		const date = createdAtDate ? this.formatDateTime(createdAtDate, { format: this.dateformat || 'medium' }) : undefined;
+		// Need this step because the formatter doesn't parse the time when using a custom format
+		const dateTime = createdAtDate ? this.formatTime(createdAtDate, { format: date }) : undefined;
+
+		const subText = this.updatedat ? this.localize('SubtextEdited', dateTime) : dateTime;
 		const showDropdown = this.canedit || this.candelete;
 		return html`
 			<style>${D2LNote.d2lTypographyStyle}</style>

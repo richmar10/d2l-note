@@ -147,7 +147,7 @@ export function LocalizeMixin<B extends Constructor<{
 			return formatter.format(val);
 		}
 
-		formatTime(val: string, opts?: FormatOpts) {
+		formatTime(val: Date, opts?: FormatOpts) {
 			opts = opts || {};
 			opts.locale = this.__overrides;
 			opts.timezone = opts.timezone || this.__timezone;
