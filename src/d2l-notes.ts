@@ -9,6 +9,8 @@ import {
 	customElement, html, LitElement, property, TemplateResult
 } from 'lit-element';
 
+import { repeat } from 'lit-html/directives/repeat';
+
 import { D2LTypographyMixin } from './mixins/d2l-typography-mixin';
 import { LocalizeMixin } from './mixins/localize-mixin';
 
@@ -178,7 +180,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 			</style>
 			<div class="d2l-typography">
 				<ol>
-				${notes.map(note => html`
+				${repeat(notes, (note) => html`
 					<li>
 						<d2l-note
 							id="${note.id}"
