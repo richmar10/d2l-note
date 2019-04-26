@@ -218,7 +218,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					<div class="d2l-notes-more-less-separator"></div>
 					<d2l-button-subtle
 						class="d2l-notes-load-more-less"
-						text="${this.collapsed ? this.loadmorestring ? this.loadmorestring : this.localize('more') : this.loadlessstring ? this.loadlessstring : this.localize('less')}"
+						text="${(this.hasmore || this.collapsed) ? this.loadmorestring ? this.loadmorestring : this.localize('more') : this.loadlessstring ? this.loadlessstring : this.localize('less')}"
 					></d2l-button-subtle>
 					<div class="d2l-notes-more-less-separator"></div>
 				</div>
