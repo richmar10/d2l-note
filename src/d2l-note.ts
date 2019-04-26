@@ -143,11 +143,11 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 		 * Use JavaScript expressions to include property values in
 		 * the element template.
 		 */
-		const imageUrl = (this.showavatar && this.user && this.user.pic) ? this.user.pic.url : '';
+		const imageUrl = (this.showavatar && this.user && this.user.pic) ? this.user.pic.url : undefined;
 		const useImageAuthentication = !!(this.showavatar && this.user && this.user.pic && this.user.pic.requireTokenAuth);
 		const userName = this.me ? this.localize('me') : this.user ? this.user.name : undefined;
 
-		const date = this.createdat ? this.formatDateTime(new Date(this.createdat), { format: this.dateformat || 'medium' }) : '';
+		const date = this.createdat ? this.formatDateTime(new Date(this.createdat), { format: this.dateformat || 'medium' }) : undefined;
 		const subText = this.updatedat ? this.localize('SubtextEdited', date) : date;
 		const showDropdown = this.canedit || this.candelete;
 		return html`
@@ -221,11 +221,12 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 			<div class="d2l-note-main d2l-typography">
 				${this.user ? html`
 					<d2l-user
-						image-url="${imageUrl}"
-						image-token="${useImageAuthentication ? this.token : ''}"
-						name="${userName}"
-						sub-text="${subText}"
+						.imageUrl="${imageUrl}"
+						.imageToken="${useImageAuthentication ? this.token : ''}"
+						.name="${userName}"
+						.subText="${subText}"
 						.useImageAuthentication=${useImageAuthentication}
+						.shouldHideImage=${!this.showavatar}
 						></d2l-user>` : html`
 					<div class="d2l-note-user-skeleton skeleton-user">
 						<div class="skeleton skeleton-avatar"></div>
