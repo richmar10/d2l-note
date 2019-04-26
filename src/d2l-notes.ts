@@ -24,6 +24,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	 */
 	@property({ type: Array })
 	notes: {
+		id: string;
 		user: {
 			name: string;
 			pic: {
@@ -40,6 +41,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 		canEdit: boolean;
 		canDelete: boolean;
 		private: boolean;
+		contextmenulabel: string;
 	}[] = [];
 
 	@property({ type: Boolean })
@@ -71,9 +73,6 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 
 	@property({ type: String })
 	loadlessstring?: string;
-
-	@property({ type: String })
-	contextmenulabel?: string;
 
 	@property({ type: String })
 	editstring?: string;
@@ -182,6 +181,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				${notes.map(note => html`
 					<li>
 						<d2l-note
+							id="${note.id}"
 							.user=${note.user}
 							.token=${note.token}
 							.showavatar=${typeof note.showAvatar === 'boolean' ? note.showAvatar : true}
@@ -193,7 +193,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 							.candelete=${note.canDelete ? note.canDelete : false}
 							.private=${note.private ? note.private : false}
 							.dateformat=${this.dateformat}
-							.contextmenulabel=${this.contextmenulabel}
+							.contextmenulabel=${note.contextmenulabel}
 							.editstring=${this.editstring}
 							.deletestring=${this.deletestring}
 							.privatelabel=${this.privatelabel}

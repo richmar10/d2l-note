@@ -133,10 +133,12 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	 * Implement `render` to define a template for your element.
 	 */
 	render() {
+		const mapToParagraphs = (text: string) => text.split('\n')
+			.map((paragraph, index) => html`<div className="paragraph" key="${index}">${paragraph}</div>`);
 		function convertText(text: string) {
 			return html`
 				<d2l-more-less>
-					<div class="d2l-note-text d2l-body-standard">${text}</div>
+					<div class="d2l-note-text d2l-body-standard">${mapToParagraphs(text)}</div>
 				</d2l-more-less>`;
 		}
 		/**
