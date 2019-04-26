@@ -140,35 +140,40 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 	}
 
 	_handleEditClick() {
+		const finish = () => this.dispatchEvent(new CustomEvent('d2l-note-edit-finished', {
+			bubbles: true,
+			composed: true,
+			detail: {
+				id: this.id,
+				value: this.value
+			}
+		}));
 		let succeeded = false;
 		if (this.new) {
 			succeeded = this.dispatchEvent(new CustomEvent('d2l-note-edit-add', {
 				bubbles: true,
 				composed: true,
+				cancelable: true,
 				detail: {
 					id: this.id,
-					text: this.value
+					text: this.value,
+					finish
 				}
 			}));
 		} else {
 			succeeded = this.dispatchEvent(new CustomEvent('d2l-note-edit-save', {
 				bubbles: true,
 				composed: true,
+				cancelable: true,
 				detail: {
 					id: this.id,
-					text: this.value
+					text: this.value,
+					finish
 				}
 			}));
 		}
 		if (succeeded) {
-			this.dispatchEvent(new CustomEvent('d2l-note-edit-finished', {
-				bubbles: true,
-				composed: true,
-				detail: {
-					id: this.id,
-					value: this.value
-				}
-			}));
+			finish();
 		}
 	}
 
@@ -176,6 +181,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 		const discarded = this.dispatchEvent(new CustomEvent('d2l-note-edit-discard', {
 			bubbles: true,
 			composed: true,
+			cancelable: true,
 			detail: {
 				id: this.id,
 				value: this.value
