@@ -145,7 +145,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 		 */
 		const imageUrl = (this.showavatar && this.user && this.user.pic) ? this.user.pic.url : undefined;
 		const useImageAuthentication = !!(this.showavatar && this.user && this.user.pic && this.user.pic.requireTokenAuth);
-		const userName = this.me ? this.localize('me') : this.user ? this.user.name : undefined;
+		const userName = this.showavatar ? this.me ? this.localize('me') : this.user ? this.user.name : undefined : undefined;
 
 		const createdAtDate = this.createdat ? new Date(this.createdat) : null;
 		const date = createdAtDate ? this.formatDateTime(createdAtDate, { format: this.dateformat || 'medium' }) : undefined;
