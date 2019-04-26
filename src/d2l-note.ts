@@ -271,10 +271,11 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					<d2l-note-edit
 						id="${this.id}"
 						placeholder="${this.editplaceholder}"
+						value="${this.text}"
 						.addnotestring=${this.addnotestring}
 						.savenotestring=${this.savenotestring}
 						.discardnotestring=${this.discardnotestring}
-						@d2l-note-edit-discard=${this._handleDiscard} value=${this.text}
+						@d2l-note-edit-finished=${this._handleFinished}
 					>
 						<slot name="description" slot="description"></slot>
 						<slot name="settings" slot="settings"></slot>
@@ -293,7 +294,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 		this.editting = true;
 	}
 
-	_handleDiscard() {
+	_handleFinished() {
 		this.editting = false;
 	}
 

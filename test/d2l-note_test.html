@@ -99,6 +99,7 @@
 				element.user = {
 					name: 'Username'
 				};
+				element.showavatar = true;
 				await element.updateComplete;
 				const elementShadowRoot = element.shadowRoot;
 				const elementUser = elementShadowRoot.querySelector('d2l-user');
@@ -110,6 +111,7 @@
 				element.user = {
 					name: 'Username'
 				};
+				element.showavatar = true;
 				element.me = true;
 				await element.resourceFetchComplete;
 				const elementShadowRoot = element.shadowRoot;
