@@ -166,12 +166,10 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					flex: 1;
 					line-height: 0;
 				}
-				.d2l-note-sidebar {
-					flex: 0;
+				.d2l-note-top {
 					display: flex;
-					flex-direction: column;
-					align-items: center;
 					justify-content: space-between;
+					align-items: flex-start;
 				}
 
 				d2l-user {
@@ -180,6 +178,17 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 
 				.d2l-note-text {
 					margin-bottom: 18px;
+				}
+
+				.d2l-note-private-indicator {
+					position: absolute;
+					bottom: 0;
+					right: 0;
+				}
+
+				:host(:dir(rtl)) .d2l-note-private-indicator {
+					right: initial;
+					left: 0;
 				}
 
 				.skeleton {
@@ -223,22 +232,39 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				}
 			</style>
 			<div class="d2l-note-main d2l-typography">
-				${this.user ? html`
-					<d2l-user
-						.imageUrl="${imageUrl}"
-						.imageToken="${useImageAuthentication ? this.token : ''}"
-						.name="${userName}"
-						.subText="${subText}"
-						.useImageAuthentication=${useImageAuthentication}
-						.shouldHideImage=${!this.showavatar}
-						></d2l-user>` : html`
-					<div class="d2l-note-user-skeleton skeleton-user">
-						<div class="skeleton skeleton-avatar"></div>
-						<div class="skeleton-info-container">
-							<div class="skeleton skeleton-name"></div>
-							<div class="skeleton skeleton-subtext"></div>
-						</div>
-					</div>`}
+				<div class="d2l-note-top">
+					${this.user ? html`
+						<d2l-user
+							.imageUrl="${imageUrl}"
+							.imageToken="${useImageAuthentication ? this.token : ''}"
+							.name="${userName}"
+							.subText="${subText}"
+							.useImageAuthentication=${useImageAuthentication}
+							.shouldHideImage=${!this.showavatar}
+							></d2l-user>` : html`
+						<div class="d2l-note-user-skeleton skeleton-user">
+							<div class="skeleton skeleton-avatar"></div>
+							<div class="skeleton-info-container">
+								<div class="skeleton skeleton-name"></div>
+								<div class="skeleton skeleton-subtext"></div>
+							</div>
+						</div>`}
+					${showDropdown ? html`
+						<d2l-dropdown-more text="${this.contextmenulabel ? this.contextmenulabel : this.localize('contextMenu')}">
+							<d2l-dropdown-menu>
+								<d2l-menu label="${this.contextmenulabel ? this.contextmenulabel : this.localize('contextMenu')}">
+									${this.canedit && !this.editting ? html`<d2l-menu-item
+										text="${this.editstring ? this.editstring : this.localize('edit')}"
+										@d2l-menu-item-select=${this.editSelectHandler}
+									></d2l-menu-item>` : null }
+									${this.candelete ? html`<d2l-menu-item
+										text="${this.deletestring ? this.deletestring : this.localize('delete')}"
+										@d2l-menu-item-select=${this.deleteSelectHandler}
+									></d2l-menu-item>` : null }
+								</d2l-menu>
+							</d2l-dropdown-menu>
+						</d2l-dropdown-more>` : null }
+				</div>
 				${this.editting ? html`
 					<d2l-note-edit
 						placeholder="${this.editplaceholder}"
@@ -251,31 +277,12 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 						<slot name="settings" slot="settings"></slot>
 					</d2l-note-edit>` : this.text ? convertText(this.text) : html`
 					<div class="d2l-note-text-skeleton skeleton"></div>`}
-			</div>
-
-			${!this.editting ? html`
-			<div class="d2l-note-sidebar">
-				${showDropdown ? html`
-					<d2l-dropdown-more text="${this.contextmenulabel ? this.contextmenulabel : this.localize('contextMenu')}">
-						<d2l-dropdown-menu>
-							<d2l-menu label="${this.contextmenulabel ? this.contextmenulabel : this.localize('contextMenu')}">
-								${this.canedit ? html`<d2l-menu-item
-									text="${this.editstring ? this.editstring : this.localize('edit')}"
-									@d2l-menu-item-select=${this.editSelectHandler}
-								></d2l-menu-item>` : null }
-								${this.candelete ? html`<d2l-menu-item
-									text="${this.deletestring ? this.deletestring : this.localize('delete')}"
-									@d2l-menu-item-select=${this.deleteSelectHandler}
-								></d2l-menu-item>` : null }
-							</d2l-menu>
-						</d2l-dropdown-menu>
-					</d2l-dropdown-more>` : null }
-				${this.private ? html`<d2l-icon
+				${!this.editting && this.private ? html`<d2l-icon
 					class="d2l-note-private-indicator"
 					icon="d2l-tier1:visibility-hide"
 					aria-label="${this.privatelabel ? this.privatelabel : this.localize('private')}"
 				></d2l-icon>` : null }
-			</div>` : null }
+			</div>
 		`;
 	}
 
