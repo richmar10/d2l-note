@@ -235,17 +235,18 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	}
 
 	handleMoreLess() {
-		if (this.collapsed) {
+		if (this.hasmore || this.collapsed) {
 			this.dispatchEvent(new CustomEvent('d2l-notes-load-more', {
 				bubbles: true,
 				composed: true
 			}));
+			this.collapsed = false;
 		} else {
 			this.dispatchEvent(new CustomEvent('d2l-notes-load-less', {
 				bubbles: true,
 				composed: true
 			}));
+			this.collapsed = true;
 		}
-		this.collapsed = !this.collapsed;
 	}
 }
