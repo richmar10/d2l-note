@@ -85,12 +85,40 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				:host {
 					display: block;
 					line-height: 0;
+
+					--d2l-note-edit-common-textarea: {
+						font-size: 1rem;
+
+						transition-property: height;
+						transition-duration: 0.5s;
+						transition-timing-function: ease;
+					};
 				}
-				.d2l-note-edit-bottom {
+				.d2l-note-edit-controls {
 					margin-top: 12px;
 					display: flex;
 					flex-direction: row;
 					justify-content: space-between;
+
+					transition-property: height, opacity, visibility;
+					transition-duration: 0.5s, 0.5s;
+					transition-timing-function: ease, ease;
+				}
+
+				:host(:not([focused])) .d2l-note-edit-controls {
+					height: 0;
+					opacity: 0;
+					visibility: hidden;
+
+					transition-delay: 0.5s, 0s, 0.5s;
+				}
+
+				:host([focused]) .d2l-note-edit-controls {
+					height: 34px;
+					opacity: 1;
+					visibility: visible;
+
+					transition-delay: 0s, 0.5s, 0.5s;
 				}
 
 				.d2l-note-edit-bottom-left {
@@ -104,8 +132,31 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				}
 
 				d2l-input-textarea {
+					--d2l-input-padding: 8px 0.75rem;
+					--d2l-input-padding-focus: 7px calc(0.75rem - 1px);
+
 					--d2l-input-textarea: {
-						font-size: 1rem;
+						@apply --d2l-note-edit-common-textarea;
+					}
+				}
+
+				:host(:not([focused])) d2l-input-textarea {
+					--d2l-input-textarea: {
+						@apply --d2l-note-edit-common-textarea;
+
+						height: 40px;
+
+						transition-delay: 0.5s;
+					}
+				}
+
+				:host([focused]) d2l-input-textarea {
+					--d2l-input-textarea: {
+						@apply --d2l-note-edit-common-textarea;
+
+						height: 90px;
+
+						transition-delay: 0s;
 					}
 				}
 			</style>
@@ -117,8 +168,10 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				value="${this.value}"
 				placeholder="${this.placeholder}"
 				@change=${this._handleChange}
+				@focusin=${this._handleFocusin}
+				@focusout=${this._handleFocusout}
 			></d2l-input-textarea>
-			<div class="d2l-note-edit-bottom">
+			<div class="d2l-note-edit-controls">
 				<div class="d2l-note-edit-bottom-left">
 					<d2l-button
 						class="d2l-note-edit-button"
@@ -208,5 +261,13 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 			}));
 			this.value = '';
 		}
+	}
+
+	_handleFocusin() {
+		this.setAttribute('focused', '');
+	}
+
+	_handleFocusout() {
+		this.removeAttribute('focused');
 	}
 }
