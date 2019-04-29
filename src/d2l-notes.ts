@@ -25,7 +25,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	 */
 	@property({ type: Array })
 	notes: {
-		id: string;
+		id?: string;
 		user: {
 			name: string;
 			pic: {
@@ -142,6 +142,12 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 			<style>${D2LNotes.d2lTypographyStyle}</style>
 			<style>
 				:host {
+					--d2l-notes-note-margin: 6px;
+					--d2l-notes-hr-margin-bottom: 18px;
+					--d2l-notes-ol-margin-bottom: 24px;
+					--d2l-notes-load-more-margin-bottom: 36px;
+				}
+				:host {
 					display: block;
 				}
 				.d2l-typography {
@@ -150,20 +156,29 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				ol {
 					margin: 0;
 					padding: 0;
+					/* (paragraph separation) 8px + (load more/less border) 1px + (load more/less padding) 8px = 17px */
+					margin-bottom: calc(var(--d2l-notes-ol-margin-bottom) - 17px);
 				}
 				li {
 					display: block;
+					margin-top: var(--d2l-notes-note-margin);
+				}
+				li:first-child {
+					margin-top: 0;
 				}
 
 				hr {
-					margin-bottom: 15px
+					/* (paragraph separation) 8px */
+					margin-top: calc(var(--d2l-notes-ol-margin-bottom) - 8px);
+					margin-bottom: var(--d2l-notes-hr-margin-bottom);
 				}
 
 				.d2l-notes-more-less {
 					display: flex;
 					width: 100%;
 					align-items: center;
-					margin-bottom: 28px;
+					/* load more/less padding (8px) - load more/less border (1px) = 9px */
+					margin-bottom: calc(var(--d2l-notes-load-more-margin-bottom) - 9px);
 				}
 
 				.d2l-notes-load-more-less {
@@ -180,7 +195,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					<ol>${repeat(notes, (note) => html`
 						<li>
 							<d2l-note
-								id="${note.id}"
+								.id=${note.id ? note.id : ''}
 								.user=${note.user}
 								.token=${note.token}
 								.showavatar=${typeof note.showAvatar === 'boolean' ? note.showAvatar : true}
