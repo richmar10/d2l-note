@@ -114,7 +114,8 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				}
 
 				:host([focused]) .d2l-note-edit-controls {
-					height: 34px;
+					/* d2l-button line-height + padding + border */
+					height: calc(2rem + 2px);
 					opacity: 1;
 					visibility: visible;
 
@@ -132,8 +133,8 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				}
 
 				d2l-input-textarea {
-					--d2l-input-padding: 8px 0.75rem;
-					--d2l-input-padding-focus: 7px calc(0.75rem - 1px);
+					--d2l-input-padding: 0.5rem 0.75rem;
+					--d2l-input-padding-focus: calc(0.5rem - 1px) calc(0.75rem - 1px);
 
 					--d2l-input-placeholder: {
 						color: var(--d2l-input-placeholder-color);
@@ -151,7 +152,8 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					--d2l-input-textarea: {
 						@apply --d2l-note-edit-common-textarea;
 
-						height: 40px;
+						/* textarea line-height + padding + border */
+						height: calc(2.2rem + 2px);
 
 						transition-delay: 0.5s;
 					}
@@ -161,7 +163,8 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					--d2l-input-textarea: {
 						@apply --d2l-note-edit-common-textarea;
 
-						height: 90px;
+						/* textarea line-height * 4 + padding + border */
+						height: calc(5.8rem + 2px);
 
 						transition-delay: 0s;
 					}
