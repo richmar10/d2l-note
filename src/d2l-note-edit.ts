@@ -2,6 +2,7 @@ import 'd2l-inputs/d2l-input-textarea';
 import 'd2l-icons/tier2-icons';
 import 'd2l-button/d2l-button';
 import 'd2l-button/d2l-button-icon';
+import 'd2l-alert/d2l-alert';
 /**
  * Import LitElement base class, html helper function,
  * and TypeScript decorators
@@ -39,6 +40,9 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 
 	@property({ type: String })
 	discardnotestring?: string;
+
+	@property({ type: String })
+	errormessage?: string;
 
 	__langResources = {
 		'en': {
@@ -86,13 +90,17 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					display: block;
 					line-height: 0;
 
-					--d2l-note-edit-common-textarea: {
+					--d2l-note-edit-base-textarea: {
 						font-size: 1rem;
 
 						transition-property: height;
 						transition-duration: 0.5s;
 						transition-timing-function: ease;
 					};
+
+					--d2l-note-edit-common-textarea: {
+						@apply --d2l-note-edit-base-textarea;
+					}
 				}
 				.d2l-note-edit-controls {
 					margin-top: 12px;
@@ -130,6 +138,25 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				.d2l-note-edit-settings {
 					margin-left: 0.5rem;
 					margin-right: 0.5rem;
+				}
+
+				d2l-alert {
+					margin-top: 12px;
+				}
+
+				d2l-input-textarea.d2l-note-edit-error {
+					--d2l-note-edit-common-textarea: {
+						@apply --d2l-note-edit-base-textarea;
+						border-color: var(--d2l-alert-critical-color, --d2l-color-cinnabar);
+					};
+
+					--d2l-input-hover-focus: {
+						border-color: var(--d2l-alert-critical-color, --d2l-color-cinnabar);
+						border-width: 2px;
+						outline-style: none;
+						outline-width: 0;
+						padding: var(--d2l-input-padding-focus);
+					};
 				}
 
 				d2l-input-textarea {
@@ -179,10 +206,12 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				@focusout=${this._handleFocusout}
 			>
 				<d2l-input-textarea
+					class="${this.errormessage ? 'd2l-note-edit-error' : ''}"
 					value="${this.value}"
 					placeholder="${this.placeholder}"
 					@change=${this._handleChange}
 				></d2l-input-textarea>
+				<d2l-alert type="error" .hidden=${!this.errormessage}>${this.errormessage}</d2l-alert>
 				<div class="d2l-note-edit-controls">
 					<div class="d2l-note-edit-bottom-left">
 						<d2l-button
@@ -212,7 +241,12 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 	}
 
 	_handleEditClick() {
-		const finish = () => {
+		this.errormessage = undefined;
+		const finish = (error?: any) => {
+			if (error) {
+				this.errormessage = error.message ? error.message : error;
+				return;
+			}
 			this.dispatchEvent(new CustomEvent('d2l-note-edit-finished', {
 				bubbles: true,
 				composed: true,
@@ -253,6 +287,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 	}
 
 	_handleClick() {
+		this.errormessage = undefined;
 		const discarded = this.dispatchEvent(new CustomEvent('d2l-note-edit-discard', {
 			bubbles: true,
 			composed: true,
