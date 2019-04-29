@@ -141,7 +141,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 		);
 		function convertText(text: string) {
 			return html`
-				<d2l-more-less>
+				<d2l-more-less height="4.7rem">
 					<div class="d2l-note-text d2l-body-standard">${mapToParagraphs(text)}</div>
 				</d2l-more-less>`;
 		}
