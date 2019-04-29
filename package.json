@@ -5,7 +5,7 @@
     "type": "git",
     "url": "https://github.com/Brightspace/d2l-note.git"
   },
-  "version": "0.3.0",
+  "version": "0.3.1",
   "main": "lib/d2l-note.js",
   "types": "lib/d2l-note.d.ts",
   "scripts": {
