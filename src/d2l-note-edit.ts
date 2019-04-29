@@ -2,7 +2,6 @@ import 'd2l-inputs/d2l-input-textarea';
 import 'd2l-icons/tier2-icons';
 import 'd2l-button/d2l-button';
 import 'd2l-button/d2l-button-icon';
-import 'd2l-polymer-behaviors/d2l-dom';
 /**
  * Import LitElement base class, html helper function,
  * and TypeScript decorators
