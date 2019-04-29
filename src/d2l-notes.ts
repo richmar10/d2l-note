@@ -153,23 +153,17 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				}
 				li {
 					display: block;
-
-					margin-bottom: 6px;
-				}
-
-				li:last-child {
-					margin-bottom: 24px;
 				}
 
 				hr {
-					margin-top: 36px;
-					margin-bottom: 18px
+					margin-bottom: 15px
 				}
 
 				.d2l-notes-more-less {
 					display: flex;
 					width: 100%;
 					align-items: center;
+					margin-bottom: 28px;
 				}
 
 				.d2l-notes-load-more-less {
@@ -234,7 +228,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				${(hasmore || this.notes.length) && this.cancreate ? html`<hr>` : null}
 
 				${this.cancreate ? html`<d2l-note-edit new placeholder="${this.editplaceholder}">
-					<slot name="description" slot="description"><div>${this.description}</div></slot>
+					<slot class="d2l-body-standard" name="description" slot="description"><div>${this.description}</div></slot>
 					<div slot="settings">${this.settings}</div>
 				</d2l-note-edit>` : null}
 			</div>

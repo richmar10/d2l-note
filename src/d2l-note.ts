@@ -6,6 +6,7 @@ import 'd2l-dropdown/d2l-dropdown-menu';
 import 'd2l-menu/d2l-menu';
 import 'd2l-menu/d2l-menu-item';
 import 'd2l-more-less/d2l-more-less';
+import 'd2l-colors/d2l-colors';
 import './d2l-note-edit';
 /**
  * Import LitElement base class, html helper function,
@@ -55,7 +56,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	@property({ type: String })
 	editplaceholder: string = '';
 
-	@property({ type: Boolean })
+	@property({ type: Boolean, reflect: true })
 	me: boolean = false;
 
 	@property({ type: Boolean })
@@ -163,6 +164,10 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					position: relative;
 					display: flex;
 					line-height: 0;
+					padding-top: 6px;
+				}
+				:host([me]) {
+					background-color: var(--d2l-color-regolith);
 				}
 				.d2l-note-main {
 					flex: 1;
@@ -179,7 +184,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				}
 
 				.d2l-note-text {
-					margin-bottom: 18px;
+					margin-bottom: 12px;
 				}
 
 				.d2l-note-private-indicator {
