@@ -193,7 +193,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				}
 
 				d2l-dropdown-more {
-					position: absolute:
+					position: absolute;
 					right: 0;
 					top: 0;
 				}
