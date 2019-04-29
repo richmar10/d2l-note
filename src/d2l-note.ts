@@ -192,6 +192,12 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					margin: var(--d2l-note-paragraph-spacing) 0;
 				}
 
+				d2l-dropdown-more {
+					position: absolute:
+					right: 0;
+					top: 0;
+				}
+
 				.d2l-note-private-indicator {
 					position: absolute;
 					bottom: 0;
