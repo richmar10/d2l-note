@@ -2,6 +2,7 @@ import 'd2l-inputs/d2l-input-textarea';
 import 'd2l-icons/tier2-icons';
 import 'd2l-button/d2l-button';
 import 'd2l-button/d2l-button-icon';
+import 'd2l-polymer-behaviors/d2l-dom';
 /**
  * Import LitElement base class, html helper function,
  * and TypeScript decorators
@@ -135,6 +136,13 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					--d2l-input-padding: 8px 0.75rem;
 					--d2l-input-padding-focus: 7px calc(0.75rem - 1px);
 
+					--d2l-input-placeholder: {
+						color: var(--d2l-input-placeholder-color);
+						font-size: 1rem;
+						font-weight: 400;
+						opacity: 1; /* Firefox has non-1 default */
+					}
+
 					--d2l-input-textarea: {
 						@apply --d2l-note-edit-common-textarea;
 					}
@@ -164,32 +172,35 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 			<div class="d2l-note-edit-description">
 				<slot name="description"></slot>
 			</div>
-			<d2l-input-textarea
-				value="${this.value}"
-				placeholder="${this.placeholder}"
-				@change=${this._handleChange}
+			<div
 				@focusin=${this._handleFocusin}
 				@focusout=${this._handleFocusout}
-			></d2l-input-textarea>
-			<div class="d2l-note-edit-controls">
-				<div class="d2l-note-edit-bottom-left">
-					<d2l-button
-						class="d2l-note-edit-button"
-						primary
-						@click=${this._handleEditClick}
-					>
-						${this.new ? this.addnotestring ? this.addnotestring : this.localize('add') : this.savenotestring ? this.savenotestring : this.localize('save')}
-					</d2l-button>
-					<div class="d2l-note-edit-settings">
-						<slot name="settings"></slot>
+			>
+				<d2l-input-textarea
+					value="${this.value}"
+					placeholder="${this.placeholder}"
+					@change=${this._handleChange}
+				></d2l-input-textarea>
+				<div class="d2l-note-edit-controls">
+					<div class="d2l-note-edit-bottom-left">
+						<d2l-button
+							class="d2l-note-edit-button"
+							primary
+							@click=${this._handleEditClick}
+						>
+							${this.new ? this.addnotestring ? this.addnotestring : this.localize('add') : this.savenotestring ? this.savenotestring : this.localize('save')}
+						</d2l-button>
+						<div class="d2l-note-edit-settings">
+							<slot name="settings"></slot>
+						</div>
 					</div>
+					<d2l-button-icon
+						class="d2l-note-edit-discard-button"
+						icon="d2l-tier2:delete"
+						text="${this.discardnotestring ? this.discardnotestring : this.localize('discard')}"
+						@click=${this._handleClick}
+					></d2l-button-icon>
 				</div>
-				<d2l-button-icon
-					class="d2l-note-edit-discard-button"
-					icon="d2l-tier2:delete"
-					text="${this.discardnotestring ? this.discardnotestring : this.localize('discard')}"
-					@click=${this._handleClick}
-				></d2l-button-icon>
 			</div>
 		`;
 	}
