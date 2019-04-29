@@ -172,17 +172,17 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				:host {
 					--d2l-note-user-text-spacing: 18px;
 					--d2l-note-paragraph-spacing: 0.5rem;
-					--d2l-note-padding-bottom: 0.5rem;
+					--d2l-note-padding: 0.5rem;
 				}
 				:host([compact]) {
 					--d2l-note-user-text-spacing: 8px;
-					--d2l-note-padding-bottom: 0;
+					--d2l-note-padding: 0;
 				}
 				:host {
 					position: relative;
 					display: flex;
 					line-height: 0;
-					padding-bottom: var(--d2l-note-padding-bottom);
+					padding: var(--d2l-note-padding) 0;
 				}
 				:host([me]) {
 					background-color: var(--d2l-color-regolith);
