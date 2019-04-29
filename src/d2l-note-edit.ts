@@ -85,12 +85,41 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				:host {
 					display: block;
 					line-height: 0;
+
+					--d2l-note-edit-common-textarea: {
+						font-size: 1rem;
+
+						transition-property: height;
+						transition-duration: 0.5s;
+						transition-timing-function: ease;
+					};
 				}
-				.d2l-note-edit-bottom {
+				.d2l-note-edit-controls {
 					margin-top: 12px;
 					display: flex;
 					flex-direction: row;
 					justify-content: space-between;
+
+					transition-property: height, opacity, visibility;
+					transition-duration: 0.5s, 0.5s;
+					transition-timing-function: ease, ease;
+				}
+
+				:host(:not([focused])) .d2l-note-edit-controls {
+					height: 0;
+					opacity: 0;
+					visibility: hidden;
+
+					transition-delay: 0.5s, 0s, 0.5s;
+				}
+
+				:host([focused]) .d2l-note-edit-controls {
+					/* d2l-button line-height + padding + border */
+					height: calc(2rem + 2px);
+					opacity: 1;
+					visibility: visible;
+
+					transition-delay: 0s, 0.5s, 0.5s;
 				}
 
 				.d2l-note-edit-bottom-left {
@@ -104,8 +133,40 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				}
 
 				d2l-input-textarea {
-					--d2l-input-textarea: {
+					--d2l-input-padding: 0.5rem 0.75rem;
+					--d2l-input-padding-focus: calc(0.5rem - 1px) calc(0.75rem - 1px);
+
+					--d2l-input-placeholder: {
+						color: var(--d2l-input-placeholder-color);
 						font-size: 1rem;
+						font-weight: 400;
+						opacity: 1; /* Firefox has non-1 default */
+					}
+
+					--d2l-input-textarea: {
+						@apply --d2l-note-edit-common-textarea;
+					}
+				}
+
+				:host(:not([focused])) d2l-input-textarea {
+					--d2l-input-textarea: {
+						@apply --d2l-note-edit-common-textarea;
+
+						/* textarea line-height + padding + border */
+						height: calc(2.2rem + 2px);
+
+						transition-delay: 0.5s;
+					}
+				}
+
+				:host([focused]) d2l-input-textarea {
+					--d2l-input-textarea: {
+						@apply --d2l-note-edit-common-textarea;
+
+						/* textarea line-height * 4 + padding + border */
+						height: calc(5.8rem + 2px);
+
+						transition-delay: 0s;
 					}
 				}
 			</style>
@@ -113,30 +174,35 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 			<div class="d2l-note-edit-description">
 				<slot name="description"></slot>
 			</div>
-			<d2l-input-textarea
-				value="${this.value}"
-				placeholder="${this.placeholder}"
-				@change=${this._handleChange}
-			></d2l-input-textarea>
-			<div class="d2l-note-edit-bottom">
-				<div class="d2l-note-edit-bottom-left">
-					<d2l-button
-						class="d2l-note-edit-button"
-						primary
-						@click=${this._handleEditClick}
-					>
-						${this.new ? this.addnotestring ? this.addnotestring : this.localize('add') : this.savenotestring ? this.savenotestring : this.localize('save')}
-					</d2l-button>
-					<div class="d2l-note-edit-settings">
-						<slot name="settings"></slot>
+			<div
+				@focusin=${this._handleFocusin}
+				@focusout=${this._handleFocusout}
+			>
+				<d2l-input-textarea
+					value="${this.value}"
+					placeholder="${this.placeholder}"
+					@change=${this._handleChange}
+				></d2l-input-textarea>
+				<div class="d2l-note-edit-controls">
+					<div class="d2l-note-edit-bottom-left">
+						<d2l-button
+							class="d2l-note-edit-button"
+							primary
+							@click=${this._handleEditClick}
+						>
+							${this.new ? this.addnotestring ? this.addnotestring : this.localize('add') : this.savenotestring ? this.savenotestring : this.localize('save')}
+						</d2l-button>
+						<div class="d2l-note-edit-settings">
+							<slot name="settings"></slot>
+						</div>
 					</div>
+					<d2l-button-icon
+						class="d2l-note-edit-discard-button"
+						icon="d2l-tier2:delete"
+						text="${this.discardnotestring ? this.discardnotestring : this.localize('discard')}"
+						@click=${this._handleClick}
+					></d2l-button-icon>
 				</div>
-				<d2l-button-icon
-					class="d2l-note-edit-discard-button"
-					icon="d2l-tier2:delete"
-					text="${this.discardnotestring ? this.discardnotestring : this.localize('discard')}"
-					@click=${this._handleClick}
-				></d2l-button-icon>
 			</div>
 		`;
 	}
@@ -208,5 +274,13 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 			}));
 			this.value = '';
 		}
+	}
+
+	_handleFocusin() {
+		this.setAttribute('focused', '');
+	}
+
+	_handleFocusout() {
+		this.removeAttribute('focused');
 	}
 }
