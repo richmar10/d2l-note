@@ -164,10 +164,13 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 			<style>${D2LNote.d2lTypographyStyle}</style>
 			<style>
 				:host {
+					--d2l-note-user-text-spacing: 10px;
+					--d2l-note-paragraph-spacing: 0.5rem;
+				}
+				:host {
 					position: relative;
 					display: flex;
 					line-height: 0;
-					padding-top: 6px;
 				}
 				:host([me]) {
 					background-color: var(--d2l-color-regolith);
@@ -183,14 +186,10 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				}
 
 				d2l-user {
-					margin-bottom: 18px;
-				}
-
-				.d2l-note-text {
-					margin-bottom: 12px;
+					margin-bottom: var(--d2l-note-user-text-spacing);
 				}
 				.paragraph {
-					margin: 0.5rem 0;
+					margin: var(--d2l-note-paragraph-spacing) 0;
 				}
 
 				.d2l-note-private-indicator {
@@ -210,15 +209,15 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				}
 
 				.skeleton.skeleton-avatar {
-					width: 48px;
-					height: 48px;
+					width: 52px;
+					height: 52px;
 				}
 
 				.skeleton-user {
 					display: flex;
 					justify-content: space-between;
-					width: 193px;
-					margin-bottom: 18px;
+					width: 197px;
+					margin-bottom: var(--d2l-note-user-text-spacing);
 				}
 
 				.skeleton-user .skeleton-info-container {
@@ -229,19 +228,20 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 
 				.skeleton-user .skeleton-name {
 					width: 80px;
-					height: 18px;
+					/* 20px = user name/subtext line height */
+					height: 20px;
 					margin-bottom: 5px;
 				}
 
 				.skeleton-user .skeleton-subtext {
 					width: 140px;
-					height: 18px;
+					height: 20px;
 				}
 
 				.d2l-note-text-skeleton {
+					@apply --d2l-body-standard-text;
 					width: 100%;
-					height: 1.4rem;
-					margin-bottom: 18px;
+					margin: var(--d2l-note-paragraph-spacing) 0;
 				}
 			</style>
 			<div class="d2l-note-main d2l-typography">
@@ -292,7 +292,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 						<slot name="description" slot="description"></slot>
 						<slot name="settings" slot="settings"></slot>
 					</d2l-note-edit>` : this.text ? convertText(this.text) : html`
-					<div class="d2l-note-text-skeleton skeleton"></div>`}
+					<div class="d2l-note-text-skeleton skeleton">&nbsp;</div>`}
 				${!this.editting && this.private ? html`<d2l-icon
 					class="d2l-note-private-indicator"
 					icon="d2l-tier1:visibility-hide"

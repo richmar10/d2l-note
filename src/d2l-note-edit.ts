@@ -93,11 +93,18 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					display: block;
 					line-height: 0;
 
+					--d2l-note-edit-spacing: 12px;
+					--d2l-note-edit-textarea-font-size: 1rem;
+					--d2l-note-edit-textarea-line-height: 1.2rem;
+					--d2l-note-edit-textarea-padding-vertical: 0.5rem;
+					--d2l-note-edit-textarea-padding-horizontal: 0.75rem;
+					--d2l-note-edit-transition-duration: 0.5s;
+
 					--d2l-note-edit-base-textarea: {
-						font-size: 1rem;
+						font-size: var(--d2l-note-edit-textarea-font-size);
 
 						transition-property: height;
-						transition-duration: 0.5s;
+						transition-duration: var(--d2l-note-edit-transition-duration);
 						transition-timing-function: ease;
 					};
 
@@ -106,13 +113,13 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					}
 				}
 				.d2l-note-edit-controls {
-					margin-top: 12px;
+					margin-top: var(--d2l-note-edit-spacing);
 					display: flex;
 					flex-direction: row;
 					justify-content: space-between;
 
 					transition-property: height, opacity, visibility;
-					transition-duration: 0.5s, 0.5s;
+					transition-duration: var(--d2l-note-edit-transition-duration), var(--d2l-note-edit-transition-duration);
 					transition-timing-function: ease, ease;
 				}
 
@@ -122,7 +129,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					opacity: 0;
 					visibility: hidden;
 
-					transition-delay: 0.5s, 0s, 0.5s;
+					transition-delay: var(--d2l-note-edit-transition-duration), 0s, var(--d2l-note-edit-transition-duration);
 				}
 
 				:host([focused]) .d2l-note-edit-controls,
@@ -132,7 +139,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					opacity: 1;
 					visibility: visible;
 
-					transition-delay: 0s, 0.5s, 0.5s;
+					transition-delay: 0s, var(--d2l-note-edit-transition-duration), var(--d2l-note-edit-transition-duration);
 				}
 
 				.d2l-note-edit-bottom-left {
@@ -146,7 +153,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				}
 
 				d2l-alert {
-					margin-top: 12px;
+					margin-top: var(--d2l-note-edit-spacing);
 				}
 
 				d2l-input-textarea.d2l-note-edit-error {
@@ -165,12 +172,12 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				}
 
 				d2l-input-textarea {
-					--d2l-input-padding: 0.5rem 0.75rem;
-					--d2l-input-padding-focus: calc(0.5rem - 1px) calc(0.75rem - 1px);
+					--d2l-input-padding: var(--d2l-note-edit-textarea-padding-vertical) var(--d2l-note-edit-textarea-padding-horizontal);
+					--d2l-input-padding-focus: calc(var(--d2l-note-edit-textarea-padding-vertical) - 1px) calc(var(--d2l-note-edit-textarea-padding-horizontal) - 1px);
 
 					--d2l-input-placeholder: {
 						color: var(--d2l-input-placeholder-color);
-						font-size: 1rem;
+						font-size: var(--d2l-note-edit-textarea-font-size);
 						font-weight: 400;
 						opacity: 1; /* Firefox has non-1 default */
 					}
@@ -186,9 +193,9 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 						@apply --d2l-note-edit-common-textarea;
 
 						/* textarea line-height + padding + border */
-						height: calc(2.2rem + 2px);
+						height: calc(var(--d2l-note-edit-textarea-line-height) + var(--d2l-note-edit-textarea-padding-vertical) * 2 + 2px);
 
-						transition-delay: 0.5s;
+						transition-delay: var(--d2l-note-edit-transition-duration);
 					}
 				}
 
@@ -198,7 +205,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 						@apply --d2l-note-edit-common-textarea;
 
 						/* textarea line-height * 4 + padding + border */
-						height: calc(5.8rem + 2px);
+						height: calc(var(--d2l-note-edit-textarea-line-height) * 4 + var(--d2l-note-edit-textarea-padding-vertical) * 2 + 2px);
 
 						transition-delay: 0s;
 					}
