@@ -141,7 +141,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 		);
 		function convertText(text: string) {
 			return html`
-				<d2l-more-less>
+				<d2l-more-less height="4.7rem">
 					<div class="d2l-note-text d2l-body-standard">${mapToParagraphs(text)}</div>
 				</d2l-more-less>`;
 		}
@@ -190,6 +190,12 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				}
 				.paragraph {
 					margin: var(--d2l-note-paragraph-spacing) 0;
+				}
+
+				d2l-dropdown-more {
+					position: absolute:
+					right: 0;
+					top: 0;
 				}
 
 				.d2l-note-private-indicator {
