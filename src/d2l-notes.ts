@@ -207,7 +207,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 						</li>
 					`)}
 					</ol>` : html`
-						<span class="d2l-body-standard">${this.emptystring ? this.emptystring : this.localize('empty')}</span>
+						<span class="d2l-body-standard">${this.emptystring !== undefined ? this.emptystring : this.localize('empty')}</span>
 					`}
 
 				${hasmore ? html`
