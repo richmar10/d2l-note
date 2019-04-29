@@ -18,6 +18,7 @@ import {
 
 import { D2LTypographyMixin } from './mixins/d2l-typography-mixin';
 import { LocalizeMixin } from './mixins/localize-mixin';
+import { repeat } from 'lit-html/directives/repeat';
 
 /**
  * Use the customElement decorator to define your class as
@@ -134,8 +135,10 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	 * Implement `render` to define a template for your element.
 	 */
 	render() {
-		const mapToParagraphs = (text: string) => text.split('\n')
-			.map((paragraph, index) => html`<div className="paragraph" key="${index}">${paragraph}</div>`);
+		const mapToParagraphs = (text: string) => repeat(
+			text.split('\n'),
+			(paragraph) => html`<div className="paragraph">${paragraph}</div>`
+		);
 		function convertText(text: string) {
 			return html`
 				<d2l-more-less>
@@ -185,6 +188,9 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 
 				.d2l-note-text {
 					margin-bottom: 12px;
+				}
+				.paragraph {
+					margin: 0.5rem 0;
 				}
 
 				.d2l-note-private-indicator {
