@@ -45,6 +45,9 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	@property({ type: Boolean })
 	showavatar = false;
 
+	@property({ type: Boolean })
+	compact = false;
+
 	@property({ type: String })
 	createdat?: string;
 
@@ -135,10 +138,13 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	 * Implement `render` to define a template for your element.
 	 */
 	render() {
-		const mapToParagraphs = (text: string) => repeat(
-			text.split('\n'),
-			(paragraph) => html`<div class="paragraph">${paragraph}</div>`
-		);
+		const mapToParagraphs = (text: string) => {
+			const lines = text.split('\n');
+			return repeat(
+				lines,
+				(paragraph, index) => html`<div class="${`paragraph ${index === 0 ? 'first' : ''} ${index === lines.length - 1 ? 'last' : ''}`}">${paragraph}</div>`
+			);
+		};
 		function convertText(text: string) {
 			return html`
 				<d2l-more-less height="4.7rem">
@@ -164,13 +170,19 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 			<style>${D2LNote.d2lTypographyStyle}</style>
 			<style>
 				:host {
-					--d2l-note-user-text-spacing: 10px;
+					--d2l-note-user-text-spacing: 18px;
 					--d2l-note-paragraph-spacing: 0.5rem;
+					--d2l-note-padding-bottom: 0.5rem;
+				}
+				:host([compact]) {
+					--d2l-note-user-text-spacing: 8px;
+					--d2l-note-padding-bottom: 0;
 				}
 				:host {
 					position: relative;
 					display: flex;
 					line-height: 0;
+					padding-bottom: var(--d2l-note-padding-bottom);
 				}
 				:host([me]) {
 					background-color: var(--d2l-color-regolith);
@@ -190,6 +202,12 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				}
 				.paragraph {
 					margin: var(--d2l-note-paragraph-spacing) 0;
+				}
+				.paragraph.first {
+					margin-top: 0;
+				}
+				.paragraph.last {
+					margin-bottom: 0;
 				}
 
 				d2l-dropdown-more {
@@ -247,7 +265,6 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				.d2l-note-text-skeleton {
 					@apply --d2l-body-standard-text;
 					width: 100%;
-					margin: var(--d2l-note-paragraph-spacing) 0;
 				}
 			</style>
 			<div class="d2l-note-main d2l-typography">
