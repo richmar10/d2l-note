@@ -137,7 +137,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	render() {
 		const mapToParagraphs = (text: string) => repeat(
 			text.split('\n'),
-			(paragraph) => html`<div className="paragraph">${paragraph}</div>`
+			(paragraph) => html`<div class="paragraph">${paragraph}</div>`
 		);
 		function convertText(text: string) {
 			return html`
