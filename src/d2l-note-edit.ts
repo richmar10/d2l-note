@@ -41,6 +41,9 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 	@property({ type: String })
 	discardnotestring?: string;
 
+	@property({ type: Boolean, reflect: true })
+	expanded = false;
+
 	@property({ type: String })
 	errormessage?: string;
 
@@ -113,7 +116,8 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					transition-timing-function: ease, ease;
 				}
 
-				:host(:not([focused])) .d2l-note-edit-controls {
+				:host(:not([focused])) .d2l-note-edit-controls,
+				:host(:not([expanded])) .d2l-note-edit-controls {
 					height: 0;
 					opacity: 0;
 					visibility: hidden;
@@ -121,7 +125,8 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					transition-delay: 0.5s, 0s, 0.5s;
 				}
 
-				:host([focused]) .d2l-note-edit-controls {
+				:host([focused]) .d2l-note-edit-controls,
+				:host([expanded]) .d2l-note-edit-controls {
 					/* d2l-button line-height + padding + border */
 					height: calc(2rem + 2px);
 					opacity: 1;
@@ -175,7 +180,8 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					}
 				}
 
-				:host(:not([focused])) d2l-input-textarea {
+				:host(:not([focused])) d2l-input-textarea,
+				:host(:not([expanded])) d2l-input-textarea {
 					--d2l-input-textarea: {
 						@apply --d2l-note-edit-common-textarea;
 
@@ -186,7 +192,8 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					}
 				}
 
-				:host([focused]) d2l-input-textarea {
+				:host([focused]) d2l-input-textarea,
+				:host([expanded]) d2l-input-textarea {
 					--d2l-input-textarea: {
 						@apply --d2l-note-edit-common-textarea;
 

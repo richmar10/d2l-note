@@ -283,6 +283,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 						id="${this.id}"
 						placeholder="${this.editplaceholder}"
 						value="${this.text}"
+						expanded
 						.addnotestring=${this.addnotestring}
 						.savenotestring=${this.savenotestring}
 						.discardnotestring=${this.discardnotestring}
