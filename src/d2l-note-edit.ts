@@ -165,9 +165,9 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					--d2l-note-edit-base-textarea: {
 						font-size: var(--d2l-note-edit-textarea-font-size);
 
-						transition-property: height;
-						transition-duration: var(--d2l-note-edit-transition-duration);
-						transition-timing-function: ease;
+						transition-property: height, background-color, border-color;
+						transition-duration: var(--d2l-note-edit-transition-duration), var(--d2l-note-edit-transition-duration), var(--d2l-note-edit-transition-duration);
+						transition-timing-function: ease, ease. ease;
 					};
 
 					--d2l-note-edit-common-textarea: {
@@ -273,7 +273,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 						/* textarea line-height + padding + border */
 						height: calc(var(--d2l-note-edit-textarea-line-height) + var(--d2l-note-edit-textarea-padding-vertical) * 2 + 2px);
 
-						transition-delay: var(--d2l-note-edit-transition-duration);
+						transition-delay: var(--d2l-note-edit-transition-duration), 0s, 0s;
 					};
 
 					@apply --d2l-note-edit-textarea-nofocus;
@@ -287,7 +287,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 						/* textarea line-height * 4 + padding + border */
 						height: calc(var(--d2l-note-edit-textarea-line-height) * 4 + var(--d2l-note-edit-textarea-padding-vertical) * 2 + 2px);
 
-						transition-delay: 0s;
+						transition-delay: 0s, 0s, 0s;
 					};
 
 					@apply --d2l-note-edit-textarea-focus;
