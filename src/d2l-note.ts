@@ -339,7 +339,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				:host(:dir(rtl)) d2l-dropdown-more {
 					@apply --d2l-note-local-context-menu-rtl;
 				}
-				:host-context([dir="rtl"]) d2l-dropdown-more {
+				:host-context([dir="rtl"]) > .d2l-note-main d2l-dropdown-more {
 					@apply --d2l-note-local-context-menu-rtl;
 				}
 
@@ -353,7 +353,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				:host(:dir(rtl)) .d2l-note-private-indicator {
 					@apply --d2l-note-local-private-indicator-rtl;
 				}
-				:host-context([dir="rtl"]) .d2l-note-private-indicator {
+				:host-context([dir="rtl"]) > .d2l-note-main .d2l-note-private-indicator {
 					@apply --d2l-note-local-private-indicator-rtl;
 				}
 
