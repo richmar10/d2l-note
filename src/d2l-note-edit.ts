@@ -172,7 +172,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 
 					--d2l-note-edit-common-textarea: {
 						@apply --d2l-note-edit-base-textarea;
-					}
+					};
 				}
 				.d2l-note-edit-controls {
 					margin-top: var(--d2l-note-edit-spacing);
@@ -256,11 +256,11 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 						font-size: var(--d2l-note-edit-textarea-font-size);
 						font-weight: 400;
 						opacity: 1; /* Firefox has non-1 default */
-					}
+					};
 
 					--d2l-input-textarea: {
 						@apply --d2l-note-edit-common-textarea;
-					}
+					};
 
 					@apply --d2l-note-edit-textarea;
 				}
@@ -274,7 +274,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 						height: calc(var(--d2l-note-edit-textarea-line-height) + var(--d2l-note-edit-textarea-padding-vertical) * 2 + 2px);
 
 						transition-delay: var(--d2l-note-edit-transition-duration);
-					}
+					};
 
 					@apply --d2l-note-edit-textarea-nofocus;
 				}
@@ -288,7 +288,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 						height: calc(var(--d2l-note-edit-textarea-line-height) * 4 + var(--d2l-note-edit-textarea-padding-vertical) * 2 + 2px);
 
 						transition-delay: 0s;
-					}
+					};
 
 					@apply --d2l-note-edit-textarea-focus;
 				}

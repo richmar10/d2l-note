@@ -271,6 +271,18 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					--d2l-note-user-text-spacing: 18px;
 					--d2l-note-paragraph-spacing: 0.5rem;
 					--d2l-note-padding: 0.5rem;
+
+					--d2l-note-local-context-menu-rtl: {
+						right: initial;
+						left: 0;
+						@apply --d2l-note-context-menu-rtl;
+					};
+
+					--d2l-note-local-private-indicator-rtl: {
+						right: initial;
+						left: 0;
+						@apply --d2l-note-private-indicator-rtl;
+					};
 				}
 				:host([compact]) {
 					--d2l-note-user-text-spacing: 8px;
@@ -325,9 +337,10 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				}
 
 				:host(:dir(rtl)) d2l-dropdown-more {
-					right: initial;
-					left: 0;
-					@apply --d2l-note-context-menu-rtl;
+					@apply --d2l-note-local-context-menu-rtl;
+				}
+				:host-context([dir="rtl"]) d2l-dropdown-more {
+					@apply --d2l-note-local-context-menu-rtl;
 				}
 
 				.d2l-note-private-indicator {
@@ -338,9 +351,10 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				}
 
 				:host(:dir(rtl)) .d2l-note-private-indicator {
-					right: initial;
-					left: 0;
-					@apply --d2l-note-private-indicator-rtl;
+					@apply --d2l-note-local-private-indicator-rtl;
+				}
+				:host-context([dir="rtl"]) .d2l-note-private-indicator {
+					@apply --d2l-note-local-private-indicator-rtl;
 				}
 
 				.skeleton {
