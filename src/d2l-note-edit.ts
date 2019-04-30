@@ -167,7 +167,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 
 						transition-property: height, background-color, border-color;
 						transition-duration: var(--d2l-note-edit-transition-duration), var(--d2l-note-edit-transition-duration), var(--d2l-note-edit-transition-duration);
-						transition-timing-function: ease, ease. ease;
+						transition-timing-function: ease, ease, ease;
 					};
 
 					--d2l-note-edit-common-textarea: {
