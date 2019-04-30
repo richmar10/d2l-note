@@ -32,6 +32,16 @@
 				await element.updateComplete;
 			});
 
+			test('shows "No Notes" when notes is empty', async() => {
+				const element = fixture('BasicTestFixture');
+				element.notes = [];
+				await element.resourceFetchComplete;
+
+				const elementShadowRoot = element.shadowRoot;
+				const elementNoteEmpty = elementShadowRoot.querySelector('.d2l-body-standard');
+				assert.equal(elementNoteEmpty.textContent.trim(), 'No Notes');
+			});
+
 			test('has d2l-note-edit if "cancreate" is true', async() => {
 				const element = fixture('BasicTestFixture');
 				element.cancreate = true;
@@ -115,6 +125,18 @@
 					private: false
 				};
 				element.notes = [note, note, note, note, note];
+				await element.resourceFetchComplete;
+				assert.equal(element.collapsed, true);
+				const elementShadowRoot = element.shadowRoot;
+				const elementMoreLess = elementShadowRoot.querySelector('.d2l-notes-load-more-less');
+				assert.notEqual(elementMoreLess, null);
+				assert.equal(elementMoreLess.text, 'Load More Notes');
+			});
+
+			test('shows load more button when "hasmore" is true', async() => {
+				const element = fixture('BasicTestFixture');
+				element.notes = [];
+				element.hasmore = true;
 				await element.resourceFetchComplete;
 				assert.equal(element.collapsed, true);
 				const elementShadowRoot = element.shadowRoot;

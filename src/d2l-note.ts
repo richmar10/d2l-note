@@ -21,14 +21,45 @@ import { LocalizeMixin } from './mixins/localize-mixin';
 import { repeat } from 'lit-html/directives/repeat';
 
 /**
- * Use the customElement decorator to define your class as
- * a custom element. Registers <my-element> as an HTML tag.
+ * d2l-note component created with lit-element
+ *
+ * # Usage
+ * ```html
+ * <d2l-note
+ *	 id="note"
+ *	 user='{"name":"Username","pic":{"url":"avatar.png"}}'
+ *	 token="foozleberries"
+ *	 showavatar
+ *	 me
+ *	 createdat="2019-04-23T17:08:33.839Z"
+ *	 updatedat="2019-04-24T17:08:33.839Z"
+ *	 text="A Note"
+ *	 canedit
+ *	 candelete
+ *	 private
+ *	 dateformat="medium"
+ *	 contextmenulabel="Context Menu"
+ *	 editstring="Edit Note"
+ *	 deletestring="Delete Note"
+ *	 privatelabel="Private"
+ *	 addnotestring="Add"
+ *	 savenotestring="Save"
+ *	 discardnotestring="Discard"
+ *	 editplaceholder="Placeholder for d2l-note-edit"
+ * >
+ *	 <div slot="description">Description for d2l-note-edit</div>
+ *	 <div slot="settings">Settings for d2l-note-edit</div>
+ * </d2l-note>
+ * ```
  */
 @customElement('d2l-note')
 export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 
 	/**
-	 * Create an observed property. Triggers update on change.
+	 * Username and avatar to show
+	 * user.pic.url = <avatar url>
+	 * user.pic.requireTokenAuth <true/false>
+	 * user.name = <user name to show>
 	 */
 	@property({ type: Object })
 	user?: {
@@ -39,65 +70,132 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 		name?: string;
 	};
 
+	/**
+	 * Token to use in request when user.pic.requireTokenAuth is true
+	 */
 	@property({ type: String })
 	token?: string;
 
+	/**
+	 * show avatar and username if true
+	 */
 	@property({ type: Boolean })
 	showavatar = false;
 
+	/**
+	 * Compact view. Removes padding
+	 */
 	@property({ type: Boolean })
 	compact = false;
 
+	/**
+	 * ISO datetime string of note creation
+	 */
 	@property({ type: String })
 	createdat?: string;
 
+	/**
+	 * ISO datetime string of note update
+	 */
 	@property({ type: String })
 	updatedat?: string;
 
+	/**
+	 * Text of note
+	 */
 	@property({ type: String })
 	text?: string;
 
+	/**
+	 * d2l-note-edit placeholder to show when editting
+	 */
 	@property({ type: String })
 	editplaceholder: string = '';
 
+	/**
+	 * Indicates note user is the current user
+	 */
 	@property({ type: Boolean, reflect: true })
 	me: boolean = false;
 
+	/**
+	 * Indicates this note is private
+	 */
 	@property({ type: Boolean })
 	private: boolean = false;
 
+	/**
+	 * Indicates this note can be editted by the current user
+	 */
 	@property({ type: Boolean })
 	canedit: boolean = false;
 
+	/**
+	 * Indicates this note can be deleted by the current user
+	 */
 	@property({ type: Boolean })
 	candelete: boolean = false;
 
+	/**
+	 * d2l-intl date format to user
+	 */
 	@property({ type: String })
 	dateformat: string = 'medium';
 
+	/**
+	 * Indicates whether the note is beting editted
+	 * Shows a d2l-note-edit component if true
+	 */
 	@property({ type: Boolean })
 	editting: boolean = false;
 
+	/**
+	 * Label for the edit/delete context menu
+	 */
 	@property({ type: String })
 	contextmenulabel?: string;
 
+	/**
+	 * Label of edit menu item
+	 */
 	@property({ type: String })
 	editstring?: string;
 
+	/**
+	 * Label of delete menu item
+	 */
 	@property({ type: String })
 	deletestring?: string;
 
+	/**
+	 * Label of private indicator
+	 */
 	@property({ type: String })
 	privatelabel?: string;
 
+	/**
+	 * Text of 'Add' button in d2l-note-edit
+	 */
 	@property({ type: String })
 	addnotestring?: string;
 
+	/**
+	 * Text of 'Save' button in d2l-note-edit
+	 */
 	@property({ type: String })
 	savenotestring?: string;
 
+	/**
+	 * Label of 'Discard' button in d2l-note-edit
+	 */
 	@property({ type: String })
 	discardnotestring?: string;
+
+	/**
+	 * Fired when delete menu item is tapped
+	 * @event
+	 */
+	static EVENT_DELETE = 'd2l-note-delete';
 
 	__langResources = {
 		'en': {
@@ -199,9 +297,17 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 
 				d2l-user {
 					margin-bottom: var(--d2l-note-user-text-spacing);
+
+					@apply --d2l-note-user;
+				}
+
+				.d2l-note-text {
+					@apply --d2l-note-text;
 				}
 				.paragraph {
 					margin: var(--d2l-note-paragraph-spacing) 0;
+
+					@apply --d2l-note-paragraph;
 				}
 				.paragraph.first {
 					margin-top: 0;
@@ -214,22 +320,33 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					position: absolute;
 					right: 0;
 					top: 0;
+
+					@apply --d2l-note-context-menu;
+				}
+
+				:host(:dir(rtl)) d2l-dropdown-more {
+					right: initial;
+					left: 0;
+					@apply --d2l-note-context-menu-rtl;
 				}
 
 				.d2l-note-private-indicator {
 					position: absolute;
 					bottom: 0;
 					right: 0;
+					@apply --d2l-note-private-indicator;
 				}
 
 				:host(:dir(rtl)) .d2l-note-private-indicator {
 					right: initial;
 					left: 0;
+					@apply --d2l-note-private-indicator-rtl;
 				}
 
 				.skeleton {
 					background: var(--d2l-color-sylvite);
 					border-radius: 6px;
+					@apply --d2l-note-skeleton;
 				}
 
 				.skeleton.skeleton-avatar {
@@ -242,6 +359,9 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					justify-content: space-between;
 					width: 197px;
 					margin-bottom: var(--d2l-note-user-text-spacing);
+
+					@apply --d2l-note-user;
+					@apply --d2l-note-skeleton-user;
 				}
 
 				.skeleton-user .skeleton-info-container {
@@ -265,6 +385,9 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				.d2l-note-text-skeleton {
 					@apply --d2l-body-standard-text;
 					width: 100%;
+
+					@apply --d2l-note-text;
+					@apply --d2l-note-skeleton-text;
 				}
 			</style>
 			<div class="d2l-note-main d2l-typography">
@@ -334,7 +457,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	}
 
 	deleteSelectHandler() {
-		this.dispatchEvent(new CustomEvent('d2l-note-delete', {
+		this.dispatchEvent(new CustomEvent(D2LNote.EVENT_DELETE, {
 			bubbles: true,
 			composed: true,
 			detail: {

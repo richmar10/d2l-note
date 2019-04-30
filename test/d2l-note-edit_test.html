@@ -162,6 +162,24 @@
 				await addPromise;
 			});
 
+			test('shows d2l-alert component when "Add" is tapped and d2l-note-edit-add is prevent defaulted and e.detail.finish is called with an error', async() => {
+				const element = fixture('BasicTestFixture');
+				const savePromise = new Promise(resolve => element.addEventListener('d2l-note-edit-add', e => {
+					e.preventDefault();
+					e.detail.finish(new Error('This is some error'));
+					resolve();
+				}));
+				element.new = true;
+				await element.resourceFetchComplete;
+				const elementShadowRoot = element.shadowRoot;
+				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-button');
+				elementButton.click();
+
+				await savePromise;
+				const alert = elementShadowRoot.querySelector('d2l-alert');
+				assert.isFalse(alert.hidden);
+			});
+
 			test('dispatches d2l-note-edit-save when "Save" is tapped', async() => {
 				const element = fixture('BasicTestFixture');
 				const editPromise = new Promise((resolve) => element.addEventListener('d2l-note-edit-save', resolve));
@@ -227,6 +245,33 @@
 				elementButton.click();
 
 				await discardPromise;
+			});
+
+			test('shows d2l-alert component when "errormessage" is set', async() => {
+				const element = fixture('BasicTestFixture');
+				element.errormessage = 'Error';
+				await element.updateComplete;
+				const elementShadowRoot = element.shadowRoot;
+				const alert = elementShadowRoot.querySelector('d2l-alert');
+				assert.isFalse(alert.hidden);
+			});
+
+			test('shows d2l-alert component when "Save" is tapped and d2l-note-edit-save is prevent defaulted and e.detail.finish is called with an error', async() => {
+				const element = fixture('BasicTestFixture');
+				const savePromise = new Promise(resolve => element.addEventListener('d2l-note-edit-save', e => {
+					e.preventDefault();
+					e.detail.finish(new Error('This is some error'));
+					resolve();
+				}));
+				element.new = false;
+				await element.resourceFetchComplete;
+				const elementShadowRoot = element.shadowRoot;
+				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-button');
+				elementButton.click();
+
+				await savePromise;
+				const alert = elementShadowRoot.querySelector('d2l-alert');
+				assert.isFalse(alert.hidden);
 			});
 
 		});

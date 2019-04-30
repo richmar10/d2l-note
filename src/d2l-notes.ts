@@ -14,14 +14,54 @@ import { LocalizeMixin } from './mixins/localize-mixin';
 import { repeat } from 'lit-html/directives/repeat';
 
 /**
- * Use the customElement decorator to define your class as
- * a custom element. Registers <my-element> as an HTML tag.
+ * d2l-note component created with lit-element
+ *
+ * # Usage
+ * ```html
+ * <d2l-notes
+ *	 id="notes"
+ *   notes="[]"
+ *	 dateformat="medium"
+ *	 editstring="Edit Note"
+ *	 deletestring="Delete Note"
+ *	 privatelabel="Private"
+ *	 addnotestring="Add"
+ *	 savenotestring="Save"
+ *	 discardnotestring="Discard"
+ *	 editplaceholder="Placeholder for d2l-note-edit"
+ * >
+ *	 <div slot="description">Description for d2l-note-edit</div>
+ * </d2l-notes>
+ * ```
+ * ```javascript
+ * document.getElementById('notes').description = html`<p>Description</p>`;
+ * document.getElementById('notes').settings = html`<div>Settings</div>`;
+ * document.getElementById('notes').notes = [{
+ *	user: {
+ *		name: 'Username',
+ *		pic: {
+ *			url: 'url',
+ *			requireTokenAuth: true,
+ *		},
+ *	},
+ *	token: 'foozleberries',
+ *	showAvatar: true,
+ *	me: false,
+ *	createdAt: '2019-04-23T17:08:33.839Z',
+ *	updatedAt: '2019-04-24T17:08:33.839Z',
+ *	text: 'Note',
+ *	canEdit: true,
+ *	canDelete: true,
+ *	private: true,
+ *	contextmenulabel: 'Context Menu'
+ * }];
+ * ```
  */
 @customElement('d2l-notes')
 export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 
 	/**
-	 * Create an observed property. Triggers update on change.
+	 * Array of notes to pass to d2l-note elements
 	 */
 	@property({ type: Array })
 	notes: {
@@ -45,56 +85,119 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 		contextmenulabel: string;
 	}[] = [];
 
+	/**
+	 * Indicates this user can create new notes
+	 */
 	@property({ type: Boolean })
 	cancreate: boolean = false;
 
+	/**
+	 * d2l-note-edit placeholder to show when creating
+	 */
 	@property({ type: String })
 	editplaceholder: string = '';
 
+	/**
+	 * TemplateResult containing description for d2l-note's in edit state and d2l-note-edit
+	 */
 	@property({ type: Object })
 	description: TemplateResult = html`<div></div>`;
 
+	/**
+	 * TemplateResult containing settings for d2l-note's in edit state and d2l-note-edit
+	 */
 	@property({ type: Object })
 	settings: TemplateResult = html`<div></div>`;
 
+	/**
+	 * Show the loadmore button regardless of number of items
+	 */
 	@property({ type: Boolean })
 	hasmore: boolean = false;
 
+	/**
+	 * Load more/less collapsed state
+	 */
 	@property({ type: Boolean })
 	collapsed: boolean = true;
 
+	/**
+	 * Number of items to show before showing the load more button
+	 */
 	@property({ type: Number })
 	collapsedsize: number = 4;
 
+	/**
+	 * dateformat in d2l-note's
+	 */
 	@property({ type: String })
 	dateformat?: string;
 
+	/**
+	 * override loadmore button text
+	 */
 	@property({ type: String })
 	loadmorestring?: string;
 
+	/**
+	 * override loadless button text
+	 */
 	@property({ type: String })
 	loadlessstring?: string;
 
+	/**
+	 * editstring in d2l-note's
+	 */
 	@property({ type: String })
 	editstring?: string;
 
+	/**
+	 * deletestring in d2l-note's
+	 */
 	@property({ type: String })
 	deletestring?: string;
 
+	/**
+	 * privatelabel in d2l-note's
+	 */
 	@property({ type: String })
 	privatelabel?: string;
 
+	/**
+	 * addnotestring in d2l-note-edit
+	 */
 	@property({ type: String })
 	addnotestring?: string;
 
+	/**
+	 * savenotestring in d2l-note's
+	 */
 	@property({ type: String })
 	savenotestring?: string;
 
+	/**
+	 * discardnotestring in d2l-note's and d2l-note-edit
+	 */
 	@property({ type: String })
 	discardnotestring?: string;
 
+	/**
+	 * string to show when there are no notes to show. Set to '' to not show anything
+	 */
 	@property({ type: String })
 	emptystring?: string;
+
+	/**
+	 * Fired when load more is tapped
+	 * @event
+	 */
+	static EVENT_LOAD_MORE = 'd2l-notes-load-more';
+
+	/**
+	 * Fired when load less is tapped
+	 * @event
+	 */
+	static EVENT_LOAD_LESS = 'd2l-notes-load-less';
 
 	__langResources = {
 		'en': {
@@ -158,19 +261,27 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					padding: 0;
 					/* (paragraph separation) 8px + (load more/less border) 1px + (load more/less padding) 8px = 17px */
 					margin-bottom: calc(var(--d2l-notes-ol-margin-bottom) - 17px);
+
+					@apply d2l-notes-ol;
 				}
 				li {
 					display: block;
 					margin-top: var(--d2l-notes-note-margin);
+
+					@apply d2l-notes-li;
 				}
 				li:first-child {
 					margin-top: 0;
+
+					@apply d2l-notes-li-first;
 				}
 
 				hr {
 					/* (paragraph separation) 8px */
 					margin-top: calc(var(--d2l-notes-ol-margin-bottom) - 8px);
 					margin-bottom: var(--d2l-notes-hr-margin-bottom);
+
+					@apply d2l-notes-hr;
 				}
 
 				.d2l-notes-more-less {
@@ -179,15 +290,21 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					align-items: center;
 					/* load more/less padding (8px) - load more/less border (1px) = 9px */
 					margin-bottom: calc(var(--d2l-notes-load-more-margin-bottom) - 9px);
+
+					@apply d2l-notes-more-less;
 				}
 
 				.d2l-notes-load-more-less {
 					flex: 0;
+
+					@apply d2l-notes-more-less-button;
 				}
 
 				.d2l-notes-more-less-separator {
 					flex: 1;
 					border-top: solid 1px var(--d2l-color-celestine);
+
+					@apply d2l-notes-more-less-separator;
 				}
 			</style>
 			<div class="d2l-typography">
@@ -252,13 +369,13 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 
 	handleMoreLess() {
 		if (this.hasmore || this.collapsed) {
-			this.dispatchEvent(new CustomEvent('d2l-notes-load-more', {
+			this.dispatchEvent(new CustomEvent(D2LNotes.EVENT_LOAD_MORE, {
 				bubbles: true,
 				composed: true
 			}));
 			this.collapsed = false;
 		} else {
-			this.dispatchEvent(new CustomEvent('d2l-notes-load-less', {
+			this.dispatchEvent(new CustomEvent(D2LNotes.EVENT_LOAD_LESS, {
 				bubbles: true,
 				composed: true
 			}));
