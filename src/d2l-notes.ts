@@ -20,7 +20,6 @@ import { repeat } from 'lit-html/directives/repeat';
  * ```html
  * <d2l-notes
  *	 id="notes"
- *   notes="[]"
  *	 dateformat="medium"
  *	 editstring="Edit Note"
  *	 deletestring="Delete Note"
@@ -32,8 +31,7 @@ import { repeat } from 'lit-html/directives/repeat';
  * >
  *	 <div slot="description">Description for d2l-note-edit</div>
  * </d2l-notes>
- * ```
- * ```javascript
+ * <script>
  * document.getElementById('notes').description = html`<p>Description</p>`;
  * document.getElementById('notes').settings = html`<div>Settings</div>`;
  * document.getElementById('notes').notes = [{
@@ -55,6 +53,7 @@ import { repeat } from 'lit-html/directives/repeat';
  *	private: true,
  *	contextmenulabel: 'Context Menu'
  * }];
+ * </script>
  * ```
  */
 @customElement('d2l-notes')
