@@ -1,12 +1,12 @@
 import d2lIntl from 'd2l-intl';
-import IntlMessageFormat from 'intl-messageformat/src/main.js';
+import IntlMessageFormat from 'intl-messageformat/src/main';
 import {
 	property
 } from 'lit-element';
 // window.IntlMessageFormat = IntlMessageFormat;
 
 const assign =
-	Object.assign ? Object.assign.bind(Object) : function(destination, source) {
+	Object.assign ? Object.assign.bind(Object) : function(destination: { [key: string]: any }, source: { [key: string]: any }) {
 		for (const prop in source) {
 			if (source.hasOwnProperty(prop)) {
 				destination[prop] = source[prop];
@@ -17,10 +17,16 @@ const assign =
 	};
 
 type Constructor<T> = new(...args: any[]) => T;
-export interface FormatOpts {
-	locale?: object;
-	timezone?: string;
-	format?: string;
+
+export interface LocalizeMixinProto {
+	__localizationCache: {
+		messages: {
+			[key: string]: IntlMessageFormat | undefined;
+		};
+		requests: {
+			[key: string]: any;
+		};
+	};
 }
 
 export function LocalizeMixin<B extends Constructor<{
@@ -82,7 +88,7 @@ export function LocalizeMixin<B extends Constructor<{
 					this._languageChange();
 
 					// Everytime language or resources change, invalidate the messages cache.
-					const proto = this.constructor.prototype;
+					const proto: LocalizeMixinProto = this.constructor.prototype;
 					this.checkLocalizationCache(proto);
 					proto.__localizationCache.messages = {};
 
@@ -100,11 +106,11 @@ export function LocalizeMixin<B extends Constructor<{
 			});
 		}
 
-		localize(key: string, ...args: string[]) {
+		localize(key: string, ...args: any[]) {
 			return this._computeLocalize(this.__language, this.__resources, key, ...args);
 		}
 
-		checkLocalizationCache(proto: { [key: string]: object }) {
+		checkLocalizationCache(proto: LocalizeMixinProto) {
 			// do nothing if proto is undefined.
 			if (proto === undefined)
 				return;
@@ -119,7 +125,7 @@ export function LocalizeMixin<B extends Constructor<{
 			return this.__timezoneObject;
 		}
 
-		formatDateTime(val: Date, opts?: FormatOpts) {
+		formatDateTime(val: Date, opts?: d2lIntl.DateFormatOpts) {
 			opts = opts || {};
 			opts.locale = this.__overrides;
 			opts.timezone = opts.timezone || this.__timezone;
@@ -127,7 +133,7 @@ export function LocalizeMixin<B extends Constructor<{
 			return formatter.format(val);
 		}
 
-		formatDate(val: Date, opts?: FormatOpts) {
+		formatDate(val: Date, opts?: d2lIntl.DateFormatOpts) {
 			opts = opts || {};
 			opts.locale = this.__overrides;
 			opts.timezone = opts.timezone || this.__timezone;
@@ -135,19 +141,19 @@ export function LocalizeMixin<B extends Constructor<{
 			return formatter.formatDate(val);
 		}
 
-		formatFileSize(val: string) {
+		formatFileSize(val: number) {
 			const formatter = new d2lIntl.FileSizeFormat(this.__language);
 			return formatter.format(val);
 		}
 
-		formatNumber(val: string, opts?: FormatOpts) {
+		formatNumber(val: number, opts?: d2lIntl.NumberFormatOpts) {
 			opts = opts || {};
 			opts.locale = this.__overrides;
 			const formatter = new d2lIntl.NumberFormat(this.__language, opts);
 			return formatter.format(val);
 		}
 
-		formatTime(val: Date, opts?: FormatOpts) {
+		formatTime(val: Date, opts?: d2lIntl.DateFormatOpts) {
 			opts = opts || {};
 			opts.locale = this.__overrides;
 			opts.timezone = opts.timezone || this.__timezone;
@@ -163,7 +169,7 @@ export function LocalizeMixin<B extends Constructor<{
 			return parser.parseDate(val);
 		}
 
-		parseNumber(val: string, opts?: FormatOpts) {
+		parseNumber(val: string, opts?: d2lIntl.FormatOpts) {
 			opts = opts || {};
 			opts.locale = this.__overrides;
 			const parser = new d2lIntl.NumberParse(this.__language, opts);
@@ -247,8 +253,8 @@ export function LocalizeMixin<B extends Constructor<{
 			this.__resources = propertyUpdates.resources;
 		}
 
-		_computeLocalize(language?: string, resources?: { [key: string]: { [key: string]: string } }, key?: string, ...args: string[]) {
-			const proto = this.constructor.prototype;
+		_computeLocalize(language?: string, resources?: { [key: string]: { [key: string]: string } }, key?: string, ...args: any[]) {
+			const proto: LocalizeMixinProto = this.constructor.prototype;
 			this.checkLocalizationCache(proto);
 
 			if (!key || !resources || !language || !resources[language])

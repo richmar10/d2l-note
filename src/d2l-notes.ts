@@ -198,7 +198,11 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	 */
 	static EVENT_LOAD_LESS = 'd2l-notes-load-less';
 
-	__langResources = {
+	__langResources: {
+		[key: string]: {
+			[key in 'more' | 'less' | 'empty']: string;
+		};
+	} = {
 		'en': {
 			'more': 'Load More Notes',
 			'less': 'Load Less Notes',

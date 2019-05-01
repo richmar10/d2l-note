@@ -109,7 +109,11 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 	 */
 	static EVENT_DISCARD = 'd2l-note-edit-discard';
 
-	__langResources = {
+	__langResources: {
+		[key: string]: {
+			[key in 'add' | 'save' | 'discard']: string;
+		};
+	} = {
 		'en': {
 			'add': 'Add',
 			'save': 'Save',
