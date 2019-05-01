@@ -16,8 +16,9 @@ import {
 	customElement, html, LitElement, property
 } from 'lit-element';
 
+import { LocalizeMixin, LocalizeMixinProto } from './mixins/localize-mixin';
+
 import { D2LTypographyMixin } from './mixins/d2l-typography-mixin';
-import { LocalizeMixin } from './mixins/localize-mixin';
 import { repeat } from 'lit-html/directives/repeat';
 
 /**
@@ -197,7 +198,11 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	 */
 	static EVENT_DELETE = 'd2l-note-delete';
 
-	__langResources = {
+	__langResources: {
+		[key: string]: {
+			[key in 'SubtextEdited' | 'me' | 'contextMenu' | 'edit' | 'delete' | 'private']: string;
+		};
+	} = {
 		'en': {
 			'SubtextEdited': '{0} (Edited)',
 			'me': 'Me',
@@ -217,7 +222,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	}
 
 	async getLangResources(lang: string) {
-		const proto = this.constructor.prototype;
+		const proto: LocalizeMixinProto = this.constructor.prototype;
 		this.checkLocalizationCache(proto);
 
 		const namespace = `d2l-note:${lang}`;
