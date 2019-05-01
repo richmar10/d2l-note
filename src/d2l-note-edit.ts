@@ -157,7 +157,13 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 
 					--d2l-note-edit-spacing: 12px;
 					--d2l-note-edit-textarea-font-size: 1rem;
-					--d2l-note-edit-textarea-line-height: 1.2rem;
+
+					/* need to set px for transitioning in Edge/IE11 */
+					/* height: calc(var(--d2l-note-edit-textarea-line-height) + var(--d2l-note-edit-textarea-padding-vertical) * 2 + 2px); */
+					--d2l-note-edit-textarea-collapsed-height: 20px;
+					/* height: calc(var(--d2l-note-edit-textarea-line-height) * 4 + var(--d2l-note-edit-textarea-padding-vertical) * 2 + 2px); */
+					--d2l-note-edit-textarea-expanded-height: 95px;
+
 					--d2l-note-edit-textarea-padding-vertical: 0.5rem;
 					--d2l-note-edit-textarea-padding-horizontal: 0.75rem;
 					--d2l-note-edit-transition-duration: 0.5s;
@@ -270,8 +276,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					--d2l-input-textarea: {
 						@apply --d2l-note-edit-common-textarea;
 
-						/* textarea line-height + padding + border */
-						height: calc(var(--d2l-note-edit-textarea-line-height) + var(--d2l-note-edit-textarea-padding-vertical) * 2 + 2px);
+						height: var(--d2l-note-edit-textarea-collapsed-height);
 
 						transition-delay: var(--d2l-note-edit-transition-duration), 0s, 0s;
 					};
@@ -284,8 +289,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					--d2l-input-textarea: {
 						@apply --d2l-note-edit-common-textarea;
 
-						/* textarea line-height * 4 + padding + border */
-						height: calc(var(--d2l-note-edit-textarea-line-height) * 4 + var(--d2l-note-edit-textarea-padding-vertical) * 2 + 2px);
+						height: var(--d2l-note-edit-textarea-expanded-height);
 
 						transition-delay: 0s, 0s, 0s;
 					};
@@ -409,9 +413,11 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 
 	_handleFocusin() {
 		this.setAttribute('focused', '');
+		window.ShadyCSS && window.ShadyCSS.styleSubtree(this);
 	}
 
 	_handleFocusout() {
 		this.removeAttribute('focused');
+		window.ShadyCSS && window.ShadyCSS.styleSubtree(this);
 	}
 }
