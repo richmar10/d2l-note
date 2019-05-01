@@ -294,7 +294,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				}
 
 				.d2l-notes-load-more-less {
-					flex: 0;
+					flex: 0 1 auto;
 
 					@apply d2l-notes-more-less-button;
 				}
