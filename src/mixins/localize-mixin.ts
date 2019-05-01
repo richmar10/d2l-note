@@ -1,4 +1,4 @@
-import * as d2lIntl from 'd2l-intl';
+import d2lIntl from 'd2l-intl';
 import IntlMessageFormat from 'intl-messageformat/src/main';
 import {
 	property
