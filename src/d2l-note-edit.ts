@@ -164,7 +164,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 
 					/* need to set px for transitioning in Edge/IE11 */
 					/* height: calc(var(--d2l-note-edit-textarea-line-height) + var(--d2l-note-edit-textarea-padding-vertical) * 2 + 2px); */
-					--d2l-note-edit-textarea-collapsed-height: 20px;
+					--d2l-note-edit-textarea-collapsed-height: 37px;
 					/* height: calc(var(--d2l-note-edit-textarea-line-height) * 4 + var(--d2l-note-edit-textarea-padding-vertical) * 2 + 2px); */
 					--d2l-note-edit-textarea-expanded-height: 95px;
 
