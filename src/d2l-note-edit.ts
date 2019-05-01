@@ -14,38 +14,100 @@ import {
 import { LocalizeMixin } from './mixins/localize-mixin';
 
 /**
- * Use the customElement decorator to define your class as
- * a custom element. Registers <my-element> as an HTML tag.
+ * d2l-note-edit component created with lit-element
+ *
+ * # Usage
+ * ```html
+ * <d2l-note-edit
+ *	 id="edit"
+ *	 placeholder="Placeholder"
+ *	 value="Initial note text"
+ *	 expanded
+ *	 addnotestring="Add"
+ *	 savenotestring="Save"
+ *	 discardnotestring="Discard"
+ *>
+ *	 <div slot="description">Description</div>
+ *	 <div slot="settings">Settings slot</div>
+ * </d2l-note-edit>
+ * ```
  */
 @customElement('d2l-note-edit')
 export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 
 	/**
-	 * Create an observed property. Triggers update on change.
+	 * Indicates this control creates a new item
 	 */
 	@property({ type: Boolean })
 	new: boolean = false;
 
+	/**
+	 * Contents of note. Updates with change event on textarea
+	 */
 	@property({ type: String })
 	value: string = '';
 
+	/**
+	 * Placeholder for textarea
+	 */
 	@property({ type: String })
 	placeholder: string = '';
 
+	/**
+	 * Text for the 'Add' button. Defaults to langified 'Add'
+	 */
 	@property({ type: String })
 	addnotestring?: string;
 
+	/**
+	 * Text for the 'Save' button. Defaults to langified 'Save'
+	 */
 	@property({ type: String })
 	savenotestring?: string;
 
+	/**
+	 * Label for the 'Discard' button. Defaults to langified 'Discard'
+	 */
 	@property({ type: String })
 	discardnotestring?: string;
 
+	/**
+	 * Indicates whether the component is in its expanded state. If true,
+	 * The textarea is set to its maximum height, the controls are visible.
+	 */
 	@property({ type: Boolean, reflect: true })
 	expanded = false;
 
+	/**
+	 * The error message to show if set. Shows a d2l-alert component and
+	 * sets the color of the textarea to --d2l-alert-critical-color
+	 */
 	@property({ type: String })
 	errormessage?: string;
+
+	/**
+	 * Fired when edit is finished
+	 * @event
+	 */
+	static EVENT_FINISHED = 'd2l-note-edit-finished';
+
+	/**
+	 * Fired when Add button is tapped
+	 * @event
+	 */
+	static EVENT_ADD = 'd2l-note-edit-add';
+
+	/**
+	 * Fired when Save button is tapped
+	 * @event
+	 */
+	static EVENT_SAVE = 'd2l-note-edit-save';
+
+	/**
+	 * Fired when Discard button is tapped
+	 * @event
+	 */
+	static EVENT_DISCARD = 'd2l-note-edit-discard';
 
 	__langResources = {
 		'en': {
@@ -95,7 +157,13 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 
 					--d2l-note-edit-spacing: 12px;
 					--d2l-note-edit-textarea-font-size: 1rem;
-					--d2l-note-edit-textarea-line-height: 1.2rem;
+
+					/* need to set px for transitioning in Edge/IE11 */
+					/* height: calc(var(--d2l-note-edit-textarea-line-height) + var(--d2l-note-edit-textarea-padding-vertical) * 2 + 2px); */
+					--d2l-note-edit-textarea-collapsed-height: 20px;
+					/* height: calc(var(--d2l-note-edit-textarea-line-height) * 4 + var(--d2l-note-edit-textarea-padding-vertical) * 2 + 2px); */
+					--d2l-note-edit-textarea-expanded-height: 95px;
+
 					--d2l-note-edit-textarea-padding-vertical: 0.5rem;
 					--d2l-note-edit-textarea-padding-horizontal: 0.75rem;
 					--d2l-note-edit-transition-duration: 0.5s;
@@ -103,14 +171,14 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					--d2l-note-edit-base-textarea: {
 						font-size: var(--d2l-note-edit-textarea-font-size);
 
-						transition-property: height;
-						transition-duration: var(--d2l-note-edit-transition-duration);
-						transition-timing-function: ease;
+						transition-property: height, background-color, border-color;
+						transition-duration: var(--d2l-note-edit-transition-duration), var(--d2l-note-edit-transition-duration), var(--d2l-note-edit-transition-duration);
+						transition-timing-function: ease, ease, ease;
 					};
 
 					--d2l-note-edit-common-textarea: {
 						@apply --d2l-note-edit-base-textarea;
-					}
+					};
 				}
 				.d2l-note-edit-controls {
 					margin-top: var(--d2l-note-edit-spacing);
@@ -121,6 +189,8 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					transition-property: height, opacity, visibility;
 					transition-duration: var(--d2l-note-edit-transition-duration), var(--d2l-note-edit-transition-duration);
 					transition-timing-function: ease, ease;
+
+					@apply --d2l-note-edit-controls;
 				}
 
 				:host(:not([focused])) .d2l-note-edit-controls,
@@ -130,6 +200,8 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					visibility: hidden;
 
 					transition-delay: var(--d2l-note-edit-transition-duration), 0s, var(--d2l-note-edit-transition-duration);
+
+					@apply --d2l-note-edit-controls-nofocus;
 				}
 
 				:host([focused]) .d2l-note-edit-controls,
@@ -140,20 +212,28 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					visibility: visible;
 
 					transition-delay: 0s, var(--d2l-note-edit-transition-duration), var(--d2l-note-edit-transition-duration);
+
+					@apply --d2l-note-edit-controls-focus;
 				}
 
 				.d2l-note-edit-bottom-left {
 					display: flex;
 					flex-direction: row;
+
+					@apply --d2l-note-edit-bottom-left;
 				}
 
 				.d2l-note-edit-settings {
 					margin-left: 0.5rem;
 					margin-right: 0.5rem;
+
+					@apply --d2l-note-edit-settings;
 				}
 
 				d2l-alert {
 					margin-top: var(--d2l-note-edit-spacing);
+
+					@apply --d2l-note-edit-error-alert;
 				}
 
 				d2l-input-textarea.d2l-note-edit-error {
@@ -169,6 +249,8 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 						outline-width: 0;
 						padding: var(--d2l-input-padding-focus);
 					};
+
+					@apply --d2l-note-edit-error-textarea;
 				}
 
 				d2l-input-textarea {
@@ -180,11 +262,13 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 						font-size: var(--d2l-note-edit-textarea-font-size);
 						font-weight: 400;
 						opacity: 1; /* Firefox has non-1 default */
-					}
+					};
 
 					--d2l-input-textarea: {
 						@apply --d2l-note-edit-common-textarea;
-					}
+					};
+
+					@apply --d2l-note-edit-textarea;
 				}
 
 				:host(:not([focused])) d2l-input-textarea,
@@ -192,11 +276,12 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					--d2l-input-textarea: {
 						@apply --d2l-note-edit-common-textarea;
 
-						/* textarea line-height + padding + border */
-						height: calc(var(--d2l-note-edit-textarea-line-height) + var(--d2l-note-edit-textarea-padding-vertical) * 2 + 2px);
+						height: var(--d2l-note-edit-textarea-collapsed-height);
 
-						transition-delay: var(--d2l-note-edit-transition-duration);
-					}
+						transition-delay: var(--d2l-note-edit-transition-duration), 0s, 0s;
+					};
+
+					@apply --d2l-note-edit-textarea-nofocus;
 				}
 
 				:host([focused]) d2l-input-textarea,
@@ -204,11 +289,12 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					--d2l-input-textarea: {
 						@apply --d2l-note-edit-common-textarea;
 
-						/* textarea line-height * 4 + padding + border */
-						height: calc(var(--d2l-note-edit-textarea-line-height) * 4 + var(--d2l-note-edit-textarea-padding-vertical) * 2 + 2px);
+						height: var(--d2l-note-edit-textarea-expanded-height);
 
-						transition-delay: 0s;
-					}
+						transition-delay: 0s, 0s, 0s;
+					};
+
+					@apply --d2l-note-edit-textarea-focus;
 				}
 			</style>
 
@@ -261,7 +347,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				this.errormessage = error.message ? error.message : error;
 				return;
 			}
-			this.dispatchEvent(new CustomEvent('d2l-note-edit-finished', {
+			this.dispatchEvent(new CustomEvent(D2LNoteEdit.EVENT_FINISHED, {
 				bubbles: true,
 				composed: true,
 				detail: {
@@ -273,7 +359,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 		};
 		let succeeded = false;
 		if (this.new) {
-			succeeded = this.dispatchEvent(new CustomEvent('d2l-note-edit-add', {
+			succeeded = this.dispatchEvent(new CustomEvent(D2LNoteEdit.EVENT_ADD, {
 				bubbles: true,
 				composed: true,
 				cancelable: true,
@@ -284,7 +370,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				}
 			}));
 		} else {
-			succeeded = this.dispatchEvent(new CustomEvent('d2l-note-edit-save', {
+			succeeded = this.dispatchEvent(new CustomEvent(D2LNoteEdit.EVENT_SAVE, {
 				bubbles: true,
 				composed: true,
 				cancelable: true,
@@ -302,7 +388,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 
 	_handleClick() {
 		this.errormessage = undefined;
-		const discarded = this.dispatchEvent(new CustomEvent('d2l-note-edit-discard', {
+		const discarded = this.dispatchEvent(new CustomEvent(D2LNoteEdit.EVENT_DISCARD, {
 			bubbles: true,
 			composed: true,
 			cancelable: true,
@@ -313,7 +399,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 		}));
 
 		if (discarded) {
-			this.dispatchEvent(new CustomEvent('d2l-note-edit-finished', {
+			this.dispatchEvent(new CustomEvent(D2LNoteEdit.EVENT_FINISHED, {
 				bubbles: true,
 				composed: true,
 				detail: {
@@ -327,9 +413,11 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 
 	_handleFocusin() {
 		this.setAttribute('focused', '');
+		window.ShadyCSS && window.ShadyCSS.styleSubtree(this);
 	}
 
 	_handleFocusout() {
 		this.removeAttribute('focused');
+		window.ShadyCSS && window.ShadyCSS.styleSubtree(this);
 	}
 }
