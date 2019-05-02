@@ -12,6 +12,7 @@
       "rules": {
         "no-dupe-class-members": "off",
         "no-unused-vars": "off",
+        "no-undef": "off",
         "@typescript-eslint/adjacent-overload-signatures": "error",
         "@typescript-eslint/array-type": "error",
         "@typescript-eslint/ban-types": "error",

@@ -3,7 +3,13 @@ import IntlMessageFormat from 'intl-messageformat/src/main';
 import {
 	property
 } from 'lit-element';
-// window.IntlMessageFormat = IntlMessageFormat;
+window.IntlMessageFormat = IntlMessageFormat;
+
+declare global {
+	interface Window {
+		IntlMessageFormat: typeof IntlMessageFormat;
+	}
+}
 
 const assign =
 	Object.assign ? Object.assign.bind(Object) : function(destination: { [key: string]: any }, source: { [key: string]: any }) {
@@ -80,7 +86,7 @@ export function LocalizeMixin<B extends Constructor<{
 		}
 
 		updated(changedProperties: Map<string, string>) {
-			changedProperties.forEach((oldValue, propName) => {
+			changedProperties.forEach((_oldValue, propName) => {
 				if (propName === '__documentLanguage' || propName === '__documentLanguageFallback') {
 					const possibleLanguages = this._generatePossibleLanguages(this.__documentLanguage, this.__documentLanguageFallback);
 					this.__language = this.getLanguage(possibleLanguages);
@@ -106,6 +112,14 @@ export function LocalizeMixin<B extends Constructor<{
 			});
 		}
 
+		/**
+		 * Same functionality as app-localize-behavior.localize:
+		 * https://github.com/PolymerElements/app-localize-behavior/blob/master/app-localize-behavior.js
+		 *
+		 * Translates a string to the current `language`. Any parameters to the
+		 * string should be passed in order, as follows:
+		 * `localize(stringKey, param1Name, param1Value, param2Name, param2Value)`
+		*/
 		localize(key: string, ...args: any[]) {
 			return this._computeLocalize(this.__language, this.__resources, key, ...args);
 		}

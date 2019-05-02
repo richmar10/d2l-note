@@ -1,4 +1,4 @@
-import '@d2l/user-elements/d2l-user.js';
+import '@d2l/user-elements/d2l-user';
 import 'd2l-icons/d2l-icon';
 import 'd2l-icons/tier1-icons';
 import 'd2l-dropdown/d2l-dropdown-more';
