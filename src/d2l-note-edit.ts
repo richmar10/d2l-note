@@ -231,6 +231,9 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					margin-left: 0.5rem;
 					margin-right: 0.5rem;
 
+					display: inline-flex;
+					align-items: center;
+
 					@apply --d2l-note-edit-settings;
 				}
 
