@@ -297,7 +297,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					position: relative;
 					display: flex;
 					line-height: 0;
-					padding: var(--d2l-note-padding) 0;
+					padding: var(--d2l-note-padding);
 				}
 				:host([me]) {
 					background-color: var(--d2l-color-regolith);
@@ -335,8 +335,8 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 
 				d2l-dropdown-more {
 					position: absolute;
-					right: 0;
-					top: 0;
+					right: var(--d2l-note-padding);
+					top: var(--d2l-note-padding);
 
 					@apply --d2l-note-context-menu;
 				}
@@ -350,8 +350,8 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 
 				.d2l-note-private-indicator {
 					position: absolute;
-					bottom: 0;
-					right: 0;
+					bottom: var(--d2l-note-padding);
+					right: var(--d2l-note-padding);
 					@apply --d2l-note-private-indicator;
 				}
 
