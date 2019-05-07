@@ -116,13 +116,13 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	/**
 	 * Indicates note user is the current user
 	 */
-	@property({ type: Boolean, reflect: true })
+	@property({ type: Boolean })
 	me: boolean = false;
 
 	/**
 	 * Indicates this note is private
 	 */
-	@property({ type: Boolean })
+	@property({ type: Boolean, reflect: true })
 	private: boolean = false;
 
 	/**
@@ -299,7 +299,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					line-height: 0;
 					padding: var(--d2l-note-padding);
 				}
-				:host([me]) {
+				:host([private]) {
 					background-color: var(--d2l-color-regolith);
 				}
 				.d2l-note-main {
