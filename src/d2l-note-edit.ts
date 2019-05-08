@@ -198,6 +198,19 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					@apply --d2l-note-edit-controls;
 				}
 
+				.d2l-note-edit-button {
+					margin-right: 0.5rem;
+				}
+
+				:host(:dir(rtl)) .d2l-note-edit-button {
+					margin-right: initial;
+					margin-left: 0.5rem;
+				}
+				:host-context([dir="rtl"]) > .d2l-note-edit-main .d2l-note-edit-button {
+					margin-right: initial;
+					margin-left: 0.5rem;
+				}
+
 				:host(:not([focused])) .d2l-note-edit-controls,
 				:host(:not([expanded])) .d2l-note-edit-controls {
 					max-height: 0;
@@ -223,16 +236,13 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				.d2l-note-edit-bottom-right {
 					display: flex;
 					flex-direction: row;
-					flex: 1;
+					flex: 1 0 auto;
 					justify-content: space-between;
 
 					@apply --d2l-note-edit-bottom-right;
 				}
 
 				.d2l-note-edit-settings {
-					margin-left: 0.5rem;
-					margin-right: 0.5rem;
-
 					display: inline-flex;
 					align-items: center;
 
@@ -311,6 +321,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				<slot name="description"></slot>
 			</div>
 			<div
+				class="d2l-note-edit-main"
 				@focusin=${this._handleFocusin}
 				@focusout=${this._handleFocusout}
 			>
