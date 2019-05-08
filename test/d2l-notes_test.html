@@ -56,8 +56,8 @@
 			test('passes description and settings slots to d2l-note-edit if "cancreate" is true', async() => {
 				const element = fixture('BasicTestFixture');
 				element.cancreate = true;
-				element.description = html`<p>Description</p>`;
-				element.settings = html`<span>Settings</span>`;
+				element.description = () => html`<p>Description</p>`;
+				element.settings = () => html`<span>Settings</span>`;
 				await element.updateComplete;
 
 				const elementShadowRoot = element.shadowRoot;

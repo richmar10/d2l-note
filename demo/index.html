@@ -181,8 +181,8 @@
 		<script type="module">
 			import { html } from '../../../lit-element/lit-element.js';
 			const notes = document.getElementById('notes');
-			notes.description = html`<p class="d2l-body-standard">Description</p>`;
-			notes.settings = html`<p class="d2l-body-standard">Settings</p>`;
+			notes.description = () => html`<p class="d2l-body-standard">Description</p>`;
+			notes.settings = () => html`<p class="d2l-body-standard">Settings</p>`;
 
 			const notes5s = document.querySelectorAll('.d2l-notes-5');
 			[].forEach.call(notes5s, (notes) => {

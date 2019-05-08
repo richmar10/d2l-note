@@ -13,6 +13,27 @@ import { D2LTypographyMixin } from './mixins/d2l-typography-mixin';
 import { LocalizeMixin } from './mixins/localize-mixin';
 import { repeat } from 'lit-html/directives/repeat';
 
+interface INote {
+	id?: string;
+	user: {
+		name: string;
+		pic: {
+			url: string;
+			requireTokenAuth?: boolean;
+		};
+	};
+	token: string;
+	showAvatar: boolean;
+	me: boolean;
+	createdAt: string;
+	updatedAt: string;
+	text: string;
+	canEdit: boolean;
+	canDelete: boolean;
+	private: boolean;
+	contextmenulabel: string;
+}
+
 /**
  * d2l-note component created with lit-element
  *
@@ -63,26 +84,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	 * Array of notes to pass to d2l-note elements
 	 */
 	@property({ type: Array })
-	notes: {
-		id?: string;
-		user: {
-			name: string;
-			pic: {
-				url: string;
-				requireTokenAuth?: boolean;
-			};
-		};
-		token: string;
-		showAvatar: boolean;
-		me: boolean;
-		createdAt: string;
-		updatedAt: string;
-		text: string;
-		canEdit: boolean;
-		canDelete: boolean;
-		private: boolean;
-		contextmenulabel: string;
-	}[] = [];
+	notes: INote[] = [];
 
 	/**
 	 * Indicates this user can create new notes
@@ -100,13 +102,13 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	 * TemplateResult containing description for d2l-note's in edit state and d2l-note-edit
 	 */
 	@property({ type: Object })
-	description: TemplateResult = html`<div></div>`;
+	description: (ctx?: INote) => TemplateResult = () => html`<div></div>`;
 
 	/**
 	 * TemplateResult containing settings for d2l-note's in edit state and d2l-note-edit
 	 */
 	@property({ type: Object })
-	settings: TemplateResult = html`<div></div>`;
+	settings: (ctx?: INote) => TemplateResult = () => html`<div></div>`;
 
 	/**
 	 * Show the loadmore button regardless of number of items
@@ -336,8 +338,8 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 								.discardnotestring=${this.discardnotestring}
 								.editplaceholder=${this.editplaceholder}
 							>
-								<div slot="description">${this.description}</div>
-								<div slot="settings">${this.settings}</div>
+								<div slot="description">${this.description(note)}</div>
+								<div slot="settings">${this.settings(note)}</div>
 							</d2l-note>
 						</li>
 					`)}
@@ -363,8 +365,8 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				${(hasmore || this.notes.length) && this.cancreate ? html`<hr>` : null}
 
 				${this.cancreate ? html`<d2l-note-edit new placeholder="${this.editplaceholder}">
-					<slot class="d2l-body-standard" name="description" slot="description"><div>${this.description}</div></slot>
-					<div slot="settings">${this.settings}</div>
+					<slot class="d2l-body-standard" name="description" slot="description"><div>${this.description()}</div></slot>
+					<div slot="settings">${this.settings()}</div>
 				</d2l-note-edit>` : null}
 			</div>
 		`;
