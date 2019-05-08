@@ -53,8 +53,8 @@ interface INote {
  *	 <div slot="description">Description for d2l-note-edit</div>
  * </d2l-notes>
  * <script>
- * document.getElementById('notes').description = html`<p>Description</p>`;
- * document.getElementById('notes').settings = html`<div>Settings</div>`;
+ * document.getElementById('notes').description = (note) => note ? html`<p>Description for note</p>` : html`<p>Description for notes</p>`;
+ * document.getElementById('notes').settings = (note) => note ? html`<div>Settings for note</div>` : html`<div>Settings for notes</div>`;
  * document.getElementById('notes').notes = [{
  *	user: {
  *		name: 'Username',
