@@ -189,17 +189,31 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					display: flex;
 					flex-direction: row;
 					justify-content: space-between;
+					flex-wrap: wrap-reverse;
 
-					transition-property: height, opacity, visibility;
+					transition-property: max-height, opacity, visibility;
 					transition-duration: var(--d2l-note-edit-transition-duration), var(--d2l-note-edit-transition-duration);
 					transition-timing-function: ease, ease;
 
 					@apply --d2l-note-edit-controls;
 				}
 
+				.d2l-note-edit-button {
+					margin-right: 0.5rem;
+				}
+
+				:host(:dir(rtl)) .d2l-note-edit-button {
+					margin-right: initial;
+					margin-left: 0.5rem;
+				}
+				:host-context([dir="rtl"]) > .d2l-note-edit-main .d2l-note-edit-button {
+					margin-right: initial;
+					margin-left: 0.5rem;
+				}
+
 				:host(:not([focused])) .d2l-note-edit-controls,
 				:host(:not([expanded])) .d2l-note-edit-controls {
-					height: 0;
+					max-height: 0;
 					opacity: 0;
 					visibility: hidden;
 
@@ -210,8 +224,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 
 				:host([focused]) .d2l-note-edit-controls,
 				:host([expanded]) .d2l-note-edit-controls {
-					/* d2l-button line-height + padding + border */
-					height: calc(2rem + 2px);
+					max-height: 90px;
 					opacity: 1;
 					visibility: visible;
 
@@ -220,17 +233,16 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					@apply --d2l-note-edit-controls-focus;
 				}
 
-				.d2l-note-edit-bottom-left {
+				.d2l-note-edit-bottom-right {
 					display: flex;
 					flex-direction: row;
+					flex: 1 0 auto;
+					justify-content: space-between;
 
-					@apply --d2l-note-edit-bottom-left;
+					@apply --d2l-note-edit-bottom-right;
 				}
 
 				.d2l-note-edit-settings {
-					margin-left: 0.5rem;
-					margin-right: 0.5rem;
-
 					display: inline-flex;
 					align-items: center;
 
@@ -309,6 +321,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				<slot name="description"></slot>
 			</div>
 			<div
+				class="d2l-note-edit-main"
 				@focusin=${this._handleFocusin}
 				@focusout=${this._handleFocusout}
 			>
@@ -320,24 +333,24 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				></d2l-input-textarea>
 				<d2l-alert type="error" .hidden=${!this.errormessage}>${this.errormessage}</d2l-alert>
 				<div class="d2l-note-edit-controls">
-					<div class="d2l-note-edit-bottom-left">
-						<d2l-button
-							class="d2l-note-edit-button"
-							primary
-							@click=${this._handleEditClick}
-						>
-							${this.new ? this.addnotestring ? this.addnotestring : this.localize('add') : this.savenotestring ? this.savenotestring : this.localize('save')}
-						</d2l-button>
+					<d2l-button
+						class="d2l-note-edit-button"
+						primary
+						@click=${this._handleEditClick}
+					>
+						${this.new ? this.addnotestring ? this.addnotestring : this.localize('add') : this.savenotestring ? this.savenotestring : this.localize('save')}
+					</d2l-button>
+					<div class="d2l-note-edit-bottom-right">
 						<div class="d2l-note-edit-settings">
 							<slot name="settings"></slot>
 						</div>
+						<d2l-button-icon
+							class="d2l-note-edit-discard-button"
+							icon="d2l-tier2:delete"
+							text="${this.discardnotestring ? this.discardnotestring : this.localize('discard')}"
+							@click=${this._handleClick}
+						></d2l-button-icon>
 					</div>
-					<d2l-button-icon
-						class="d2l-note-edit-discard-button"
-						icon="d2l-tier2:delete"
-						text="${this.discardnotestring ? this.discardnotestring : this.localize('discard')}"
-						@click=${this._handleClick}
-					></d2l-button-icon>
 				</div>
 			</div>
 		`;
