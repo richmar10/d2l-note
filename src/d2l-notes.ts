@@ -267,18 +267,18 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					/* (paragraph separation) 8px + (load more/less border) 1px + (load more/less padding) 8px = 17px */
 					margin-bottom: calc(var(--d2l-notes-ol-margin-bottom) - 17px);
 
-					@apply d2l-notes-ol;
+					@apply --d2l-notes-ol;
 				}
 				li {
 					display: block;
 					margin-top: var(--d2l-notes-note-margin);
 
-					@apply d2l-notes-li;
+					@apply --d2l-notes-li;
 				}
 				li:first-child {
 					margin-top: 0;
 
-					@apply d2l-notes-li-first;
+					@apply --d2l-notes-li-first;
 				}
 
 				hr {
@@ -286,7 +286,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					margin-top: calc(var(--d2l-notes-ol-margin-bottom) - 8px);
 					margin-bottom: var(--d2l-notes-hr-margin-bottom);
 
-					@apply d2l-notes-hr;
+					@apply --d2l-notes-hr;
 				}
 
 				.d2l-notes-more-less {
@@ -296,20 +296,20 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					/* load more/less padding (8px) - load more/less border (1px) = 9px */
 					margin-bottom: calc(var(--d2l-notes-load-more-margin-bottom) - 9px);
 
-					@apply d2l-notes-more-less;
+					@apply --d2l-notes-more-less;
 				}
 
 				.d2l-notes-load-more-less {
 					flex: 0 1 auto;
 
-					@apply d2l-notes-more-less-button;
+					@apply --d2l-notes-more-less-button;
 				}
 
 				.d2l-notes-more-less-separator {
 					flex: 1;
 					border-top: solid 1px var(--d2l-color-celestine);
 
-					@apply d2l-notes-more-less-separator;
+					@apply --d2l-notes-more-less-separator;
 				}
 			</style>
 			<div class="d2l-typography">
