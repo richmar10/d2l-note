@@ -16,3 +16,4 @@ declare module 'd2l-icons/tier2-icons';
 declare module 'd2l-button/d2l-button';
 declare module 'd2l-button/d2l-button-icon';
 declare module 'd2l-alert/d2l-alert';
+declare module 'd2l-users/components/d2l-profile-image';

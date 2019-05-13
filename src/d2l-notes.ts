@@ -22,6 +22,7 @@ interface INote {
 			requireTokenAuth?: boolean;
 		};
 	};
+	href: string;
 	token: string;
 	showAvatar: boolean;
 	me: boolean;
@@ -319,6 +320,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 							<d2l-note
 								.id=${note.id ? note.id : ''}
 								.user=${note.user}
+								.href=${note.href}
 								.token=${note.token}
 								.showavatar=${typeof note.showAvatar === 'boolean' ? note.showAvatar : true}
 								.me=${note.me ? note.me : false}
