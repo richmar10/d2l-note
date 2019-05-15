@@ -1,0 +1,30 @@
+{
+  "entities": [
+    {
+      "rel": ["https://api.brightspace.com/rels/user-profile"],
+      "entities": [{
+        "rel": ["https://api.brightspace.com/rels/profile-image"],
+        "links": [{
+          "rel": ["alternate"],
+          "href": "avatar.png"
+        }]
+      }]
+    }, {
+      "rel": ["https://api.brightspace.com/rels/first-name"],
+      "properties": {
+        "name": "Bill"
+      }
+    }, {
+      "rel": ["https://api.brightspace.com/rels/last-name"],
+      "properties": {
+        "name": "Bob"
+      }
+    }
+  ],
+  "links": [
+    {
+      "rel": ["self"],
+      "href": "123"
+    }
+  ]
+}

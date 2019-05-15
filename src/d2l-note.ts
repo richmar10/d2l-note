@@ -7,6 +7,7 @@ import 'd2l-menu/d2l-menu';
 import 'd2l-menu/d2l-menu-item';
 import 'd2l-more-less/d2l-more-less';
 import 'd2l-colors/d2l-colors';
+import 'd2l-users/components/d2l-profile-image';
 import './d2l-note-edit';
 /**
  * Import LitElement base class, html helper function,
@@ -69,6 +70,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 			requireTokenAuth?: boolean;
 		};
 		name?: string;
+		href?: string;
 	};
 
 	/**
@@ -369,8 +371,8 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				}
 
 				.skeleton.skeleton-avatar {
-					width: 52px;
-					height: 52px;
+					width: 42px;
+					height: 42px;
 				}
 
 				.skeleton-user {
@@ -419,7 +421,14 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 							.subText="${subText}"
 							.useImageAuthentication=${useImageAuthentication}
 							.shouldHideImage=${!this.showavatar}
-							></d2l-user>` : html`
+							>
+								${this.user.href ? html`<d2l-profile-image
+									slot="avatar"
+									href="${this.user.href}"
+									token="${this.token}"
+									medium
+								></d2l-profile-image>` : null }
+							</d2l-user>` : html`
 						<div class="d2l-note-user-skeleton skeleton-user">
 							<div class="skeleton skeleton-avatar"></div>
 							<div class="skeleton-info-container">
