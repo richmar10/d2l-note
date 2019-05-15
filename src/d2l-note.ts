@@ -70,13 +70,8 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 			requireTokenAuth?: boolean;
 		};
 		name?: string;
+		href?: string;
 	};
-
-	/**
-	 * Href location of user entity
-	 */
-	@property({ type: String })
-	href?: string;
 
 	/**
 	 * Token to use in request when user.pic.requireTokenAuth is true
@@ -427,9 +422,9 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 							.useImageAuthentication=${useImageAuthentication}
 							.shouldHideImage=${!this.showavatar}
 							>
-								${this.href ? html`<d2l-profile-image
+								${this.user.href ? html`<d2l-profile-image
 									slot="avatar"
-									href="${this.href}"
+									href="${this.user.href}"
 									token="${this.token}"
 									medium
 								></d2l-profile-image>` : null }
