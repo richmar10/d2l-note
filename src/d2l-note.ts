@@ -280,8 +280,6 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					--d2l-note-padding: 0.5rem;
 
 					--d2l-note-local-context-menu-rtl: {
-						right: initial;
-						left: 0;
 						@apply --d2l-note-context-menu-rtl;
 					};
 
@@ -336,10 +334,6 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				}
 
 				d2l-dropdown-more {
-					position: absolute;
-					right: var(--d2l-note-padding);
-					top: var(--d2l-note-padding);
-
 					@apply --d2l-note-context-menu;
 				}
 
