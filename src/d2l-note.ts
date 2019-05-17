@@ -277,7 +277,9 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				:host {
 					--d2l-note-user-text-spacing: 18px;
 					--d2l-note-paragraph-spacing: 0.5rem;
-					--d2l-note-padding: 0.5rem;
+					--d2l-note-padding-vertical: 0.5rem;
+					--d2l-note-padding-horizontal: 1rem;
+					--d2l-note-margin-horizontal: -1rem;
 
 					--d2l-note-local-context-menu-rtl: {
 						@apply --d2l-note-context-menu-rtl;
@@ -285,19 +287,22 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 
 					--d2l-note-local-private-indicator-rtl: {
 						right: initial;
-						left: 0;
+						left: var(--d2l-note-padding-horizontal);
 						@apply --d2l-note-private-indicator-rtl;
 					};
 				}
 				:host([compact]) {
 					--d2l-note-user-text-spacing: 8px;
-					--d2l-note-padding: 0;
+					--d2l-note-padding-vertical: 0;
+					--d2l-note-padding-horizontal: 0;
+					--d2l-note-margin-horizontal: 0;
 				}
 				:host {
 					position: relative;
 					display: flex;
 					line-height: 0;
-					padding: var(--d2l-note-padding);
+					padding: var(--d2l-note-padding-vertical) var(--d2l-note-padding-horizontal);
+					margin: 0 var(--d2l-note-margin-horizontal);
 				}
 				:host([private]) {
 					background-color: var(--d2l-color-regolith);
@@ -346,8 +351,8 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 
 				.d2l-note-private-indicator {
 					position: absolute;
-					bottom: var(--d2l-note-padding);
-					right: var(--d2l-note-padding);
+					bottom: var(--d2l-note-padding-vertical);
+					right: var(--d2l-note-padding-horizontal);
 					@apply --d2l-note-private-indicator;
 				}
 
