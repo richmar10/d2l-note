@@ -275,7 +275,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 			<style>${D2LNote.d2lTypographyStyle}</style>
 			<style>
 				:host {
-					--d2l-note-user-text-spacing: 18px;
+					--d2l-note-user-text-spacing: 12px;
 					--d2l-note-paragraph-spacing: 0.5rem;
 					--d2l-note-padding-vertical: 0.5rem;
 					--d2l-note-padding-horizontal: 1rem;
@@ -286,8 +286,6 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					};
 
 					--d2l-note-local-private-indicator-rtl: {
-						right: initial;
-						left: var(--d2l-note-padding-horizontal);
 						@apply --d2l-note-private-indicator-rtl;
 					};
 				}
@@ -350,9 +348,7 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				}
 
 				.d2l-note-private-indicator {
-					position: absolute;
-					bottom: var(--d2l-note-padding-vertical);
-					right: var(--d2l-note-padding-horizontal);
+					margin: 8px;
 					@apply --d2l-note-private-indicator;
 				}
 
@@ -361,6 +357,14 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				}
 				:host-context([dir="rtl"]) > .d2l-note-main .d2l-note-private-indicator {
 					@apply --d2l-note-local-private-indicator-rtl;
+				}
+
+				.d2l-note-text-container {
+					display: flex;
+				}
+
+				d2l-more-less {
+					flex: 1;
 				}
 
 				.skeleton {
@@ -420,14 +424,12 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 							.subText="${subText}"
 							.useImageAuthentication=${useImageAuthentication}
 							.shouldHideImage=${!this.showavatar}
-							>
-								${this.user.href ? html`<d2l-profile-image
+							>${this.user.href ? html`<d2l-profile-image
 									slot="avatar"
 									href="${this.user.href}"
 									token="${this.token}"
 									medium
-								></d2l-profile-image>` : null }
-							</d2l-user>` : html`
+								></d2l-profile-image>` : null }</d2l-user>` : html`
 						<div class="d2l-note-user-skeleton skeleton-user">
 							<div class="skeleton skeleton-avatar"></div>
 							<div class="skeleton-info-container">
@@ -451,26 +453,28 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 							</d2l-dropdown-menu>
 						</d2l-dropdown-more>` : null }
 				</div>
-				${this.editting ? html`
-					<d2l-note-edit
-						id="${this.id}"
-						placeholder="${this.editplaceholder}"
-						value="${this.text}"
-						expanded
-						.addnotestring=${this.addnotestring}
-						.savenotestring=${this.savenotestring}
-						.discardnotestring=${this.discardnotestring}
-						@d2l-note-edit-finished=${this._handleFinished}
-					>
-						<slot name="description" slot="description"></slot>
-						<slot name="settings" slot="settings"></slot>
-					</d2l-note-edit>` : this.text ? convertText(this.text) : html`
-					<div class="d2l-note-text-skeleton skeleton">&nbsp;</div>`}
-				${!this.editting && this.private ? html`<d2l-icon
-					class="d2l-note-private-indicator"
-					icon="d2l-tier1:visibility-hide"
-					aria-label="${this.privatelabel ? this.privatelabel : this.localize('private')}"
-				></d2l-icon>` : null }
+				<div class="d2l-note-text-container">
+					${this.editting ? html`
+						<d2l-note-edit
+							id="${this.id}"
+							placeholder="${this.editplaceholder}"
+							value="${this.text}"
+							expanded
+							.addnotestring=${this.addnotestring}
+							.savenotestring=${this.savenotestring}
+							.discardnotestring=${this.discardnotestring}
+							@d2l-note-edit-finished=${this._handleFinished}
+						>
+							<slot name="description" slot="description"></slot>
+							<slot name="settings" slot="settings"></slot>
+						</d2l-note-edit>` : this.text ? convertText(this.text) : html`
+						<div class="d2l-note-text-skeleton skeleton">&nbsp;</div>`}
+					${!this.editting && this.private ? html`<d2l-icon
+						class="d2l-note-private-indicator"
+						icon="d2l-tier1:visibility-hide"
+						aria-label="${this.privatelabel ? this.privatelabel : this.localize('private')}"
+					></d2l-icon>` : null }
+				</div>
 			</div>
 		`;
 	}
