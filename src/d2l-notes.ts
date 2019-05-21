@@ -251,7 +251,8 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 			<style>${D2LNotes.d2lTypographyStyle}</style>
 			<style>
 				:host {
-					--d2l-notes-note-margin: 6px;
+					--d2l-notes-note-margin-top: 6px;
+					--d2l-notes-note-margin-bottom: 12px;
 					--d2l-notes-hr-margin-bottom: 18px;
 					--d2l-notes-ol-margin-bottom: 24px;
 					--d2l-notes-load-more-margin-bottom: 36px;
@@ -272,7 +273,8 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				}
 				li {
 					display: block;
-					margin-top: var(--d2l-notes-note-margin);
+					margin-top: var(--d2l-notes-note-margin-top);
+					margin-bottom: var(--d2l-notes-note-margin-bottom);
 
 					@apply --d2l-notes-li;
 				}
@@ -280,6 +282,11 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					margin-top: 0;
 
 					@apply --d2l-notes-li-first;
+				}
+				li:last-child {
+					margin-bottom: 0;
+
+					@apply --d2l-notes-li-last;
 				}
 
 				hr {
