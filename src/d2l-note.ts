@@ -308,6 +308,8 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				.d2l-note-main {
 					flex: 1;
 					line-height: 0;
+					max-width: 100%;
+					position: relative;
 				}
 				.d2l-note-top {
 					display: flex;
@@ -322,10 +324,16 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 				}
 
 				.d2l-note-text {
+					position: relative;
+					max-width: 100%;
+
 					@apply --d2l-note-text;
 				}
 				.paragraph {
 					margin: var(--d2l-note-paragraph-spacing) 0;
+					word-break: break-word; /* Not universally supported */
+					word-wrap: break-word;  /* Alternate for above */
+					overflow-wrap: anywhere; /* Overrides word-* rules, where supported */
 
 					@apply --d2l-note-paragraph;
 				}
@@ -361,10 +369,14 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 
 				.d2l-note-text-container {
 					display: flex;
+					position: relative;
+					max-width: 100%;
 				}
 
 				d2l-more-less {
 					flex: 1;
+					position: relative;
+					max-width: 100%;
 				}
 
 				.skeleton {
