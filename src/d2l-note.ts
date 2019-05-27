@@ -379,6 +379,10 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					max-width: 100%;
 				}
 
+				d2l-note-edit {
+					flex: 1;
+				}
+
 				.skeleton {
 					background: var(--d2l-color-sylvite);
 					border-radius: 6px;
