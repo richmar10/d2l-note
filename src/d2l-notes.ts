@@ -326,9 +326,10 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 					@apply --d2l-notes-more-less-separator;
 				}
 
-				.d2l-notes-enter-note-string {
+				.d2l-notes-enter-note-string,
+				.d2l-note-emptystring {
 					line-height: 1;
-					margin-bottom: 0.9rem;
+					margin-bottom: 0.6rem;
 				}
 			</style>
 			<div class="d2l-typography">
@@ -363,8 +364,7 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 							</d2l-note>
 						</li>
 					`)}
-					</ol>` : html`<span class="d2l-body-standard">${this.emptystring !== undefined || this.enternotestring !== undefined ? this.emptystring || this.enternotestring : this.localize('empty')}</span>
-					`}
+			</ol>` : (this.emptystring === '' ? '' : html`<div class="d2l-body-standard d2l-note-emptystring">${this.emptystring !== undefined || this.enternotestring !== undefined ? this.emptystring || this.enternotestring : this.localize('empty')}</div>`)}
 
 				${hasmore ? html`
 				<div
