@@ -42,6 +42,77 @@
 				assert.equal(elementNoteEmpty.textContent.trim(), 'No Notes');
 			});
 
+			test('shows emptystring when notes is empty', async() => {
+				const element = fixture('BasicTestFixture');
+				element.notes = [];
+				element.emptystring = 'HELLO MOTO';
+				element.enternotestring = 'NOT ME';
+				await element.resourceFetchComplete;
+
+				const elementShadowRoot = element.shadowRoot;
+				const elementNoteEmpty = elementShadowRoot.querySelector('.d2l-body-standard');
+				assert.equal(elementNoteEmpty.textContent.trim(), 'HELLO MOTO');
+			});
+
+			test('shows enternotestring when notes is empty and no emptystring', async() => {
+				const element = fixture('BasicTestFixture');
+				element.notes = [];
+				element.enternotestring = 'MEEEE';
+				await element.resourceFetchComplete;
+
+				const elementShadowRoot = element.shadowRoot;
+				const elementNoteEmpty = elementShadowRoot.querySelector('.d2l-body-standard');
+				assert.equal(elementNoteEmpty.textContent.trim(), 'MEEEE');
+			});
+
+			test('shows enternotestring when notes is not empty and cancreate is true', async() => {
+				const element = fixture('BasicTestFixture');
+				element.notes = [{
+					user: {
+						name:'Username',
+						pic: {
+							url: 'fixtures/user.png'
+						}
+					},
+					createdAt: new Date().toISOString(),
+					text: 'foozleberries',
+					canEdit: true,
+					canDelete: true,
+					private: false
+				}];
+				element.cancreate = true;
+				element.enternotestring = 'MEEEE';
+				await element.resourceFetchComplete;
+
+				const elementShadowRoot = element.shadowRoot;
+				const elementEnterNoteLabel = elementShadowRoot.querySelector('.d2l-notes-enter-note-string');
+				assert.equal(elementEnterNoteLabel.textContent.trim(), 'MEEEE');
+			});
+
+			test('does not shows enternotestring cancreate is false', async() => {
+				const element = fixture('BasicTestFixture');
+				element.notes = [{
+					user: {
+						name:'Username',
+						pic: {
+							url: 'fixtures/user.png'
+						}
+					},
+					createdAt: new Date().toISOString(),
+					text: 'foozleberries',
+					canEdit: true,
+					canDelete: true,
+					private: false
+				}];
+				element.cancreate = false;
+				element.enternotestring = 'MEEEE';
+				await element.resourceFetchComplete;
+
+				const elementShadowRoot = element.shadowRoot;
+				const elementEnterNoteLabel = elementShadowRoot.querySelector('.d2l-notes-enter-note-string');
+				assert.equal(elementEnterNoteLabel, undefined);
+			});
+
 			test('has d2l-note-edit if "cancreate" is true', async() => {
 				const element = fixture('BasicTestFixture');
 				element.cancreate = true;
