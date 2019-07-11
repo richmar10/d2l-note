@@ -156,6 +156,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 	}
 
 	updated(changedProps: Map<string, string>) {
+		super.updated(changedProps);
 		if (changedProps.has('errormessage') && this.errormessage) {
 			IronA11yAnnouncer.assertiveInstance.announce(this.errormessage);
 		}
