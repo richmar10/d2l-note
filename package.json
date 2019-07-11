@@ -24,6 +24,7 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@d2l/user-elements": "^2.2.0",
+    "@polymer/iron-a11y-announcer": "^3.0.2",
     "@polymer/polymer": "^3.0.0",
     "d2l-alert": "github:BrightspaceUI/alert#semver:^4",
     "d2l-button": "github:BrightspaceUI/button#semver:^5",

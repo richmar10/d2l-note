@@ -11,6 +11,7 @@ import {
 	customElement, html, LitElement, property
 } from 'lit-element';
 
+import { IronA11yAnnouncer } from '@polymer/iron-a11y-announcer/iron-a11y-announcer';
 import { LocalizeMixin } from './mixins/localize-mixin';
 
 /**
@@ -121,6 +122,15 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 		}
 	}
 
+	connectedCallback() {
+		super.connectedCallback();
+		if (!IronA11yAnnouncer.assertiveInstance) {
+			IronA11yAnnouncer.assertiveInstance = document.createElement('iron-a11y-announcer');
+		}
+		IronA11yAnnouncer.assertiveInstance.mode = 'assertive';
+		document.body.appendChild(IronA11yAnnouncer.assertiveInstance);
+	}
+
 	getLanguage(langs: string[]) {
 		for (let i = 0; i < langs.length; i++) {
 			if (this.__langResources[langs[i]]) {
@@ -143,6 +153,12 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 
 		proto.__localizationCache.requests[namespace] = result;
 		return result;
+	}
+
+	updated(changedProps: Map<string, string>) {
+		if (changedProps.has('errormessage') && this.errormessage) {
+			IronA11yAnnouncer.assertiveInstance.announce(this.errormessage);
+		}
 	}
 
 	/**
@@ -331,7 +347,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					placeholder="${this.placeholder}"
 					@change=${this._handleChange}
 				></d2l-input-textarea>
-				<d2l-alert type="error" .hidden=${!this.errormessage}>${this.errormessage}</d2l-alert>
+				<d2l-alert role="alert" type="error" .hidden=${!this.errormessage}>${this.errormessage}</d2l-alert>
 				<div class="d2l-note-edit-controls">
 					<d2l-button
 						class="d2l-note-edit-button"
