@@ -75,6 +75,12 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 	discardnotestring?: string;
 
 	/**
+	 * True while a request is being made, disables the components, defaults to false
+	 */
+	@property({ type: Boolean })
+	_makingCall: boolean = false;
+
+	/**
 	 * Indicates whether the component is in its expanded state. If true,
 	 * The textarea is set to its maximum height, the controls are visible.
 	 */
@@ -339,6 +345,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					value="${this.value}"
 					placeholder="${this.placeholder}"
 					@change=${this._handleChange}
+					?disabled="${this._makingCall}"
 				></d2l-input-textarea>
 				<d2l-alert role="alert" type="error" .hidden=${!this.errormessage}>${this.errormessage}</d2l-alert>
 				<div class="d2l-note-edit-controls">
@@ -346,6 +353,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 						class="d2l-note-edit-button"
 						primary
 						@click=${this._handleEditClick}
+						?disabled="${this._makingCall}"
 					>
 						${this.new ? this.addnotestring ? this.addnotestring : this.localize('add') : this.savenotestring ? this.savenotestring : this.localize('save')}
 					</d2l-button>
@@ -372,6 +380,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 	_handleEditClick() {
 		this.errormessage = undefined;
 		const finish = (error?: any) => {
+			this._makingCall = false;
 			if (error) {
 				this.errormessage = error.message ? error.message : error;
 				return;
@@ -386,6 +395,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 			}));
 			this.value = '';
 		};
+		this._makingCall = true;
 		let succeeded = false;
 		if (this.new) {
 			succeeded = this.dispatchEvent(new CustomEvent(D2LNoteEdit.EVENT_ADD, {
