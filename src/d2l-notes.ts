@@ -1,5 +1,5 @@
-import 'd2l-button/d2l-button-subtle';
-import 'd2l-colors/d2l-colors';
+import '@brightspace-ui/core/components/button/button-subtle.js';
+import '@brightspace-ui/core/components/colors/colors.js';
 import './d2l-note';
 
 /**
@@ -10,7 +10,7 @@ import {
 	customElement, html, LitElement, property, TemplateResult
 } from 'lit-element';
 
-import { D2LTypographyMixin } from './mixins/d2l-typography-mixin';
+import { bodyStandardStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { langResources } from './lang';
 import { LocalizeMixin } from './mixins/localize-mixin';
 import { repeat } from 'lit-html/directives/repeat';
@@ -81,7 +81,7 @@ interface INote {
  * ```
  */
 @customElement('d2l-notes')
-export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
+export class D2LNotes extends LocalizeMixin(LitElement) {
 
 	/**
 	 * Array of notes to pass to d2l-note elements
@@ -209,30 +209,21 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	 */
 	static EVENT_LOAD_LESS = 'd2l-notes-load-less';
 
-	__langResources = langResources;
+	static __langResources = langResources;
 
-	getLanguage(langs: string[]) {
+	static async getLocalizeResources(langs: string[]) {
 		for (let i = 0; i < langs.length; i++) {
 			if (this.__langResources[langs[i]]) {
-				return langs[i];
+				return {
+					resources: this.__langResources[langs[i]],
+					language: langs[i],
+				};
 			}
 		}
 	}
 
-	async getLangResources(lang: string) {
-		const proto = this.constructor.prototype;
-		this.checkLocalizationCache(proto);
-
-		const namespace = `d2l-notes:${lang}`;
-
-		if (proto.__localizationCache.requests[namespace]) {
-			return proto.__localizationCache.requests[namespace];
-		}
-
-		const result = this.__langResources[lang];
-
-		proto.__localizationCache.requests[namespace] = result;
-		return result;
+	static get styles() {
+		return bodyStandardStyles;
 	}
 
 	/**
@@ -246,7 +237,6 @@ export class D2LNotes extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 		 * the element template.
 		 */
 		return html`
-			<style>${D2LNotes.d2lTypographyStyle}</style>
 			<style>
 				:host {
 					--d2l-notes-note-margin-top: 6px;

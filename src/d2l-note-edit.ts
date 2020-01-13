@@ -1,7 +1,6 @@
-import 'd2l-inputs/d2l-input-textarea';
-import 'd2l-icons/tier2-icons';
-import 'd2l-button/d2l-button';
-import 'd2l-button/d2l-button-icon';
+import '@brightspace-ui/core/components/icons/icon.js';
+import '@brightspace-ui/core/components/button/button.js';
+import '@brightspace-ui/core/components/button/button-icon.js';
 import 'd2l-alert/d2l-alert';
 
 /**
@@ -12,6 +11,7 @@ import {
 	customElement, html, LitElement, property
 } from 'lit-element';
 
+import { inputStyles } from '@brightspace-ui/core/components/inputs/input-styles.js';
 import { IronA11yAnnouncer } from '@polymer/iron-a11y-announcer/iron-a11y-announcer';
 import { langResources } from './lang';
 import { LocalizeMixin } from './mixins/localize-mixin';
@@ -118,7 +118,22 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 	 */
 	static EVENT_DISCARD = 'd2l-note-edit-discard';
 
-	__langResources = langResources;
+	static __langResources = langResources;
+
+	static async getLocalizeResources(langs: string[]) {
+		for (let i = 0; i < langs.length; i++) {
+			if (this.__langResources[langs[i]]) {
+				return {
+					resources: this.__langResources[langs[i]],
+					language: langs[i],
+				};
+			}
+		}
+	}
+
+	static get styles() {
+		return inputStyles;
+	}
 
 	connectedCallback() {
 		super.connectedCallback();
@@ -127,30 +142,6 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 		}
 		IronA11yAnnouncer.assertiveInstance.mode = 'assertive';
 		document.body.appendChild(IronA11yAnnouncer.assertiveInstance);
-	}
-
-	getLanguage(langs: string[]) {
-		for (let i = 0; i < langs.length; i++) {
-			if (this.__langResources[langs[i]]) {
-				return langs[i];
-			}
-		}
-	}
-
-	async getLangResources(lang: string) {
-		const proto = this.constructor.prototype;
-		this.checkLocalizationCache(proto);
-
-		const namespace = `d2l-note-edit:${lang}`;
-
-		if (proto.__localizationCache.requests[namespace]) {
-			return proto.__localizationCache.requests[namespace];
-		}
-
-		const result = this.__langResources[lang];
-
-		proto.__localizationCache.requests[namespace] = result;
-		return result;
 	}
 
 	updated(changedProps: Map<string, string>) {
@@ -186,19 +177,8 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					--d2l-note-edit-textarea-padding-vertical: 0.5rem;
 					--d2l-note-edit-textarea-padding-horizontal: 0.75rem;
 					--d2l-note-edit-transition-duration: 0.5s;
-
-					--d2l-note-edit-base-textarea: {
-						font-size: var(--d2l-note-edit-textarea-font-size);
-
-						transition-property: height, background-color, border-color;
-						transition-duration: var(--d2l-note-edit-transition-duration), var(--d2l-note-edit-transition-duration), var(--d2l-note-edit-transition-duration);
-						transition-timing-function: ease, ease, ease;
-					};
-
-					--d2l-note-edit-common-textarea: {
-						@apply --d2l-note-edit-base-textarea;
-					};
 				}
+
 				.d2l-note-edit-controls {
 					margin-top: var(--d2l-note-edit-spacing);
 					display: flex;
@@ -270,68 +250,56 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					@apply --d2l-note-edit-error-alert;
 				}
 
-				d2l-input-textarea.d2l-note-edit-error {
-					--d2l-note-edit-common-textarea: {
-						@apply --d2l-note-edit-base-textarea;
-						border-color: var(--d2l-alert-critical-color, --d2l-color-cinnabar);
-					};
-
-					--d2l-input-hover-focus: {
-						border-color: var(--d2l-alert-critical-color, --d2l-color-cinnabar);
-						border-width: 2px;
-						outline-style: none;
-						outline-width: 0;
-						padding: var(--d2l-input-padding-focus);
-					};
+				textarea.d2l-input.d2l-note-edit-error {
+					border-color: var(--d2l-alert-critical-color, --d2l-color-cinnabar);
 
 					@apply --d2l-note-edit-error-textarea;
 				}
 
-				d2l-input-textarea {
-					--d2l-input-padding: var(--d2l-note-edit-textarea-padding-vertical) var(--d2l-note-edit-textarea-padding-horizontal);
-					--d2l-input-padding-focus: calc(var(--d2l-note-edit-textarea-padding-vertical) - 1px) calc(var(--d2l-note-edit-textarea-padding-horizontal) - 1px);
+				textarea.d2l-input {
+					padding: var(--d2l-note-edit-textarea-padding-vertical) var(--d2l-note-edit-textarea-padding-horizontal);
 
-					--d2l-input-placeholder: {
-						color: var(--d2l-input-placeholder-color);
-						font-size: var(--d2l-note-edit-textarea-font-size);
-						font-weight: 400;
-						opacity: 1; /* Firefox has non-1 default */
-					};
+					font-size: var(--d2l-note-edit-textarea-font-size);
 
-					--d2l-input-textarea: {
-						@apply --d2l-note-edit-common-textarea;
-					};
-
-					@apply --d2l-note-edit-textarea;
+					transition-property: height, background-color, border-color;
+					transition-duration: var(--d2l-note-edit-transition-duration), var(--d2l-note-edit-transition-duration), var(--d2l-note-edit-transition-duration);
+					transition-timing-function: ease, ease, ease;
 				}
 
-				:host(:not([focused])) d2l-input-textarea,
-				:host(:not([expanded])) d2l-input-textarea {
-					--d2l-input-textarea: {
-						@apply --d2l-note-edit-common-textarea;
-
-						height: var(--d2l-note-edit-textarea-collapsed-height);
-
-						transition-delay: var(--d2l-note-edit-transition-duration), 0s, 0s;
-					};
-
+				:host(:not([focused])) textarea.d2l-input,
+				:host(:not([expanded])) textarea.d2l-input {
+					height: var(--d2l-note-edit-textarea-collapsed-height);
+					transition-delay: var(--d2l-note-edit-transition-duration), 0s, 0s;
 					@apply --d2l-note-edit-textarea-nofocus;
 				}
 
-				:host([focused]) d2l-input-textarea,
-				:host([expanded]) d2l-input-textarea {
-					--d2l-input-textarea: {
-						@apply --d2l-note-edit-common-textarea;
-
-						height: var(--d2l-note-edit-textarea-expanded-height);
-
-						transition-delay: 0s, 0s, 0s;
-					};
-
+				:host([focused]) textarea.d2l-input,
+				:host([expanded]) textarea.d2l-input {
+					height: var(--d2l-note-edit-textarea-expanded-height);
+					transition-delay: 0s, 0s, 0s;
 					@apply --d2l-note-edit-textarea-focus;
 				}
-			</style>
 
+				textarea.d2l-input.d2l-note-edit-error:hover,
+				textarea.d2l-input.d2l-note-edit-error:focus {
+					border-color: var(--d2l-alert-critical-color, --d2l-color-cinnabar);
+					border-width: 2px;
+					outline-style: none;
+					outline-width: 0;
+					padding: var(--d2l-input-padding-focus);
+				}
+
+				textarea.d2l-input::placeholder {
+					color: var(--d2l-input-placeholder-color);
+					font-size: var(--d2l-note-edit-textarea-font-size);
+					font-weight: 400;
+					opacity: 1; /* Firefox has non-1 default */
+				}
+
+				textarea.d2l-input:focus {
+					padding: calc(var(--d2l-note-edit-textarea-padding-vertical) - 1px) calc(var(--d2l-note-edit-textarea-padding-horizontal) - 1px);
+				}
+			</style>
 			<div class="d2l-note-edit-description">
 				<slot name="description"></slot>
 			</div>
@@ -340,13 +308,13 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				@focusin=${this._handleFocusin}
 				@focusout=${this._handleFocusout}
 			>
-				<d2l-input-textarea
-					class="${this.errormessage ? 'd2l-note-edit-error' : ''}"
+				<textarea
+					class="d2l-input ${this.errormessage ? 'd2l-note-edit-error' : ''}"
 					value="${this.value}"
 					placeholder="${this.placeholder}"
 					@change=${this._handleChange}
 					?disabled="${this._makingCall}"
-				></d2l-input-textarea>
+				></textarea>
 				<d2l-alert role="alert" type="error" .hidden=${!this.errormessage}>${this.errormessage}</d2l-alert>
 				<div class="d2l-note-edit-controls">
 					<d2l-button
