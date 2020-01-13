@@ -29,13 +29,13 @@
 
 			test('instantiating the element with default properties works', async() => {
 				const element = fixture('BasicTestFixture');
-				await element.updateComplete;
+				await element.updateComplete.then();
 			});
 
 			test('shows "No Notes" when notes is empty', async() => {
 				const element = fixture('BasicTestFixture');
 				element.notes = [];
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 
 				const elementShadowRoot = element.shadowRoot;
 				const elementNoteEmpty = elementShadowRoot.querySelector('.d2l-body-standard');
@@ -47,7 +47,7 @@
 				element.notes = [];
 				element.emptystring = 'HELLO MOTO';
 				element.enternotestring = 'NOT ME';
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 
 				const elementShadowRoot = element.shadowRoot;
 				const elementNoteEmpty = elementShadowRoot.querySelector('.d2l-body-standard');
@@ -58,7 +58,7 @@
 				const element = fixture('BasicTestFixture');
 				element.notes = [];
 				element.enternotestring = 'MEEEE';
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 
 				const elementShadowRoot = element.shadowRoot;
 				const elementNoteEmpty = elementShadowRoot.querySelector('.d2l-body-standard');
@@ -82,7 +82,7 @@
 				}];
 				element.cancreate = true;
 				element.enternotestring = 'MEEEE';
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 
 				const elementShadowRoot = element.shadowRoot;
 				const elementEnterNoteLabel = elementShadowRoot.querySelector('.d2l-notes-enter-note-string');
@@ -106,7 +106,7 @@
 				}];
 				element.cancreate = false;
 				element.enternotestring = 'MEEEE';
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 
 				const elementShadowRoot = element.shadowRoot;
 				const elementEnterNoteLabel = elementShadowRoot.querySelector('.d2l-notes-enter-note-string');
@@ -116,7 +116,7 @@
 			test('has d2l-note-edit if "cancreate" is true', async() => {
 				const element = fixture('BasicTestFixture');
 				element.cancreate = true;
-				await element.updateComplete;
+				await element.updateComplete.then();
 
 				const elementShadowRoot = element.shadowRoot;
 				const elementNoteEdit = elementShadowRoot.querySelector('d2l-note-edit');
@@ -129,11 +129,11 @@
 				element.cancreate = true;
 				element.description = () => html`<p>Description</p>`;
 				element.settings = () => html`<span>Settings</span>`;
-				await element.updateComplete;
+				await element.updateComplete.then();
 
 				const elementShadowRoot = element.shadowRoot;
 				const elementNoteEdit = elementShadowRoot.querySelector('d2l-note-edit');
-				await elementNoteEdit.updateComplete;
+				await elementNoteEdit.updateComplete.then();
 				assert.notEqual(elementNoteEdit, null);
 				assert.equal(elementNoteEdit.new, true);
 
@@ -149,7 +149,7 @@
 			test('does not have d2l-note-edit if "cancreate" is false', async() => {
 				const element = fixture('BasicTestFixture');
 				element.cancreate = false;
-				await element.updateComplete;
+				await element.updateComplete.then();
 
 				const elementShadowRoot = element.shadowRoot;
 				const elementNoteEdit = elementShadowRoot.querySelector('d2l-note-edit');
@@ -172,7 +172,7 @@
 					canDelete: true,
 					private: false
 				}];
-				await element.updateComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementNote = elementShadowRoot.querySelectorAll('d2l-note');
 				assert.equal(elementNote.length, 1);
@@ -196,7 +196,7 @@
 					private: false
 				};
 				element.notes = [note, note, note, note, note];
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 				assert.equal(element.collapsed, true);
 				const elementShadowRoot = element.shadowRoot;
 				const elementMoreLess = elementShadowRoot.querySelector('.d2l-notes-load-more-less');
@@ -208,7 +208,7 @@
 				const element = fixture('BasicTestFixture');
 				element.notes = [];
 				element.hasmore = true;
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 				assert.equal(element.collapsed, true);
 				const elementShadowRoot = element.shadowRoot;
 				const elementMoreLess = elementShadowRoot.querySelector('.d2l-notes-load-more-less');
@@ -233,10 +233,10 @@
 					private: false
 				};
 				element.notes = [note, note, note, note, note];
-				await element.updateComplete;
+				await element.updateComplete.then();
 				assert.equal(element.collapsed, true);
 				element.collapsed = false;
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementMoreLess = elementShadowRoot.querySelector('.d2l-notes-load-more-less');
 				assert.notEqual(elementMoreLess, null);
@@ -260,14 +260,14 @@
 					private: false
 				};
 				element.notes = [note, note, note, note, note];
-				await element.updateComplete;
+				await element.updateComplete.then();
 				assert.equal(element.collapsed, true);
 				const elementShadowRoot = element.shadowRoot;
 				const elementMoreLess = elementShadowRoot.querySelector('.d2l-notes-load-more-less');
 				const loadMorePromise = new Promise((resolve) => element.addEventListener('d2l-notes-load-more', resolve));
 				elementMoreLess.click();
 
-				await element.updateComplete;
+				await element.updateComplete.then();
 				assert.equal(element.collapsed, false);
 				await loadMorePromise;
 			});
@@ -288,17 +288,19 @@
 					canDelete: true,
 					private: false
 				};
+				await element.updateComplete.then();
 				element.notes = [note, note, note, note, note];
-				await element.updateComplete;
+				await element.updateComplete.then();
 				assert.equal(element.collapsed, true);
 				element.collapsed = false;
-				await element.updateComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementMoreLess = elementShadowRoot.querySelector('.d2l-notes-load-more-less');
 				const loadMorePromise = new Promise((resolve) => element.addEventListener('d2l-notes-load-less', resolve));
+				await element.updateComplete.then();
 				elementMoreLess.click();
 
-				await element.updateComplete;
+				await element.updateComplete.then();
 				assert.equal(element.collapsed, true);
 				await loadMorePromise;
 			});

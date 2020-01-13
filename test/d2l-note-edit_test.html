@@ -47,12 +47,12 @@
 
 			test('instantiating the element with default properties works', async() => {
 				const element = fixture('BasicTestFixture');
-				await element.updateComplete;
+				await element.updateComplete.then();
 			});
 
 			test('has description slot', async() => {
 				const element = fixture('DescriptionTestFixture');
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementDescriptionSlot = elementShadowRoot.querySelector('slot[name="description"]');
 				const elementDescription = elementDescriptionSlot.assignedNodes()[0];
@@ -61,7 +61,7 @@
 
 			test('has settings slot', async() => {
 				const element = fixture('SettingsTestFixture');
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementSettingsSlot = elementShadowRoot.querySelector('slot[name="settings"]');
 				const elementSettings = elementSettingsSlot.assignedNodes()[0];
@@ -70,17 +70,18 @@
 
 			test('has edit field set by "value" property', async() => {
 				const element = fixture('BasicTestFixture');
+				await element.updateComplete.then();
 				element.value = 'foozleberries';
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
-				const elementInputText = elementShadowRoot.querySelector('d2l-input-textarea');
+				const elementInputText = elementShadowRoot.querySelector('textarea.d2l-input');
 				assert.equal(elementInputText.value, 'foozleberries');
 			});
 
 			test('has add button when [new]', async() => {
 				const element = fixture('BasicTestFixture');
 				element.new = true;
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-button');
 				assert.equal(elementButton.textContent.trim(), 'Add');
@@ -90,7 +91,7 @@
 			test('has edit button when :not([new])', async() => {
 				const element = fixture('BasicTestFixture');
 				element.new = false;
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-button');
 				assert.equal(elementButton.textContent.trim(), 'Save');
@@ -99,7 +100,7 @@
 
 			test('has discard button', async() => {
 				const element = fixture('BasicTestFixture');
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-discard-button');
 				assert.equal(elementButton.icon, 'd2l-tier2:delete');
@@ -110,7 +111,7 @@
 				const element = fixture('BasicTestFixture');
 				const addPromise = new Promise((resolve) => element.addEventListener('d2l-note-edit-add', resolve));
 				element.new = true;
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-button');
 				elementButton.click();
@@ -122,7 +123,7 @@
 				const element = fixture('BasicTestFixture');
 				const addPromise = new Promise((resolve) => element.addEventListener('d2l-note-edit-finished', resolve));
 				element.new = true;
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-button');
 				elementButton.click();
@@ -136,7 +137,7 @@
 				element.addEventListener('d2l-note-edit-add', e => e.preventDefault());
 				element.addEventListener('d2l-note-edit-finished', () => finishedDispatched = true);
 				element.new = true;
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-button');
 				elementButton.click();
@@ -154,7 +155,7 @@
 				});
 				const addPromise = new Promise((resolve) => element.addEventListener('d2l-note-edit-finished', resolve));
 				element.new = true;
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-button');
 				elementButton.click();
@@ -170,7 +171,7 @@
 					resolve();
 				}));
 				element.new = true;
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-button');
 				elementButton.click();
@@ -184,7 +185,7 @@
 				const element = fixture('BasicTestFixture');
 				const editPromise = new Promise((resolve) => element.addEventListener('d2l-note-edit-save', resolve));
 				element.new = false;
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-button');
 				elementButton.click();
@@ -196,7 +197,7 @@
 				const element = fixture('BasicTestFixture');
 				const editPromise = new Promise((resolve) => element.addEventListener('d2l-note-edit-finished', resolve));
 				element.new = false;
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-button');
 				elementButton.click();
@@ -210,7 +211,7 @@
 				element.addEventListener('d2l-note-edit-save', e => e.preventDefault());
 				element.addEventListener('d2l-note-edit-finished', () => finishedDispatched = true);
 				element.new = false;
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-button');
 				elementButton.click();
@@ -228,7 +229,7 @@
 				});
 				const editPromise = new Promise((resolve) => element.addEventListener('d2l-note-edit-finished', resolve));
 				element.new = false;
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-button');
 				elementButton.click();
@@ -239,7 +240,7 @@
 			test('dispatches d2l-note-edit-discard when "discard" is tapped', async() => {
 				const element = fixture('BasicTestFixture');
 				const discardPromise = new Promise((resolve) => element.addEventListener('d2l-note-edit-discard', resolve));
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-discard-button');
 				elementButton.click();
@@ -250,7 +251,7 @@
 			test('shows d2l-alert component when "errormessage" is set', async() => {
 				const element = fixture('BasicTestFixture');
 				element.errormessage = 'Error';
-				await element.updateComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const alert = elementShadowRoot.querySelector('d2l-alert');
 				assert.isFalse(alert.hidden);
@@ -264,7 +265,7 @@
 					resolve();
 				}));
 				element.new = false;
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-button');
 				elementButton.click();

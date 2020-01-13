@@ -310,7 +310,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 			>
 				<textarea
 					class="d2l-input ${this.errormessage ? 'd2l-note-edit-error' : ''}"
-					value="${this.value}"
+					.value=${this.value}
 					placeholder="${this.placeholder}"
 					@change=${this._handleChange}
 					?disabled="${this._makingCall}"
