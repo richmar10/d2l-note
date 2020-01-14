@@ -160,7 +160,7 @@
 				assert.notEqual(elementPrivateIndicator, null);
 			});
 
-			suite('context menu', async() => {
+			suite('context menu', () => {
 
 				test('has context menu if "canedit" is true', async() => {
 					const element = fixture('BasicTestFixture');
@@ -226,7 +226,7 @@
 					assert.isFalse([].some.call(elementMenuItems, item => item.text.indexOf('Delete') !== -1));
 				});
 
-				suite('edit', async() => {
+				suite('edit', () => {
 
 					test('shows d2l-note-edit when edit button is tapped', async() => {
 						const element = fixture('BasicTestFixture');
@@ -253,7 +253,7 @@
 
 				});
 
-				suite('delete', async() => {
+				suite('delete', () => {
 
 					test('fires d2l-note-delete when delete button is tapped', async() => {
 						const element = fixture('BasicTestFixture');
