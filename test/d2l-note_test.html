@@ -24,6 +24,13 @@
 
     <script type="module">
 		import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime.js';
+        function listenOnce(et, evt, handler) {
+		  const handle = (...args) => {
+			et.removeEventListener(evt, handle);
+			return handler(...args);
+		  }
+		  et.addEventListener(evt, handle);
+		}
 		suite('d2l-note', () => {
 			test('instantiating the element with default properties works', async() => {
 				const element = fixture('BasicTestFixture');
@@ -237,7 +244,7 @@
 						assert.equal(hiddenElementNoteEdit, null);
 						const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown-more');
 						const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
-						const openPromise = new Promise((resolve) => elementDropdown.addEventListener('d2l-dropdown-open', resolve));
+						const openPromise = new Promise((resolve) => listenOnce(elementDropdown, 'd2l-dropdown-open', resolve));
 						elementDropdown.toggleOpen();
 						await openPromise;
 						// Wait for menu to become visible
@@ -262,14 +269,14 @@
 						const elementShadowRoot = element.shadowRoot;
 						const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown-more');
 						const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
-						const openPromise = new Promise((resolve) => elementDropdown.addEventListener('d2l-dropdown-open', resolve));
+						const openPromise = new Promise((resolve) => listenOnce(elementDropdown, 'd2l-dropdown-open', resolve));
 						elementDropdown.toggleOpen();
 						await openPromise;
 						// Wait for menu to become visible
 						await new Promise((resolve) => setTimeout(resolve, 100));
 						const deleteItem = [].filter.call(elementMenuItems, item => item.text.indexOf('Delete') !== -1)[0];
 
-						const deletePromise = new Promise((resolve) => element.addEventListener('d2l-note-delete', resolve));
+						const deletePromise = new Promise((resolve) => listenOnce(element, 'd2l-note-delete', resolve));
 						deleteItem.click();
 
 						await element.updateComplete.then();

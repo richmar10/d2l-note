@@ -1,48 +1,55 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>d2l-note test</title>
+	<title>d2l-note test</title>
 
-    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-    <script src="../node_modules/@polymer/test-fixture/test-fixture.js"></script>
-    <script src="../node_modules/mocha/mocha.js"></script>
-    <script src="../node_modules/chai/chai.js"></script>
-    <script src="../node_modules/wct-mocha/wct-mocha.js"></script>
+	<script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+	<script src="../node_modules/@polymer/test-fixture/test-fixture.js"></script>
+	<script src="../node_modules/mocha/mocha.js"></script>
+	<script src="../node_modules/chai/chai.js"></script>
+	<script src="../node_modules/wct-mocha/wct-mocha.js"></script>
 
-    <script type="module" src="../lib/d2l-note-edit.js"></script>
+	<script type="module" src="../lib/d2l-note-edit.js"></script>
   </head>
   <body>
 
-    <test-fixture id="BasicTestFixture">
-      <template>
-        <d2l-note-edit></d2l-note-edit>
-      </template>
-    </test-fixture>
+	<test-fixture id="BasicTestFixture">
+	  <template>
+		<d2l-note-edit></d2l-note-edit>
+	  </template>
+	</test-fixture>
 
 	<test-fixture id="DescriptionTestFixture">
-      <template>
-        <d2l-note-edit>
+	  <template>
+		<d2l-note-edit>
 			<p slot="description">
 				Description
 			</p>
 		</d2l-note-edit>
-      </template>
-    </test-fixture>
+	  </template>
+	</test-fixture>
 
 	<test-fixture id="SettingsTestFixture">
-      <template>
-        <d2l-note-edit>
+	  <template>
+		<d2l-note-edit>
 			<div slot="settings">
 				Settings
 			</div>
 		</d2l-note-edit>
-      </template>
-    </test-fixture>
+	  </template>
+	</test-fixture>
 
-    <script type="module">
+	<script type="module">
+		function listenOnce(et, evt, handler) {
+		  const handle = (...args) => {
+			et.removeEventListener(evt, handle);
+			return handler(...args);
+		  }
+		  et.addEventListener(evt, handle);
+		}
 		suite('d2l-note-edit', () => {
 
 			test('instantiating the element with default properties works', async() => {
@@ -109,7 +116,7 @@
 
 			test('dispatches d2l-note-edit-add when "Add" is tapped', async() => {
 				const element = fixture('BasicTestFixture');
-				const addPromise = new Promise((resolve) => element.addEventListener('d2l-note-edit-add', resolve));
+				const addPromise = new Promise((resolve) => listenOnce(element, 'd2l-note-edit-add', resolve));
 				element.new = true;
 				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
@@ -121,7 +128,7 @@
 
 			test('dispatches d2l-note-edit-finished when "Add" is tapped', async() => {
 				const element = fixture('BasicTestFixture');
-				const addPromise = new Promise((resolve) => element.addEventListener('d2l-note-edit-finished', resolve));
+				const addPromise = new Promise((resolve) => listenOnce(element, 'd2l-note-edit-finished', resolve));
 				element.new = true;
 				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
@@ -134,8 +141,8 @@
 			test('does not dispatch d2l-note-edit-finished when "Add" is tapped and d2l-note-edit-add is prevent defaulted', async() => {
 				const element = fixture('BasicTestFixture');
 				let finishedDispatched = false;
-				element.addEventListener('d2l-note-edit-add', e => e.preventDefault());
-				element.addEventListener('d2l-note-edit-finished', () => finishedDispatched = true);
+				listenOnce(element, 'd2l-note-edit-add', e => e.preventDefault())
+				listenOnce(element, 'd2l-note-edit-finished', () => finishedDispatched = true)
 				element.new = true;
 				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
@@ -149,11 +156,11 @@
 
 			test('dispatches d2l-note-edit-finished when "Add" is tapped and d2l-note-edit-add is prevent defaulted and e.detail.finish is called', async() => {
 				const element = fixture('BasicTestFixture');
-				element.addEventListener('d2l-note-edit-add', e => {
+				listenOnce(element, 'd2l-note-edit-add', e => {
 					e.preventDefault();
 					e.detail.finish();
 				});
-				const addPromise = new Promise((resolve) => element.addEventListener('d2l-note-edit-finished', resolve));
+				const addPromise = new Promise((resolve) => listenOnce(element, 'd2l-note-edit-finished', resolve));
 				element.new = true;
 				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
@@ -165,7 +172,7 @@
 
 			test('shows d2l-alert component when "Add" is tapped and d2l-note-edit-add is prevent defaulted and e.detail.finish is called with an error', async() => {
 				const element = fixture('BasicTestFixture');
-				const savePromise = new Promise(resolve => element.addEventListener('d2l-note-edit-add', e => {
+				const savePromise = new Promise(resolve => listenOnce(element, 'd2l-note-edit-add', e => {
 					e.preventDefault();
 					e.detail.finish(new Error('This is some error'));
 					resolve();
@@ -183,7 +190,7 @@
 
 			test('dispatches d2l-note-edit-save when "Save" is tapped', async() => {
 				const element = fixture('BasicTestFixture');
-				const editPromise = new Promise((resolve) => element.addEventListener('d2l-note-edit-save', resolve));
+				const editPromise = new Promise((resolve) => listenOnce(element, 'd2l-note-edit-save', resolve));
 				element.new = false;
 				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
@@ -195,7 +202,7 @@
 
 			test('dispatches d2l-note-edit-finish when "Save" is tapped', async() => {
 				const element = fixture('BasicTestFixture');
-				const editPromise = new Promise((resolve) => element.addEventListener('d2l-note-edit-finished', resolve));
+				const editPromise = new Promise((resolve) => listenOnce(element, 'd2l-note-edit-finished', resolve));
 				element.new = false;
 				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
@@ -208,8 +215,8 @@
 			test('does not dispatch d2l-note-edit-finished when "Save" is tapped and d2l-note-edit-save is prevent defaulted', async() => {
 				const element = fixture('BasicTestFixture');
 				let finishedDispatched = false;
-				element.addEventListener('d2l-note-edit-save', e => e.preventDefault());
-				element.addEventListener('d2l-note-edit-finished', () => finishedDispatched = true);
+				listenOnce(element, 'd2l-note-edit-save', e => e.preventDefault())
+				listenOnce(element, 'd2l-note-edit-finished', () => finishedDispatched = true)
 				element.new = false;
 				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
@@ -223,11 +230,11 @@
 
 			test('dispatches d2l-note-edit-finished when "Save" is tapped and d2l-note-edit-save is prevent defaulted and e.detail.finish is called', async() => {
 				const element = fixture('BasicTestFixture');
-				element.addEventListener('d2l-note-edit-save', e => {
+				listenOnce(element, 'd2l-note-edit-save', e => {
 					e.preventDefault();
 					e.detail.finish();
 				});
-				const editPromise = new Promise((resolve) => element.addEventListener('d2l-note-edit-finished', resolve));
+				const editPromise = new Promise((resolve) => listenOnce(element, 'd2l-note-edit-finished', resolve));
 				element.new = false;
 				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
@@ -239,7 +246,7 @@
 
 			test('dispatches d2l-note-edit-discard when "discard" is tapped', async() => {
 				const element = fixture('BasicTestFixture');
-				const discardPromise = new Promise((resolve) => element.addEventListener('d2l-note-edit-discard', resolve));
+				const discardPromise = new Promise((resolve) => listenOnce(element, 'd2l-note-edit-discard', resolve));
 				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-discard-button');
@@ -259,7 +266,7 @@
 
 			test('shows d2l-alert component when "Save" is tapped and d2l-note-edit-save is prevent defaulted and e.detail.finish is called with an error', async() => {
 				const element = fixture('BasicTestFixture');
-				const savePromise = new Promise(resolve => element.addEventListener('d2l-note-edit-save', e => {
+				const savePromise = new Promise(resolve => listenOnce(element, 'd2l-note-edit-save', e => {
 					e.preventDefault();
 					e.detail.finish(new Error('This is some error'));
 					resolve();
@@ -276,7 +283,7 @@
 			});
 
 		});
-    </script>
+	</script>
 
   </body>
 </html>
