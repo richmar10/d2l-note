@@ -24,12 +24,12 @@
 
     <script type="module">
 		import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime.js';
-        function listenOnce(et, evt, handler) {
-		  const handle = (...args) => {
-			et.removeEventListener(evt, handle);
-			return handler(...args);
-		  }
-		  et.addEventListener(evt, handle);
+function listenOnce(et, evt, handler) {
+			const handle = (...args) => {
+				et.removeEventListener(evt, handle);
+				return handler(...args);
+			};
+			et.addEventListener(evt, handle);
 		}
 		suite('d2l-note', () => {
 			test('instantiating the element with default properties works', async() => {

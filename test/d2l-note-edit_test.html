@@ -44,11 +44,11 @@
 
 	<script type="module">
 		function listenOnce(et, evt, handler) {
-		  const handle = (...args) => {
-			et.removeEventListener(evt, handle);
-			return handler(...args);
-		  }
-		  et.addEventListener(evt, handle);
+			const handle = (...args) => {
+				et.removeEventListener(evt, handle);
+				return handler(...args);
+			};
+			et.addEventListener(evt, handle);
 		}
 		suite('d2l-note-edit', () => {
 
@@ -141,8 +141,8 @@
 			test('does not dispatch d2l-note-edit-finished when "Add" is tapped and d2l-note-edit-add is prevent defaulted', async() => {
 				const element = fixture('BasicTestFixture');
 				let finishedDispatched = false;
-				listenOnce(element, 'd2l-note-edit-add', e => e.preventDefault())
-				listenOnce(element, 'd2l-note-edit-finished', () => finishedDispatched = true)
+				listenOnce(element, 'd2l-note-edit-add', e => e.preventDefault());
+				listenOnce(element, 'd2l-note-edit-finished', () => finishedDispatched = true);
 				element.new = true;
 				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
@@ -215,8 +215,8 @@
 			test('does not dispatch d2l-note-edit-finished when "Save" is tapped and d2l-note-edit-save is prevent defaulted', async() => {
 				const element = fixture('BasicTestFixture');
 				let finishedDispatched = false;
-				listenOnce(element, 'd2l-note-edit-save', e => e.preventDefault())
-				listenOnce(element, 'd2l-note-edit-finished', () => finishedDispatched = true)
+				listenOnce(element, 'd2l-note-edit-save', e => e.preventDefault());
+				listenOnce(element, 'd2l-note-edit-finished', () => finishedDispatched = true);
 				element.new = false;
 				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;

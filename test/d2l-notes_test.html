@@ -26,11 +26,11 @@
 		import { html } from 'lit-element';
 
 		function listenOnce(et, evt, handler) {
-		  const handle = (...args) => {
-			et.removeEventListener(evt, handle);
-			return handler(...args);
-		  }
-		  return et.addEventListener(evt, handle);
+			const handle = (...args) => {
+				et.removeEventListener(evt, handle);
+				return handler(...args);
+			};
+			return et.addEventListener(evt, handle);
 		}
 
 		suite('d2l-notes', () => {
