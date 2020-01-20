@@ -1,12 +1,11 @@
 import '@d2l/user-elements/d2l-user';
-import 'd2l-icons/d2l-icon';
-import 'd2l-icons/tier1-icons';
+import '@brightspace-ui/core/components/icons/icon.js';
+import '@brightspace-ui/core/components/more-less/more-less.js';
+import '@brightspace-ui/core/components/colors/colors.js';
 import 'd2l-dropdown/d2l-dropdown-more';
 import 'd2l-dropdown/d2l-dropdown-menu';
 import 'd2l-menu/d2l-menu';
 import 'd2l-menu/d2l-menu-item';
-import 'd2l-more-less/d2l-more-less';
-import 'd2l-colors/d2l-colors';
 import 'd2l-users/components/d2l-profile-image';
 import './d2l-note-edit';
 
@@ -17,11 +16,11 @@ import './d2l-note-edit';
 import {
 	customElement, html, LitElement, property
 } from 'lit-element';
+import { formatDateTime, formatTime } from '@brightspace-ui/intl/lib/dateTime.js';
 
-import { LocalizeMixin, LocalizeMixinProto } from './mixins/localize-mixin';
-
-import { D2LTypographyMixin } from './mixins/d2l-typography-mixin';
+import { bodyStandardStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { langResources } from './lang';
+import { LocalizeMixin } from './mixins/localize-mixin';
 import { repeat } from 'lit-html/directives/repeat';
 
 /**
@@ -57,7 +56,7 @@ import { repeat } from 'lit-html/directives/repeat';
  * ```
  */
 @customElement('d2l-note')
-export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
+export class D2LNote extends LocalizeMixin(LitElement) {
 
 	/**
 	 * Username and avatar to show
@@ -202,30 +201,21 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 	 */
 	static EVENT_DELETE = 'd2l-note-delete';
 
-	__langResources = langResources;
+	static __langResources = langResources;
 
-	getLanguage(langs: string[]) {
+	static async getLocalizeResources(langs: string[]) {
 		for (let i = 0; i < langs.length; i++) {
-			if (this.__langResources[langs[i].toLocaleLowerCase()]) {
-				return langs[i];
+			if (this.__langResources[langs[i]]) {
+				return {
+					resources: this.__langResources[langs[i]],
+					language: langs[i],
+				};
 			}
 		}
 	}
 
-	async getLangResources(lang: string) {
-		const proto: LocalizeMixinProto = this.constructor.prototype;
-		this.checkLocalizationCache(proto);
-
-		const namespace = `d2l-note:${lang}`;
-
-		if (proto.__localizationCache.requests[namespace]) {
-			return proto.__localizationCache.requests[namespace];
-		}
-
-		const result = this.__langResources[lang];
-
-		proto.__localizationCache.requests[namespace] = result;
-		return result;
+	static get styles() {
+		return bodyStandardStyles;
 	}
 
 	/**
@@ -254,14 +244,13 @@ export class D2LNote extends D2LTypographyMixin(LocalizeMixin(LitElement)) {
 		const userName = this.showavatar ? this.me ? this.localize('me') : this.user ? this.user.name : undefined : undefined;
 
 		const createdAtDate = this.createdat ? new Date(this.createdat) : null;
-		const date = createdAtDate ? this.formatDateTime(createdAtDate, { format: this.dateformat || 'medium' }) : undefined;
+		const date = createdAtDate ? formatDateTime(createdAtDate, { format: this.dateformat || 'medium' }) : undefined;
 		// Need this step because the formatter doesn't parse the time when using a custom format
-		const dateTime = createdAtDate ? this.formatTime(createdAtDate, { format: date }) : undefined;
+		const dateTime = createdAtDate ? formatTime(createdAtDate, { format: date }) : undefined;
 
-		const subText = this.updatedat ? this.localize('subtextEdited', dateTime) : dateTime;
+		const subText = dateTime ? this.updatedat ? this.localize('subtextEdited', { '0': dateTime }) : dateTime : '';
 		const showDropdown = this.canedit || this.candelete;
 		return html`
-			<style>${D2LNote.d2lTypographyStyle}</style>
 			<style>
 				:host {
 					--d2l-note-user-text-spacing: 12px;

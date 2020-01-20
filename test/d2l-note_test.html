@@ -23,17 +23,23 @@
     </test-fixture>
 
     <script type="module">
-		import d2lIntl from 'd2l-intl';
+		import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime.js';
+function listenOnce(et, evt, handler) {
+			const handle = (...args) => {
+				et.removeEventListener(evt, handle);
+				return handler(...args);
+			};
+			et.addEventListener(evt, handle);
+		}
 		suite('d2l-note', () => {
-
 			test('instantiating the element with default properties works', async() => {
 				const element = fixture('BasicTestFixture');
-				await element.updateComplete;
+				await element.updateComplete.then();
 			});
 
 			test('shows skeleton', async() => {
 				const element = fixture('BasicTestFixture');
-				await element.updateComplete;
+				await element.updateComplete.then();
 
 				const elementShadowRoot = element.shadowRoot;
 				const elementUser = elementShadowRoot.querySelector('d2l-user');
@@ -55,7 +61,7 @@
 					}
 				};
 				element.showavatar = true;
-				await element.updateComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementUser = elementShadowRoot.querySelector('d2l-user');
 				const elementUserSkeleton = elementShadowRoot.querySelector('.d2l-note-user-skeleton');
@@ -73,7 +79,7 @@
 					}
 				};
 				element.showavatar = true;
-				await element.updateComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementUser = elementShadowRoot.querySelector('d2l-user');
 				assert.equal(elementUser.imageUrl, 'fixtures/user.png');
@@ -88,7 +94,7 @@
 					}
 				};
 				element.showavatar = false;
-				await element.updateComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementUser = elementShadowRoot.querySelector('d2l-user');
 				assert.notEqual(elementUser.imageUrl, 'fixtures/user.png');
@@ -100,7 +106,7 @@
 					name: 'Username'
 				};
 				element.showavatar = true;
-				await element.updateComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementUser = elementShadowRoot.querySelector('d2l-user');
 				assert.equal(elementUser.name, 'Username');
@@ -113,7 +119,7 @@
 				};
 				element.showavatar = true;
 				element.me = true;
-				await element.resourceFetchComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementUser = elementShadowRoot.querySelector('d2l-user');
 				assert.equal(elementUser.name, 'Me');
@@ -126,17 +132,16 @@
 					name: 'Username'
 				};
 				element.createdat = date.toISOString();
-				const formatter = new d2lIntl.DateTimeFormat('en', { format: 'medium' });
-				await element.updateComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementUser = elementShadowRoot.querySelector('d2l-user');
-				assert.equal(elementUser.subText, formatter.format(date));
+				assert.equal(elementUser.subText, formatDateTime(date, { format: 'medium' }));
 			});
 
 			test('has note text supplied by "text" property', async() => {
 				const element = fixture('BasicTestFixture');
 				element.text = 'foozleberries';
-				await element.updateComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementText = elementShadowRoot.querySelector('.d2l-note-text');
 				const elementTextSkeleton = elementShadowRoot.querySelector('.d2l-note-text-skeleton');
@@ -147,7 +152,7 @@
 			test('has no privacy indicator if "private" is false', async() => {
 				const element = fixture('BasicTestFixture');
 				element.private = false;
-				await element.updateComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementPrivateIndicator = elementShadowRoot.querySelector('.d2l-note-private-indicator');
 				assert.equal(elementPrivateIndicator, null);
@@ -156,18 +161,18 @@
 			test('has privacy indicator supplied by "private" property', async() => {
 				const element = fixture('BasicTestFixture');
 				element.private = true;
-				await element.updateComplete;
+				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementPrivateIndicator = elementShadowRoot.querySelector('.d2l-note-private-indicator');
 				assert.notEqual(elementPrivateIndicator, null);
 			});
 
-			suite('context menu', async() => {
+			suite('context menu', () => {
 
 				test('has context menu if "canedit" is true', async() => {
 					const element = fixture('BasicTestFixture');
 					element.canedit = true;
-					await element.updateComplete;
+					await element.updateComplete.then();
 					const elementShadowRoot = element.shadowRoot;
 					const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown-more');
 					assert.notEqual(elementDropdown, null);
@@ -176,7 +181,7 @@
 				test('has context menu if "candelete" is true', async() => {
 					const element = fixture('BasicTestFixture');
 					element.candelete = true;
-					await element.updateComplete;
+					await element.updateComplete.then();
 					const elementShadowRoot = element.shadowRoot;
 					const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown-more');
 					assert.notEqual(elementDropdown, null);
@@ -186,7 +191,7 @@
 					const element = fixture('BasicTestFixture');
 					element.canedit = false;
 					element.candelete = false;
-					await element.updateComplete;
+					await element.updateComplete.then();
 					const elementShadowRoot = element.shadowRoot;
 					const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown-more');
 					assert.equal(elementDropdown, null);
@@ -195,7 +200,7 @@
 				test('has edit action if "canedit" is true', async() => {
 					const element = fixture('BasicTestFixture');
 					element.canedit = true;
-					await element.resourceFetchComplete;
+					await element.updateComplete.then();
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
 					assert.isTrue([].some.call(elementMenuItems, item => item.text.indexOf('Edit') !== -1));
@@ -204,7 +209,7 @@
 				test('does not have edit action if "canedit" is not true', async() => {
 					const element = fixture('BasicTestFixture');
 					element.canedit = false;
-					await element.resourceFetchComplete;
+					await element.updateComplete.then();
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
 					assert.isFalse([].some.call(elementMenuItems, item => item.text.indexOf('Edit') !== -1));
@@ -213,7 +218,7 @@
 				test('has delete action if "candelete" is true', async() => {
 					const element = fixture('BasicTestFixture');
 					element.candelete = true;
-					await element.resourceFetchComplete;
+					await element.updateComplete.then();
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
 					assert.isTrue([].some.call(elementMenuItems, item => item.text.indexOf('Delete') !== -1));
@@ -222,24 +227,24 @@
 				test('does not have delete action if "candelete" is not true', async() => {
 					const element = fixture('BasicTestFixture');
 					element.candelete = false;
-					await element.resourceFetchComplete;
+					await element.updateComplete.then();
 					const elementShadowRoot = element.shadowRoot;
 					const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
 					assert.isFalse([].some.call(elementMenuItems, item => item.text.indexOf('Delete') !== -1));
 				});
 
-				suite('edit', async() => {
+				suite('edit', () => {
 
 					test('shows d2l-note-edit when edit button is tapped', async() => {
 						const element = fixture('BasicTestFixture');
 						element.canedit = true;
-						await element.resourceFetchComplete;
+						await element.updateComplete.then();
 						const elementShadowRoot = element.shadowRoot;
 						const hiddenElementNoteEdit = elementShadowRoot.querySelector('d2l-note-edit');
 						assert.equal(hiddenElementNoteEdit, null);
 						const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown-more');
 						const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
-						const openPromise = new Promise((resolve) => elementDropdown.addEventListener('d2l-dropdown-open', resolve));
+						const openPromise = new Promise((resolve) => listenOnce(elementDropdown, 'd2l-dropdown-open', resolve));
 						elementDropdown.toggleOpen();
 						await openPromise;
 						// Wait for menu to become visible
@@ -247,7 +252,7 @@
 						const editItem = [].filter.call(elementMenuItems, item => item.text.indexOf('Edit') !== -1)[0];
 						editItem.click();
 
-						await element.updateComplete;
+						await element.updateComplete.then();
 						assert.equal(element.editting, true);
 						const elementNoteEdit = elementShadowRoot.querySelector('d2l-note-edit');
 						assert.notEqual(elementNoteEdit, null);
@@ -255,26 +260,26 @@
 
 				});
 
-				suite('delete', async() => {
+				suite('delete', () => {
 
 					test('fires d2l-note-delete when delete button is tapped', async() => {
 						const element = fixture('BasicTestFixture');
 						element.candelete = true;
-						await element.resourceFetchComplete;
+						await element.updateComplete.then();
 						const elementShadowRoot = element.shadowRoot;
 						const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown-more');
 						const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
-						const openPromise = new Promise((resolve) => elementDropdown.addEventListener('d2l-dropdown-open', resolve));
+						const openPromise = new Promise((resolve) => listenOnce(elementDropdown, 'd2l-dropdown-open', resolve));
 						elementDropdown.toggleOpen();
 						await openPromise;
 						// Wait for menu to become visible
 						await new Promise((resolve) => setTimeout(resolve, 100));
 						const deleteItem = [].filter.call(elementMenuItems, item => item.text.indexOf('Delete') !== -1)[0];
 
-						const deletePromise = new Promise((resolve) => element.addEventListener('d2l-note-delete', resolve));
+						const deletePromise = new Promise((resolve) => listenOnce(element, 'd2l-note-delete', resolve));
 						deleteItem.click();
 
-						await element.updateComplete;
+						await element.updateComplete.then();
 						await deletePromise;
 					});
 
