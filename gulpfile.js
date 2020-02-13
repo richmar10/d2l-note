@@ -40,7 +40,7 @@ function createLocalizationFiles() {
 			.pipe(ejs(data, options))
 			.pipe(rename({
 				basename: filename,
-				extname: '.ts'
+				extname: '.js'
 			}))
 			.pipe(gulp.dest(options.root)))
 	);

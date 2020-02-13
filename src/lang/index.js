@@ -12,29 +12,7 @@ import { trTr } from './locales/tr-TR';
 import { zhCn } from './locales/zh-CN';
 import { zhTw } from './locales/zh-TW';
 
-export type LangTerm =
-	'add' |
-	'contextMenu' |
-	'delete' |
-	'discard' |
-	'edit' |
-	'empty' |
-	'less' |
-	'me' |
-	'more' |
-	'private' |
-	'save' |
-	'subtextEdited';
-
-export type LangResource = {
-	[key in LangTerm]: string;
-};
-
-export interface LangResourceMap {
-	[key: string]: LangResource;
-}
-
-export const langResources: LangResourceMap = {
+export const langResources = {
 	'ar': arSa,
 	'de': deDe,
 	'en': en,

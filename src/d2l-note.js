@@ -13,14 +13,12 @@ import './d2l-note-edit';
  * Import LitElement base class, html helper function,
  * and TypeScript decorators
  **/
-import {
-	customElement, html, LitElement, property
-} from 'lit-element';
-import { DateTimeDescriptor, formatDateTime } from '@brightspace-ui/intl/lib/dateTime.js';
+import { html, LitElement } from 'lit-element';
 
 import { bodyStandardStyles } from '@brightspace-ui/core/components/typography/styles.js';
+import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime.js';
 import { langResources } from './lang';
-import { LocalizeMixin } from './mixins/localize-mixin';
+import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { repeat } from 'lit-html/directives/repeat';
 
 /**
@@ -55,159 +53,125 @@ import { repeat } from 'lit-html/directives/repeat';
  * </d2l-note>
  * ```
  */
-@customElement('d2l-note')
 export class D2LNote extends LocalizeMixin(LitElement) {
 
-	/**
-	 * Username and avatar to show
-	 * user.pic.url = <avatar url>
-	 * user.pic.requireTokenAuth <true/false>
-	 * user.name = <user name to show>
-	 */
-	@property({ type: Object })
-	user?: {
-		pic?: {
-			url: string;
-			requireTokenAuth?: boolean;
+	static get properties() {
+		return {
+			/**
+			 * Username and avatar to show
+			 * user.pic.url = <avatar url>
+			 * user.pic.requireTokenAuth <true/false>
+			 * user.name = <user name to show>
+			 */
+			user: { type: Object },
+			/**
+			 * Token to use in request when user.pic.requireTokenAuth is true
+			 */
+			token: { type: String },
+			/**
+			 * show avatar and username if true
+			 */
+			showavatar: { type: Boolean },
+			/**
+			 * Compact view. Removes padding
+			 */
+			compact: { type: Boolean },
+			/**
+			 * ISO datetime string of note creation
+			 */
+			createdat: { type: String },
+			/**
+			 * ISO datetime string of note update
+			 */
+			updatedat: { type: String },
+			/**
+			 * Text of note
+			 */
+			text: { type: String},
+			/**
+			 * d2l-note-edit placeholder to show when editting
+			 */
+			editplaceholder: { type: String },
+			/**
+			 * Indicates note user is the current user
+			 */
+			me: { type: Boolean },
+			/**
+			 * Indicates this note is private
+			 */
+			private: { type: Boolean, reflect: true },
+			/**
+			 * Indicates this note can be editted by the current user
+			 */
+			canedit: { type: Boolean },
+			/**
+			 * Indicates this note can be deleted by the current user
+			 */
+			candelete: { type: Boolean },
+			/**
+			 * value for "format" property of @brightspace-ui/intl formatDateTime options
+			 */
+			dateformat: { type: String },
+			/**
+			 * Indicates whether the note is beting editted
+			 * Shows a d2l-note-edit component if true
+			 */
+			editting: { type: String },
+			/**
+			* Label for the edit/delete context menu
+			*/
+			contextmenulabel: { type: String },
+			/**
+			 * Label of edit menu item
+			 */
+			editstring: { type: String },
+			/**
+			 * Label of delete menu item
+			 */
+			deletestring: { type: String },
+			/**
+			 * Label of private indicator
+			 */
+			privatelabel: { type: String },
+			/**
+			 * Text of 'Add' button in d2l-note-edit
+			 */
+			addnotestring: { type: String },
+			/**
+			 * Text of 'Save' button in d2l-note-edit
+			 */
+			savenotestring: { type: String },
+			/**
+			 * Label of 'Discard' button in d2l-note-edit
+			 */
+			discardnotestring: { type: String },
 		};
-		name?: string;
-		href?: string;
-	};
+	}
 
-	/**
-	 * Token to use in request when user.pic.requireTokenAuth is true
-	 */
-	@property({ type: String })
-	token?: string;
+	constructor() {
+		super();
+		this.showavatar = false;
+		this.compact = false;
+		this.editplaceholder = '';
+		this.me = false;
+		this.private = false;
+		this.canedit = false;
+		this.candelete = false;
+		this.dateformat = 'medium';
+		this.editting = false;
 
-	/**
-	 * show avatar and username if true
-	 */
-	@property({ type: Boolean })
-	showavatar = false;
+		/**
+		 * Fired when delete menu item is tapped
+		 * @event
+		 */
+		this.EVENT_DELETE = 'd2l-note-delete';
+	}
 
-	/**
-	 * Compact view. Removes padding
-	 */
-	@property({ type: Boolean })
-	compact = false;
-
-	/**
-	 * ISO datetime string of note creation
-	 */
-	@property({ type: String })
-	createdat?: string;
-
-	/**
-	 * ISO datetime string of note update
-	 */
-	@property({ type: String })
-	updatedat?: string;
-
-	/**
-	 * Text of note
-	 */
-	@property({ type: String })
-	text?: string;
-
-	/**
-	 * d2l-note-edit placeholder to show when editting
-	 */
-	@property({ type: String })
-	editplaceholder: string = '';
-
-	/**
-	 * Indicates note user is the current user
-	 */
-	@property({ type: Boolean })
-	me: boolean = false;
-
-	/**
-	 * Indicates this note is private
-	 */
-	@property({ type: Boolean, reflect: true })
-	private: boolean = false;
-
-	/**
-	 * Indicates this note can be editted by the current user
-	 */
-	@property({ type: Boolean })
-	canedit: boolean = false;
-
-	/**
-	 * Indicates this note can be deleted by the current user
-	 */
-	@property({ type: Boolean })
-	candelete: boolean = false;
-
-	/**
-	 * value for "format" property of @brightspace-ui/intl formatDateTime options
-	 */
-	@property({ type: String })
-	dateformat: keyof DateTimeDescriptor['formats']['timeFormats'] = 'medium';
-
-	/**
-	 * Indicates whether the note is beting editted
-	 * Shows a d2l-note-edit component if true
-	 */
-	@property({ type: Boolean })
-	editting: boolean = false;
-
-	/**
-	 * Label for the edit/delete context menu
-	 */
-	@property({ type: String })
-	contextmenulabel?: string;
-
-	/**
-	 * Label of edit menu item
-	 */
-	@property({ type: String })
-	editstring?: string;
-
-	/**
-	 * Label of delete menu item
-	 */
-	@property({ type: String })
-	deletestring?: string;
-
-	/**
-	 * Label of private indicator
-	 */
-	@property({ type: String })
-	privatelabel?: string;
-
-	/**
-	 * Text of 'Add' button in d2l-note-edit
-	 */
-	@property({ type: String })
-	addnotestring?: string;
-
-	/**
-	 * Text of 'Save' button in d2l-note-edit
-	 */
-	@property({ type: String })
-	savenotestring?: string;
-
-	/**
-	 * Label of 'Discard' button in d2l-note-edit
-	 */
-	@property({ type: String })
-	discardnotestring?: string;
-
-	/**
-	 * Fired when delete menu item is tapped
-	 * @event
-	 */
-	static EVENT_DELETE = 'd2l-note-delete';
-
-	static __langResources = langResources;
-
-	static async getLocalizeResources(langs: string[]) {
+	static async getLocalizeResources(langs) {
 		for (let i = 0; i < langs.length; i++) {
-			if (this.__langResources[langs[i]]) {
+			if (langResources[langs[i]]) {
 				return {
-					resources: this.__langResources[langs[i]],
+					resources: langResources[langs[i]],
 					language: langs[i],
 				};
 			}
@@ -222,14 +186,14 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 	 * Implement `render` to define a template for your element.
 	 */
 	render() {
-		const mapToParagraphs = (text: string) => {
+		const mapToParagraphs = (text) => {
 			const lines = text.split('\n');
 			return repeat(
 				lines,
 				(paragraph, index) => html`<div class="${`paragraph ${index === 0 ? 'first' : ''} ${index === lines.length - 1 ? 'last' : ''}`}">${paragraph}</div>`
 			);
 		};
-		function convertText(text: string) {
+		function convertText(text) {
 			return html`
 				<d2l-more-less height="4.7rem">
 					<div class="d2l-note-text d2l-body-standard">${mapToParagraphs(text)}</div>
@@ -480,7 +444,7 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 	}
 
 	deleteSelectHandler() {
-		this.dispatchEvent(new CustomEvent(D2LNote.EVENT_DELETE, {
+		this.dispatchEvent(new CustomEvent(this.EVENT_DELETE, {
 			bubbles: true,
 			composed: true,
 			detail: {
@@ -489,3 +453,4 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 		}));
 	}
 }
+customElements.define('d2l-note', D2LNote);

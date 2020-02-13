@@ -6,36 +6,12 @@ import './d2l-note';
  * Import LitElement base class, html helper function,
  * and TypeScript decorators
  **/
-import {
-	customElement, html, LitElement, property, TemplateResult
-} from 'lit-element';
+import { html, LitElement } from 'lit-element';
 
 import { bodyStandardStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { langResources } from './lang';
-import { LocalizeMixin } from './mixins/localize-mixin';
+import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 import { repeat } from 'lit-html/directives/repeat';
-
-interface INote {
-	id?: string;
-	user: {
-		name: string;
-		pic: {
-			url: string;
-			requireTokenAuth?: boolean;
-		};
-	};
-	href: string;
-	token: string;
-	showAvatar: boolean;
-	me: boolean;
-	createdAt: string;
-	updatedAt: string;
-	text: string;
-	canEdit: boolean;
-	canDelete: boolean;
-	private: boolean;
-	contextmenulabel: string;
-}
 
 /**
  * d2l-note component created with lit-element
@@ -80,142 +56,118 @@ interface INote {
  * </script>
  * ```
  */
-@customElement('d2l-notes')
 export class D2LNotes extends LocalizeMixin(LitElement) {
+	static get properties() {
+		return {
+			/**
+			 * Array of notes to pass to d2l-note elements
+			 */
+			notes: { type: Array },
+			/**
+			 * Indicates this user can create new notes
+			 */
+			cancreate: { type: Boolean },
+			/**
+			 * d2l-note-edit placeholder to show when creating
+			 */
+			editplaceholder: { type: String },
+			/**
+			 * TemplateResult containing description for d2l-note's in edit state and d2l-note-edit
+			 */
+			description: { type: Object },
+			/**
+			 * TemplateResult containing settings for d2l-note's in edit state and d2l-note-edit
+			 */
+			settings: { type: Object },
+			/**
+			 * Show the loadmore button regardless of number of items
+			 */
+			hasmore: { type: Boolean },
+			/**
+			 * Load more/less collapsed state
+			 */
+			collapsed: { type: Boolean },
+			/**
+			 * Number of items to show before showing the load more button
+			 */
+			collapsedsize: { type: Number },
+			/**
+			 * dateformat in d2l-note's
+			 */
+			dateformat: { type: String },
+			/**
+			 * override loadmore button text
+			 */
+			loadmorestring: { type: String },
+			/**
+			 * override loadless button text
+			 */
+			loadlessstring: { type: String },
+			/**
+			 * editstring in d2l-note's
+			 */
+			editstring: { type: String },
+			/**
+			 * deletestring in d2l-note's
+			 */
+			deletestring: { type: String },
+			/**
+			 * privatelabel in d2l-note's
+			 */
+			privatelabel: { type: String },
+			/**
+			 * addnotestring in d2l-note-edit
+			 */
+			addnotestring: { type: String },
+			/**
+			 * savenotestring in d2l-note's
+			 */
+			savenotestring: { type: String },
+			/**
+			 * discardnotestring in d2l-note's and d2l-note-edit
+			 */
+			discardnotestring: { type: String },
+			/**
+			 * string to show when there are no notes to show. Set to '' to not show anything
+			 */
+			emptystring: { type: String },
+			/**
+			 * label for the 'enter notes' area, overridden by emptystring if there are no existing notes. Does not render if undefined
+			 */
+			enternotestring: { type: String },
+		};
+	}
 
-	/**
-	 * Array of notes to pass to d2l-note elements
-	 */
-	@property({ type: Array })
-	notes: INote[] = [];
+	constructor() {
+		super();
+		this.notes = [];
+		this.cancreate = false;
+		this.editplaceholder = '';
+		this.description = () => html`<div></div>`;
+		this.settings = () => html`<div></div>`;
+		this.hasmore = false;
+		this.collapsed = true;
+		this.collapsedsize = 4;
 
-	/**
-	 * Indicates this user can create new notes
-	 */
-	@property({ type: Boolean })
-	cancreate: boolean = false;
+		/**
+		 * Fired when load more is tapped
+		 * @event
+		 */
+		this.EVENT_LOAD_MORE = 'd2l-notes-load-more';
 
-	/**
-	 * d2l-note-edit placeholder to show when creating
-	 */
-	@property({ type: String })
-	editplaceholder: string = '';
+		/**
+		 * Fired when load less is tapped
+		 * @event
+		 */
+		this.EVENT_LOAD_LESS = 'd2l-notes-load-less';
 
-	/**
-	 * TemplateResult containing description for d2l-note's in edit state and d2l-note-edit
-	 */
-	@property({ type: Object })
-	description: (ctx?: INote) => TemplateResult = () => html`<div></div>`;
+	}
 
-	/**
-	 * TemplateResult containing settings for d2l-note's in edit state and d2l-note-edit
-	 */
-	@property({ type: Object })
-	settings: (ctx?: INote) => TemplateResult = () => html`<div></div>`;
-
-	/**
-	 * Show the loadmore button regardless of number of items
-	 */
-	@property({ type: Boolean })
-	hasmore: boolean = false;
-
-	/**
-	 * Load more/less collapsed state
-	 */
-	@property({ type: Boolean })
-	collapsed: boolean = true;
-
-	/**
-	 * Number of items to show before showing the load more button
-	 */
-	@property({ type: Number })
-	collapsedsize: number = 4;
-
-	/**
-	 * dateformat in d2l-note's
-	 */
-	@property({ type: String })
-	dateformat?: string;
-
-	/**
-	 * override loadmore button text
-	 */
-	@property({ type: String })
-	loadmorestring?: string;
-
-	/**
-	 * override loadless button text
-	 */
-	@property({ type: String })
-	loadlessstring?: string;
-
-	/**
-	 * editstring in d2l-note's
-	 */
-	@property({ type: String })
-	editstring?: string;
-
-	/**
-	 * deletestring in d2l-note's
-	 */
-	@property({ type: String })
-	deletestring?: string;
-
-	/**
-	 * privatelabel in d2l-note's
-	 */
-	@property({ type: String })
-	privatelabel?: string;
-
-	/**
-	 * addnotestring in d2l-note-edit
-	 */
-	@property({ type: String })
-	addnotestring?: string;
-
-	/**
-	 * savenotestring in d2l-note's
-	 */
-	@property({ type: String })
-	savenotestring?: string;
-
-	/**
-	 * discardnotestring in d2l-note's and d2l-note-edit
-	 */
-	@property({ type: String })
-	discardnotestring?: string;
-
-	/**
-	 * string to show when there are no notes to show. Set to '' to not show anything
-	 */
-	@property({ type: String })
-	emptystring?: string;
-
-	/**
-	 * label for the 'enter notes' area, overridden by emptystring if there are no existing notes. Does not render if undefined
-	 */
-	@property({ type: String })
-	enternotestring?: string;
-
-	/**
-	 * Fired when load more is tapped
-	 * @event
-	 */
-	static EVENT_LOAD_MORE = 'd2l-notes-load-more';
-
-	/**
-	 * Fired when load less is tapped
-	 * @event
-	 */
-	static EVENT_LOAD_LESS = 'd2l-notes-load-less';
-
-	static __langResources = langResources;
-
-	static async getLocalizeResources(langs: string[]) {
+	static async getLocalizeResources(langs) {
 		for (let i = 0; i < langs.length; i++) {
-			if (this.__langResources[langs[i]]) {
+			if (langResources[langs[i]]) {
 				return {
-					resources: this.__langResources[langs[i]],
+					resources: langResources[langs[i]],
 					language: langs[i],
 				};
 			}
@@ -376,13 +328,13 @@ export class D2LNotes extends LocalizeMixin(LitElement) {
 
 	handleMoreLess() {
 		if (this.hasmore || this.collapsed) {
-			this.dispatchEvent(new CustomEvent(D2LNotes.EVENT_LOAD_MORE, {
+			this.dispatchEvent(new CustomEvent(this.EVENT_LOAD_MORE, {
 				bubbles: true,
 				composed: true
 			}));
 			this.collapsed = false;
 		} else {
-			this.dispatchEvent(new CustomEvent(D2LNotes.EVENT_LOAD_LESS, {
+			this.dispatchEvent(new CustomEvent(this.EVENT_LOAD_LESS, {
 				bubbles: true,
 				composed: true
 			}));
@@ -390,3 +342,4 @@ export class D2LNotes extends LocalizeMixin(LitElement) {
 		}
 	}
 }
+customElements.define('d2l-notes', D2LNotes);
