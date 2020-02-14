@@ -7,14 +7,12 @@ import 'd2l-alert/d2l-alert';
  * Import LitElement base class, html helper function,
  * and TypeScript decorators
  **/
-import {
-	customElement, html, LitElement, property
-} from 'lit-element';
+import { html, LitElement } from 'lit-element';
 
 import { inputStyles } from '@brightspace-ui/core/components/inputs/input-styles.js';
 import { IronA11yAnnouncer } from '@polymer/iron-a11y-announcer/iron-a11y-announcer';
 import { langResources } from './lang';
-import { LocalizeMixin } from './mixins/localize-mixin';
+import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 
 /**
  * d2l-note-edit component created with lit-element
@@ -35,96 +33,89 @@ import { LocalizeMixin } from './mixins/localize-mixin';
  * </d2l-note-edit>
  * ```
  */
-@customElement('d2l-note-edit')
 export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 
-	/**
-	 * Indicates this control creates a new item
-	 */
-	@property({ type: Boolean })
-	new: boolean = false;
+	static get properties() {
+		return {
+			/**
+			 * Indicates this control creates a new item
+			 */
+			new: { type: Boolean },
+			/**
+			 * Contents of note. Updates with change event on textarea
+			 */
+			value: { type: String },
+			/**
+			 * Placeholder for textarea
+			 */
+			placeholder: { type: String },
+			/**
+			 * Text for the 'Add' button. Defaults to langified 'Add'
+			 */
+			addnotestring: { type: String },
+			/**
+			 * Text for the 'Save' button. Defaults to langified 'Save'
+			 */
+			savenotestring: { type: String },
+			/**
+			 * Label for the 'Discard' button. Defaults to langified 'Discard'
+			 */
+			discardnotestring: { type: String },
+			/**
+			 * True while a request is being made, disables the components, defaults to false
+			 */
+			_makingCall: { type: Boolean },
+			/**
+			 * Indicates whether the component is in its expanded state. If true,
+			 * The textarea is set to its maximum height, the controls are visible.
+			 */
+			expanded: { type: Boolean, reflect: true },
+			/**
+			 * The error message to show if set. Shows a d2l-alert component and
+			 * sets the color of the textarea to --d2l-alert-critical-color
+			 */
+			errormessage: { type: String },
+		};
+	}
 
-	/**
-	 * Contents of note. Updates with change event on textarea
-	 */
-	@property({ type: String })
-	value: string = '';
+	constructor() {
+		super();
+		this.new = false;
+		this.value = '';
+		this.placeholder = '';
+		this._makingCall = false;
+		this.expanded = false;
 
-	/**
-	 * Placeholder for textarea
-	 */
-	@property({ type: String })
-	placeholder: string = '';
+		/**
+		 * Fired when edit is finished
+		 * @fires d2l-note-edit-finished
+		 */
+		this.EVENT_FINISHED = 'd2l-note-edit-finished';
 
-	/**
-	 * Text for the 'Add' button. Defaults to langified 'Add'
-	 */
-	@property({ type: String })
-	addnotestring?: string;
+		/**
+		 * Fired when Add button is tapped
+		 * @fires d2l-note-edit-add
+		 */
+		this.EVENT_ADD = 'd2l-note-edit-add';
 
-	/**
-	 * Text for the 'Save' button. Defaults to langified 'Save'
-	 */
-	@property({ type: String })
-	savenotestring?: string;
+		/**
+		 * Fired when Save button is tapped
+		 * @fires d2l-note-edit-save
+		 */
+		this.EVENT_SAVE = 'd2l-note-edit-save';
 
-	/**
-	 * Label for the 'Discard' button. Defaults to langified 'Discard'
-	 */
-	@property({ type: String })
-	discardnotestring?: string;
+		/**
+		 * Fired when Discard button is tapped
+		 * @fires d2l-note-edit-discard
+		 */
+		this.EVENT_DISCARD = 'd2l-note-edit-discard';
+	}
 
-	/**
-	 * True while a request is being made, disables the components, defaults to false
-	 */
-	@property({ type: Boolean })
-	_makingCall: boolean = false;
-
-	/**
-	 * Indicates whether the component is in its expanded state. If true,
-	 * The textarea is set to its maximum height, the controls are visible.
-	 */
-	@property({ type: Boolean, reflect: true })
-	expanded = false;
-
-	/**
-	 * The error message to show if set. Shows a d2l-alert component and
-	 * sets the color of the textarea to --d2l-alert-critical-color
-	 */
-	@property({ type: String })
-	errormessage?: string;
-
-	/**
-	 * Fired when edit is finished
-	 * @event
-	 */
-	static EVENT_FINISHED = 'd2l-note-edit-finished';
-
-	/**
-	 * Fired when Add button is tapped
-	 * @event
-	 */
-	static EVENT_ADD = 'd2l-note-edit-add';
-
-	/**
-	 * Fired when Save button is tapped
-	 * @event
-	 */
-	static EVENT_SAVE = 'd2l-note-edit-save';
-
-	/**
-	 * Fired when Discard button is tapped
-	 * @event
-	 */
-	static EVENT_DISCARD = 'd2l-note-edit-discard';
-
-	static __langResources = langResources;
-
-	static async getLocalizeResources(langs: string[]) {
+	static async getLocalizeResources(langs) {
 		for (let i = 0; i < langs.length; i++) {
-			if (this.__langResources[langs[i]]) {
+			if (langResources[langs[i]]) {
 				return {
-					resources: this.__langResources[langs[i]],
+					resources: langResources[langs[i]],
 					language: langs[i],
 				};
 			}
@@ -144,7 +135,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 		document.body.appendChild(IronA11yAnnouncer.assertiveInstance);
 	}
 
-	updated(changedProps: Map<string, string>) {
+	updated(changedProps) {
 		super.updated(changedProps);
 		if (changedProps.has('errormessage') && this.errormessage) {
 			IronA11yAnnouncer.assertiveInstance.announce(this.errormessage);
@@ -341,19 +332,19 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 		`;
 	}
 
-	_handleChange(e: Event) {
-		this.value = e.target && (e.target as any).value;
+	_handleChange(e) {
+		this.value = e.target && (e.target).value;
 	}
 
 	_handleEditClick() {
 		this.errormessage = undefined;
-		const finish = (error?: any) => {
+		const finish = (error) => {
 			this._makingCall = false;
 			if (error) {
 				this.errormessage = error.message ? error.message : error;
 				return;
 			}
-			this.dispatchEvent(new CustomEvent(D2LNoteEdit.EVENT_FINISHED, {
+			this.dispatchEvent(new CustomEvent(this.EVENT_FINISHED, {
 				bubbles: true,
 				composed: true,
 				detail: {
@@ -366,7 +357,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 		this._makingCall = true;
 		let succeeded = false;
 		if (this.new) {
-			succeeded = this.dispatchEvent(new CustomEvent(D2LNoteEdit.EVENT_ADD, {
+			succeeded = this.dispatchEvent(new CustomEvent(this.EVENT_ADD, {
 				bubbles: true,
 				composed: true,
 				cancelable: true,
@@ -377,7 +368,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				}
 			}));
 		} else {
-			succeeded = this.dispatchEvent(new CustomEvent(D2LNoteEdit.EVENT_SAVE, {
+			succeeded = this.dispatchEvent(new CustomEvent(this.EVENT_SAVE, {
 				bubbles: true,
 				composed: true,
 				cancelable: true,
@@ -395,7 +386,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 
 	_handleClick() {
 		this.errormessage = undefined;
-		const discarded = this.dispatchEvent(new CustomEvent(D2LNoteEdit.EVENT_DISCARD, {
+		const discarded = this.dispatchEvent(new CustomEvent(this.EVENT_DISCARD, {
 			bubbles: true,
 			composed: true,
 			cancelable: true,
@@ -406,7 +397,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 		}));
 
 		if (discarded) {
-			this.dispatchEvent(new CustomEvent(D2LNoteEdit.EVENT_FINISHED, {
+			this.dispatchEvent(new CustomEvent(this.EVENT_FINISHED, {
 				bubbles: true,
 				composed: true,
 				detail: {
@@ -428,3 +419,5 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 		window.ShadyCSS && window.ShadyCSS.styleSubtree(this);
 	}
 }
+
+customElements.define('d2l-note-edit', D2LNoteEdit);

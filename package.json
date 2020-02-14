@@ -6,25 +6,19 @@
     "url": "https://github.com/Brightspace/d2l-note.git"
   },
   "version": "1.2.0",
-  "main": "lib/d2l-note.js",
-  "types": "lib/d2l-note.d.ts",
+  "main": "src/d2l-note.js",
   "scripts": {
-    "start": "tsc-watch --onFirstSuccess \"npm run serve\"",
     "serve": "polymer serve",
-    "build": "tsc",
     "localize": "gulp localize",
-    "prepare": "npm run build",
-    "pretest:sauce": "npm run build",
-    "pretest:local": "npm run build",
     "test:sauce": "polymer test --skip-plugin local",
     "test:local": "polymer test --skip-plugin sauce",
     "test": "npm run test:local",
-    "lint": "eslint --ext html,js,ts demo src test"
+    "lint": "eslint --ext html,js demo src test"
   },
   "author": "D2L",
   "license": "UNLICENSED",
   "dependencies": {
-    "@brightspace-ui/core": "^1.28.2",
+    "@brightspace-ui/core": "^1",
     "@brightspace-ui/intl": "^3.0.1",
     "@d2l/user-elements": "^3",
     "@polymer/iron-a11y-announcer": "^3.0.2",
@@ -57,7 +51,6 @@
     "mocha": "^5.2.0",
     "polymer-cli": "^1.9.8",
     "require-dir": "^1.2.0",
-    "tsc-watch": "^2.1.2",
     "typescript": "^3.4.4",
     "wct-mocha": "^1.0.0"
   }
