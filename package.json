@@ -15,8 +15,8 @@
     "test": "npm run test:local",
     "lint": "eslint --ext html,js demo src test"
   },
-  "author": "D2L",
-  "license": "UNLICENSED",
+  "author": "D2L Corporation",
+  "license": "Apache-2.0",
   "dependencies": {
     "@brightspace-ui/core": "^1",
     "@brightspace-ui/intl": "^3.0.1",
