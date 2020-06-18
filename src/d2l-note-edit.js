@@ -273,11 +273,10 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 
 				textarea.d2l-input.d2l-note-edit-error:hover,
 				textarea.d2l-input.d2l-note-edit-error:focus {
-					border-color: var(--d2l-alert-critical-color, --d2l-color-cinnabar);
+					border-color: var(--d2l-color-feedback-error, --d2l-color-cinnabar);
 					border-width: 2px;
 					outline-style: none;
 					outline-width: 0;
-					padding: var(--d2l-input-padding-focus);
 				}
 
 				textarea.d2l-input::placeholder {
@@ -303,7 +302,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					class="d2l-input ${this.errormessage ? 'd2l-note-edit-error' : ''}"
 					.value=${this.value}
 					placeholder="${this.placeholder}"
-					@change=${this._handleChange}
+					@input=${this._handleInput}
 					?disabled="${this._makingCall}"
 				></textarea>
 				<d2l-alert role="alert" type="error" .hidden=${!this.errormessage}>${this.errormessage}</d2l-alert>
@@ -332,7 +331,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 		`;
 	}
 
-	_handleChange(e) {
+	_handleInput(e) {
 		this.value = e.target && (e.target).value;
 	}
 
