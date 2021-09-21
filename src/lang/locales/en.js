@@ -4,8 +4,8 @@
 export const en = {
 	"add": "Add",
 	"contextMenu": "Context Menu",
+	"cancel": "Cancel",
 	"delete": "Delete",
-	"discard": "Discard",
 	"edit": "Edit",
 	"empty": "No Notes",
 	"less": "Load Less Notes",

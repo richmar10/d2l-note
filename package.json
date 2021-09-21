@@ -5,10 +5,10 @@
     "type": "git",
     "url": "https://github.com/Brightspace/d2l-note.git"
   },
-  "version": "2.6.0",
+  "version": "3.0.0",
   "main": "src/d2l-note.js",
   "scripts": {
-    "serve": "polymer serve",
+    "start": "polymer serve",
     "localize": "gulp localize",
     "test:sauce": "polymer test --skip-plugin local",
     "test:local": "polymer test --skip-plugin sauce",
@@ -18,14 +18,11 @@
   "author": "D2L Corporation",
   "license": "Apache-2.0",
   "dependencies": {
-    "@brightspace-ui/core": "^1",
+    "@brightspace-ui/core": "^1.176.3",
     "@brightspace-ui/intl": "^3.0.1",
-    "@d2l/user-elements": "^4",
+    "@d2l/user-elements": "^4.0.1",
     "@polymer/iron-a11y-announcer": "^3.0.2",
     "@polymer/polymer": "^3.0.0",
-    "d2l-alert": "github:BrightspaceUI/alert#semver:^4",
-    "d2l-dropdown": "BrightspaceUI/dropdown#semver:^7",
-    "d2l-menu": "github:BrightspaceUI/menu#semver:^2",
     "d2l-users": "BrightspaceHypermediaComponents/users#semver:^2",
     "intl-messageformat": "^2.2.0",
     "lit-element": "^2.1.0"

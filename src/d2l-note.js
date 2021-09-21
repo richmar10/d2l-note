@@ -1,12 +1,13 @@
-import '@d2l/user-elements/d2l-user';
+import '@brightspace-ui/core/components/colors/colors.js';
+import '@brightspace-ui/core/components/dropdown/dropdown-menu.js';
+import '@brightspace-ui/core/components/dropdown/dropdown-more.js';
 import '@brightspace-ui/core/components/icons/icon.js';
 import '@brightspace-ui/core/components/more-less/more-less.js';
-import '@brightspace-ui/core/components/colors/colors.js';
-import 'd2l-dropdown/d2l-dropdown-more';
-import 'd2l-dropdown/d2l-dropdown-menu';
-import 'd2l-menu/d2l-menu';
-import 'd2l-menu/d2l-menu-item';
+import '@brightspace-ui/core/components/menu/menu.js';
+import '@brightspace-ui/core/components/menu/menu-item.js';
+import '@d2l/user-elements/d2l-user';
 import 'd2l-users/components/d2l-profile-image';
+
 import './d2l-note-edit';
 
 /**
@@ -89,7 +90,7 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 			 */
 			text: { type: String},
 			/**
-			 * d2l-note-edit placeholder to show when editting
+			 * d2l-note-edit placeholder to show when editing
 			 */
 			editplaceholder: { type: String },
 			/**
@@ -101,7 +102,7 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 			 */
 			private: { type: Boolean, reflect: true },
 			/**
-			 * Indicates this note can be editted by the current user
+			 * Indicates this note can be edited by the current user
 			 */
 			canedit: { type: Boolean },
 			/**
@@ -113,10 +114,10 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 			 */
 			dateformat: { type: String },
 			/**
-			 * Indicates whether the note is beting editted
+			 * Indicates whether the note is beting edited
 			 * Shows a d2l-note-edit component if true
 			 */
-			editting: { type: String },
+			editing: { type: String },
 			/**
 			* Label for the edit/delete context menu
 			*/
@@ -158,7 +159,7 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 		this.canedit = false;
 		this.candelete = false;
 		this.dateformat = 'medium';
-		this.editting = false;
+		this.editing = false;
 
 		/**
 		 * Fired when delete menu item is tapped
@@ -397,7 +398,7 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 						<d2l-dropdown-more text="${this.contextmenulabel ? this.contextmenulabel : this.localize('contextMenu')}">
 							<d2l-dropdown-menu>
 								<d2l-menu label="${this.contextmenulabel ? this.contextmenulabel : this.localize('contextMenu')}">
-									${this.canedit && !this.editting ? html`<d2l-menu-item
+									${this.canedit && !this.editing ? html`<d2l-menu-item
 										text="${this.editstring ? this.editstring : this.localize('edit')}"
 										@d2l-menu-item-select=${this.editSelectHandler}
 									></d2l-menu-item>` : null }
@@ -410,7 +411,7 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 						</d2l-dropdown-more>` : null }
 				</div>
 				<div class="d2l-note-text-container">
-					${this.editting ? html`
+					${this.editing ? html`
 						<d2l-note-edit
 							id="${this.id}"
 							placeholder="${this.editplaceholder}"
@@ -425,7 +426,7 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 							<slot name="settings" slot="settings"></slot>
 						</d2l-note-edit>` : this.text ? convertText(this.text) : html`
 						<div class="d2l-note-text-skeleton skeleton">&nbsp;</div>`}
-					${!this.editting && this.private ? html`<d2l-icon
+					${!this.editing && this.private ? html`<d2l-icon
 						class="d2l-note-private-indicator"
 						icon="d2l-tier1:visibility-hide"
 						aria-label="${this.privatelabel ? this.privatelabel : this.localize('private')}"
@@ -436,11 +437,11 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 	}
 
 	editSelectHandler() {
-		this.editting = true;
+		this.editing = true;
 	}
 
 	_handleFinished() {
-		this.editting = false;
+		this.editing = false;
 	}
 
 	deleteSelectHandler() {

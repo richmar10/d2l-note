@@ -1,7 +1,6 @@
-import '@brightspace-ui/core/components/icons/icon.js';
+import '@brightspace-ui/core/components/alert/alert.js';
 import '@brightspace-ui/core/components/button/button.js';
-import '@brightspace-ui/core/components/button/button-icon.js';
-import 'd2l-alert/d2l-alert';
+import '@brightspace-ui/core/components/icons/icon.js';
 
 /**
  * Import LitElement base class, html helper function,
@@ -305,7 +304,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					@input=${this._handleInput}
 					?disabled="${this._makingCall}"
 				></textarea>
-				<d2l-alert role="alert" type="error" .hidden=${!this.errormessage}>${this.errormessage}</d2l-alert>
+				<d2l-alert role="alert" type="critical" .hidden=${!this.errormessage}>${this.errormessage}</d2l-alert>
 				<div class="d2l-note-edit-controls">
 					<d2l-button
 						class="d2l-note-edit-button"
@@ -316,15 +315,13 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 						${this.new ? this.addnotestring ? this.addnotestring : this.localize('add') : this.savenotestring ? this.savenotestring : this.localize('save')}
 					</d2l-button>
 					<div class="d2l-note-edit-bottom-right">
+						<d2l-button
+						class="d2l-note-edit-discard-button"
+						@click=${this._handleClick}
+						>${this.discardnotestring ? this.discardnotestring : this.localize('cancel')}</d2l-button>
 						<div class="d2l-note-edit-settings">
 							<slot name="settings"></slot>
 						</div>
-						<d2l-button-icon
-							class="d2l-note-edit-discard-button"
-							icon="d2l-tier2:delete"
-							text="${this.discardnotestring ? this.discardnotestring : this.localize('discard')}"
-							@click=${this._handleClick}
-						></d2l-button-icon>
 					</div>
 				</div>
 			</div>

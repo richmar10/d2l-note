@@ -243,17 +243,20 @@
 						const hiddenElementNoteEdit = elementShadowRoot.querySelector('d2l-note-edit');
 						assert.equal(hiddenElementNoteEdit, null);
 						const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown-more');
+						const elementMenu = elementShadowRoot.querySelector('d2l-dropdown-menu');
 						const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
+
 						const openPromise = new Promise((resolve) => listenOnce(elementDropdown, 'd2l-dropdown-open', resolve));
-						elementDropdown.toggleOpen();
+						elementMenu.setAttribute('opened', true);
 						await openPromise;
+
 						// Wait for menu to become visible
 						await new Promise((resolve) => setTimeout(resolve, 100));
 						const editItem = [].filter.call(elementMenuItems, item => item.text.indexOf('Edit') !== -1)[0];
 						editItem.click();
 
 						await element.updateComplete.then();
-						assert.equal(element.editting, true);
+						assert.equal(element.editing, true);
 						const elementNoteEdit = elementShadowRoot.querySelector('d2l-note-edit');
 						assert.notEqual(elementNoteEdit, null);
 					});
@@ -268,10 +271,13 @@
 						await element.updateComplete.then();
 						const elementShadowRoot = element.shadowRoot;
 						const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown-more');
+						const elementMenu = elementShadowRoot.querySelector('d2l-dropdown-menu');
 						const elementMenuItems = elementShadowRoot.querySelectorAll('d2l-menu-item');
+
 						const openPromise = new Promise((resolve) => listenOnce(elementDropdown, 'd2l-dropdown-open', resolve));
-						elementDropdown.toggleOpen();
+						elementMenu.setAttribute('opened', true);
 						await openPromise;
+
 						// Wait for menu to become visible
 						await new Promise((resolve) => setTimeout(resolve, 100));
 						const deleteItem = [].filter.call(elementMenuItems, item => item.text.indexOf('Delete') !== -1)[0];

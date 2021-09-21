@@ -1,4 +1,4 @@
-# \<d2l-note\>
+# d2l-note
 [![Build status][ci-image]][ci-url]
 
 A Note
@@ -9,14 +9,14 @@ First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polyme
 
 ## Viewing Your Element
 
-```
-$ npm start
+```bash
+npm start
 ```
 
 ## Running Tests
 
-```
-$ npm test
+```bash
+npm test
 ```
 
 Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `npm test` to run your application's test suite locally.
@@ -33,7 +33,7 @@ By using either **[increment major]** or **[increment patch]** notation inside y
 ## Localization
 
 This repo uses [Serge](https://docs.dev.d2l/index.php/Serge-Localize) for localization. On any changes to langterm data files (eg. due to adding new lang terms, or merging an automated PR that provides updated translations), you must run
-```
+```bash
 npm run localize
 ```
 to generate new modules with the updated data.

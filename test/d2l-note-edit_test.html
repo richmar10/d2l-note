@@ -110,8 +110,7 @@
 				await element.updateComplete.then();
 				const elementShadowRoot = element.shadowRoot;
 				const elementButton = elementShadowRoot.querySelector('.d2l-note-edit-discard-button');
-				assert.equal(elementButton.icon, 'd2l-tier2:delete');
-				assert.equal(elementButton.text, 'Discard');
+				assert.equal(elementButton.textContent.trim(), 'Cancel');
 			});
 
 			test('dispatches d2l-note-edit-add when "Add" is tapped', async() => {
