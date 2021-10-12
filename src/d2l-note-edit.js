@@ -295,7 +295,6 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 			<div
 				class="d2l-note-edit-main"
 				@focusin=${this._handleFocusin}
-				@focusout=${this._handleFocusout}
 			>
 				<textarea
 					class="d2l-input ${this.errormessage ? 'd2l-note-edit-error' : ''}"
@@ -402,6 +401,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				}
 			}));
 			this.value = '';
+			this._handleFocusout();
 		}
 	}
 
