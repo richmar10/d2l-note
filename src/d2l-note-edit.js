@@ -402,6 +402,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 			}));
 			this.value = '';
 			this._handleFocusout();
+
 		}
 	}
 
