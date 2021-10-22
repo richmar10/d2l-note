@@ -401,8 +401,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 				}
 			}));
 			this.value = '';
-			this._handleFocusout();
-
+			this._removeFocus();
 		}
 	}
 
@@ -411,7 +410,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 		window.ShadyCSS && window.ShadyCSS.styleSubtree(this);
 	}
 
-	_handleFocusout() {
+	_removeFocus() {
 		this.removeAttribute('focused');
 		window.ShadyCSS && window.ShadyCSS.styleSubtree(this);
 	}
