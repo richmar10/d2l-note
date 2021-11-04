@@ -74,6 +74,11 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 			 * sets the color of the textarea to --d2l-alert-critical-color
 			 */
 			errormessage: { type: String },
+			/**
+			 * Indicates whether the component is in its focused state. If true,
+			 * The textarea is set to have its text area selected, and expanded.
+			 */
+			focused: { type: Boolean, reflect: true },
 		};
 	}
 
@@ -84,6 +89,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 		this.placeholder = '';
 		this._makingCall = false;
 		this.expanded = false;
+		this.focused = false;
 
 		/**
 		 * Fired when edit is finished
@@ -347,7 +353,7 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					value: this.value
 				}
 			}));
-			this.value = '';
+			this._closeNote();
 		};
 		this._makingCall = true;
 		let succeeded = false;
@@ -400,19 +406,21 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 					value: this.value
 				}
 			}));
-			this.value = '';
-			this._removeFocus();
+			this._closeNote();
 		}
 	}
 
 	_handleFocusin() {
-		this.setAttribute('focused', '');
-		window.ShadyCSS && window.ShadyCSS.styleSubtree(this);
+		this.focused = true;
 	}
 
 	_removeFocus() {
-		this.removeAttribute('focused');
-		window.ShadyCSS && window.ShadyCSS.styleSubtree(this);
+		this.focused = false;
+	}
+
+	_closeNote() {
+		this.value = '';
+		this._removeFocus();
 	}
 }
 

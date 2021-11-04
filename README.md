@@ -12,12 +12,17 @@ First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polyme
 ```bash
 npm start
 ```
-
 ## Running Tests
 
 ```bash
 npm test
 ```
+
+## Issue With CI
+
+Currently there is an issue running the following on travis CI: npm run test:local;
+Line 16 of travis.yml has been commented out, and this test should be run locally prior to creating a PR and merging into master.
+
 
 Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `npm test` to run your application's test suite locally.
 
