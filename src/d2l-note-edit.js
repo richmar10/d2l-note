@@ -8,8 +8,8 @@ import '@brightspace-ui/core/components/icons/icon.js';
  **/
 import { html, LitElement } from 'lit-element';
 
+import { announce } from '@brightspace-ui/core/helpers/announce';
 import { inputStyles } from '@brightspace-ui/core/components/inputs/input-styles.js';
-import { IronA11yAnnouncer } from '@polymer/iron-a11y-announcer/iron-a11y-announcer';
 import { langResources } from './lang';
 import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
 
@@ -133,17 +133,12 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 
 	connectedCallback() {
 		super.connectedCallback();
-		if (!IronA11yAnnouncer.assertiveInstance) {
-			IronA11yAnnouncer.assertiveInstance = document.createElement('iron-a11y-announcer');
-		}
-		IronA11yAnnouncer.assertiveInstance.mode = 'assertive';
-		document.body.appendChild(IronA11yAnnouncer.assertiveInstance);
 	}
 
 	updated(changedProps) {
 		super.updated(changedProps);
 		if (changedProps.has('errormessage') && this.errormessage) {
-			IronA11yAnnouncer.assertiveInstance.announce(this.errormessage);
+			announce(this.errormessage);
 		}
 	}
 

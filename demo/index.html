@@ -1,37 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
-
-		<title>d2l-note demo</title>
-
-		<script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="UTF-8">
+		<style>
+			html {
+				font-size: 20px;
+			}
+			body {
+				margin: 0;
+			}
+			d2l-note {
+				--d2l-note-margin-horizontal: 0;
+			}
+		</style>
+		<script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
 		<script type="module">
-			import '@polymer/iron-demo-helpers/demo-pages-shared-styles';
-			import '@polymer/iron-demo-helpers/demo-snippet';
-			import 'd2l-typography/d2l-typography.js';
-		</script>
-
-		<script type="module" src="../src/d2l-notes.js"></script>
-
-		<script type="module">
-			const $_documentContainer = document.createElement('template');
-			$_documentContainer.innerHTML = `<custom-style include="d2l-typography">
-				<style is="custom-style" include="d2l-typography"></style>
-			</custom-style>`;
-			document.body.appendChild($_documentContainer.content);
+			import '@brightspace-ui/core/components/demo/demo-page.js';
+			import '@brightspace-ui/core/components/typography/typography.js';
+			import '../src/d2l-notes.js';
 		</script>
 	</head>
-	<body class="d2l-typography">
-		<custom-style>
-			<style is="custom-style" include="demo-pages-shared-styles">
-			</style>
-		</custom-style>
-		<div class="vertical-section-container centered">
-			<h3>private d2l-note demo</h3>
-			<demo-snippet>
+
+	<body unresolved>
+		<d2l-demo-page page-title="d2l-note">
+			<h2>private d2l-note demo</h2>
+			<d2l-demo-snippet>
 				<template>
 					<d2l-note
 						user='{"name":"Username","pic":{"url":"avatar.png"},"href":"123"}'
@@ -47,10 +41,10 @@
 						<span class="d2l-body-standard" slot="settings">Settings</span>
 					</d2l-note>
 				</template>
-			</demo-snippet>
+			</d2l-demo-snippet>
 
-			<h3>private d2l-note dateformat demo</h3>
-			<demo-snippet>
+			<h2>private d2l-note dateformat demo</h2>
+			<d2l-demo-snippet>
 				<template>
 					<d2l-note
 						user='{"name":"Username","pic":{"url":"avatar.png"},"href":"123"}'
@@ -67,10 +61,10 @@
 						<span class="d2l-body-standard" slot="settings">Settings</span>
 					</d2l-note>
 				</template>
-			</demo-snippet>
+			</d2l-demo-snippet>
 
-			<h3>private long d2l-note demo</h3>
-			<demo-snippet>
+			<h2>private long d2l-note demo</h2>
+			<d2l-demo-snippet>
 				<template>
 					<d2l-note
 						user='{"name":"Username","pic":{"url":"avatar.png"},"href":"123"}'
@@ -86,10 +80,10 @@
 						<span class="d2l-body-standard" slot="settings">Settings</span>
 					</d2l-note>
 				</template>
-			</demo-snippet>
+			</d2l-demo-snippet>
 
-			<h3>shared d2l-note demo</h3>
-			<demo-snippet>
+			<h2>shared d2l-note demo</h2>
+			<d2l-demo-snippet>
 				<template>
 					<d2l-note
 						user='{"name":"Username","pic":{"url":"avatar.png"},"href":"123"}'
@@ -101,10 +95,10 @@
 						candelete
 					></d2l-note>
 				</template>
-			</demo-snippet>
+			</d2l-demo-snippet>
 
-			<h3>my shared d2l-note demo</h3>
-			<demo-snippet>
+			<h2>my shared d2l-note demo</h2>
+			<d2l-demo-snippet>
 				<template>
 					<d2l-note
 						user='{"name":"Username","pic":{"url":"avatar.png"},"href":"123"}'
@@ -117,10 +111,10 @@
 						me
 					></d2l-note>
 				</template>
-			</demo-snippet>
+			</d2l-demo-snippet>
 
-			<h3>readonly d2l-note demo</h3>
-			<demo-snippet>
+			<h2>readonly d2l-note demo</h2>
+			<d2l-demo-snippet>
 				<template>
 					<d2l-note
 						user='{"name":"Username","pic":{"url":"avatar.png"},"href":"123"}'
@@ -130,10 +124,10 @@
 						text="This is some text"
 					></d2l-note>
 				</template>
-			</demo-snippet>
+			</d2l-demo-snippet>
 
-			<h3>initials avatar d2l-note demo</h3>
-			<demo-snippet>
+			<h2>initials avatar d2l-note demo</h2>
+			<d2l-demo-snippet>
 				<template>
 					<d2l-note
 						user='{"name":"Username","pic":{"url":"avatar.png"},"href":"1234"}'
@@ -143,10 +137,10 @@
 						text="This is some text"
 					></d2l-note>
 				</template>
-			</demo-snippet>
+			</d2l-demo-snippet>
 
-			<h3>old fashioned d2l-avatar d2l-note demo</h3>
-			<demo-snippet>
+			<h2>old fashioned d2l-avatar d2l-note demo</h2>
+			<d2l-demo-snippet>
 				<template>
 					<d2l-note
 						user='{"name":"Username","pic":{"url":"avatar.png"}}'
@@ -155,17 +149,17 @@
 						text="This is some text"
 					></d2l-note>
 				</template>
-			</demo-snippet>
+			</d2l-demo-snippet>
 
-			<h3>skeleton d2l-note demo</h3>
-			<demo-snippet>
+			<h2>skeleton d2l-note demo</h2>
+			<d2l-demo-snippet>
 				<template>
 					<d2l-note></d2l-note>
 				</template>
-			</demo-snippet>
+			</d2l-demo-snippet>
 
-			<h3>d2l-notes demo</h3>
-			<demo-snippet>
+			<h2>d2l-notes demo</h2>
+			<d2l-demo-snippet>
 				<template>
 					<d2l-notes
 						id="notes"
@@ -173,38 +167,38 @@
 						cancreate
 					></d2l-notes>
 				</template>
-			</demo-snippet>
+			</d2l-demo-snippet>
 
-			<h3>d2l-notes no hasmore demo</h3>
-			<demo-snippet>
+			<h2>d2l-notes no hasmore demo</h2>
+			<d2l-demo-snippet>
 				<template>
 					<d2l-notes
 						class="d2l-notes-3"
 						cancreate
 					></d2l-notes>
 				</template>
-			</demo-snippet>
+			</d2l-demo-snippet>
 
-			<h3>d2l-notes no notes demo</h3>
-			<demo-snippet>
+			<h2>d2l-notes no notes demo</h2>
+			<d2l-demo-snippet>
 				<template>
 					<d2l-notes
 						cancreate
 					></d2l-notes>
 				</template>
-			</demo-snippet>
+			</d2l-demo-snippet>
 
-			<h3>d2l-notes hasmore demo</h3>
-			<demo-snippet>
+			<h2>d2l-notes hasmore demo</h2>
+			<d2l-demo-snippet>
 				<template>
 					<d2l-notes
 						hasmore
 					></d2l-notes>
 				</template>
-			</demo-snippet>
+			</d2l-demo-snippet>
 
-			<h3>d2l-notes custom load more/less demo</h3>
-			<demo-snippet>
+			<h2>d2l-notes custom load more/less demo</h2>
+			<d2l-demo-snippet>
 				<template>
 					<d2l-notes
 						class="d2l-notes-5"
@@ -213,8 +207,8 @@
 						loadlessstring="Load Less Comments"
 					></d2l-notes>
 				</template>
-			</demo-snippet>
-		</div>
+			</d2l-demo-snippet>
+		</d2l-demo-page>
 		<script type="module">
 			import { html } from '../../../lit-element/lit-element.js';
 			const notes = document.getElementById('notes');
