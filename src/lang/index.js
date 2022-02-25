@@ -3,6 +3,7 @@ import { deDe } from './locales/de-DE';
 import { en } from './locales/en';
 import { esMx } from './locales/es-MX';
 import { frCa } from './locales/fr-CA';
+import { hiHi } from './locales/hi-HI';
 import { jaJp } from './locales/ja-JP';
 import { koKr } from './locales/ko-KR';
 import { nlNl } from './locales/nl-NL';
@@ -18,6 +19,7 @@ export const langResources = {
 	'en': en,
 	'es': esMx,
 	'fr': frCa,
+	'hi': hiHi,
 	'ja': jaJp,
 	'ko': koKr,
 	'nl': nlNl,
