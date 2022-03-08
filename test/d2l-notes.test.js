@@ -1,6 +1,6 @@
 import '../src/d2l-notes';
 import { expect, fixture, html } from '@open-wc/testing';
-import { html as litHtml } from 'lit-element'; // prevent collision with @open-wc/testing html
+import { html as litHtml } from 'lit'; // prevent collision with @open-wc/testing html
 
 function listenOnce(et, evt, handler) {
 	const handle = (...args) => {

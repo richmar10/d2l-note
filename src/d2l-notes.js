@@ -270,23 +270,23 @@ export class D2LNotes extends LocalizeMixin(LitElement) {
 									.user=${note.user}
 									.href=${note.href}
 									.token=${note.token}
-									.showavatar=${typeof note.showAvatar === 'boolean' ? note.showAvatar : true}
+									?show-avatar=${typeof note.showAvatar === 'boolean' ? note.showAvatar : true}
 									.me=${note.me ? note.me : false}
-									.createdat=${note.createdAt}
-									.updatedat=${note.updatedAt}
-									.text=${note.text}
-									.canedit=${note.canEdit ? note.canEdit : false}
-									.candelete=${note.canDelete ? note.canDelete : false}
-									.private=${note.private ? note.private : false}
-									.dateformat=${this.dateFormat}
-									.contextmenulabel=${note.contextmenulabel}
-									.editstring=${this.editString}
-									.deletestring=${this.deleteString}
-									.privatelabel=${this.privateLabel}
-									.addnotestring=${this.addNoteString}
-									.savenotestring=${this.saveNoteString}
-									.discardnotestring=${this.discardNoteString}
-									.editplaceholder=${this.editPlaceholder}
+									created-at=${note.createdAt}
+									updated-at=${note.updatedAt}
+									text=${note.text}
+									?can-edit=${note.canEdit ? note.canEdit : false}
+									?can-delete=${note.canDelete ? note.canDelete : false}
+									?private=${note.private ? note.private : false}
+									date-format=${this.dateFormat}
+									context-menu-label=${note.contextmenulabel}
+									edit-string=${this.editString}
+									delete-string=${this.deleteString}
+									private-label=${this.privateLabel}
+									add-note-string=${this.addNoteString}
+									save-note-string=${this.saveNoteString}
+									discard-note-string=${this.discardNoteString}
+									edit-placeholder=${this.editPlaceholder}
 								>
 									<div slot="description">${this.description(note)}</div>
 									<div slot="settings">${this.settings(note)}</div>
