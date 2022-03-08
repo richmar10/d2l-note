@@ -132,13 +132,8 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 
 			--d2l-note-edit-spacing: 12px;
 			--d2l-note-edit-textarea-font-size: 1rem;
-
-			/* need to set px for transitioning in Edge/IE11 */
-			/* height: calc(var(--d2l-note-edit-textarea-line-height) + var(--d2l-note-edit-textarea-padding-vertical) * 2 + 2px); */
 			--d2l-note-edit-textarea-collapsed-height: 2.3rem;
-			/* height: calc(var(--d2l-note-edit-textarea-line-height) * 4 + var(--d2l-note-edit-textarea-padding-vertical) * 2 + 2px); */
 			--d2l-note-edit-textarea-expanded-height: 95px;
-
 			--d2l-note-edit-textarea-padding-vertical: 0.5rem;
 			--d2l-note-edit-textarea-padding-horizontal: 0.75rem;
 			--d2l-note-edit-transition-duration: 0.5s;
@@ -159,16 +154,16 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 		}
 
 		.d2l-note-edit-button {
-			margin-right: 0.5rem;
+			margin-inline-end: 0.5rem;
 		}
 
 		:host(:dir(rtl)) .d2l-note-edit-button {
-			margin-right: initial;
-			margin-left: 0.5rem;
+			margin-inline-end: initial;
+			margin-inline-start: 0.5rem;
 		}
 		:host-context([dir="rtl"]) > .d2l-note-edit-main .d2l-note-edit-button {
-			margin-right: initial;
-			margin-left: 0.5rem;
+			margin-inline-end: initial;
+			margin-inline-start: 0.5rem;
 		}
 
 		:host(:not([focused])) .d2l-note-edit-controls,
