@@ -251,13 +251,8 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 		}
 	`];
 
-	connectedCallback() {
-		super.connectedCallback();
-	}
-
-	updated(changedProps) {
-		super.updated(changedProps);
-		if (changedProps.has('errorMessage') && this.errorMessage) {
+	updated(changedProperties) {
+		if (changedProperties.has('errorMessage') && this.errorMessage) {
 			announce(this.errorMessage);
 		}
 	}
