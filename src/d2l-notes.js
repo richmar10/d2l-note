@@ -62,8 +62,8 @@ export class D2LNotes extends LocalizeMixin(LitElement) {
 		 */
 		notes: { type: Array },
 		/**
-* Indicates this user can create new notes
-*/
+		 * Indicates this user can create new notes
+		 */
 		canCreate: { type: Boolean, attribute: 'can-create' },
 		/**
 		 * d2l-note-edit placeholder to show when creating

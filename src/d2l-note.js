@@ -69,8 +69,8 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 		 */
 		token: { type: String },
 		/**
-	 * show avatar and username if true
-	 */
+		 * show avatar and username if true
+		 */
 		showAvatar: { type: Boolean, attribute: 'show-avatar' },
 		/**
 		 * Compact view. Removes padding

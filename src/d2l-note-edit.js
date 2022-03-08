@@ -48,8 +48,8 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 		 */
 		placeholder: { type: String },
 		/**
-* Text for the 'Add' button. Defaults to langified 'Add'
-*/
+		 * Text for the 'Add' button. Defaults to langified 'Add'
+		 */
 		addNoteString: { type: String, attribute: 'add-note-string' },
 		/**
 		 * Text for the 'Save' button. Defaults to langified 'Save'
