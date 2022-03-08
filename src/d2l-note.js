@@ -423,9 +423,9 @@ export class D2LNote extends LocalizeMixin(LitElement) {
 							placeholder="${this.editPlaceholder}"
 							value="${this.text}"
 							expanded
-							.addnotestring=${this.addNoteString}
-							.savenotestring=${this.saveNoteString}
-							.discardnotestring=${this.discardNoteString}
+							add-note-string=${this.addNoteString}
+							save-note-string=${this.saveNoteString}
+							discard-note-string=${this.discardNoteString}
 							@d2l-note-edit-finished=${this._handleFinished}
 						>
 							<slot name="description" slot="description"></slot>
