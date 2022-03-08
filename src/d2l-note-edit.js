@@ -157,15 +157,6 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 			margin-inline-end: 0.5rem;
 		}
 
-		:host(:dir(rtl)) .d2l-note-edit-button {
-			margin-inline-end: initial;
-			margin-inline-start: 0.5rem;
-		}
-		:host-context([dir="rtl"]) > .d2l-note-edit-main .d2l-note-edit-button {
-			margin-inline-end: initial;
-			margin-inline-start: 0.5rem;
-		}
-
 		:host(:not([focused])) .d2l-note-edit-controls,
 		:host(:not([expanded])) .d2l-note-edit-controls {
 			max-height: 0;
