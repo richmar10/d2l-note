@@ -235,7 +235,7 @@ describe('d2l-note-edit', () => {
 
 	it('shows d2l-alert component when "errormessage" is set', async() => {
 		const el = await fixture(basicTestFixture);
-		el.errormessage = 'Error';
+		el.errorMessage = 'Error';
 		await el.updateComplete;
 		const elementShadowRoot = el.shadowRoot;
 		const alert = elementShadowRoot.querySelector('d2l-alert');

@@ -41,7 +41,7 @@ describe('d2l-note', () => {
 				url: 'fixtures/user.png'
 			}
 		};
-		el.showavatar = true;
+		el.showAvatar = true;
 		await el.updateComplete;
 
 		const elementShadowRoot = el.shadowRoot;
@@ -62,7 +62,7 @@ describe('d2l-note', () => {
 				requireTokenAuth: true
 			}
 		};
-		el.showavatar = true;
+		el.showAvatar = true;
 		await el.updateComplete;
 
 		const elementShadowRoot = el.shadowRoot;
@@ -79,7 +79,7 @@ describe('d2l-note', () => {
 				url: 'fixtures/user.png'
 			}
 		};
-		el.showavatar = false;
+		el.showAvatar = false;
 		await el.updateComplete;
 
 		const elementShadowRoot = el.shadowRoot;
@@ -92,7 +92,7 @@ describe('d2l-note', () => {
 		el.user = {
 			name: 'Username'
 		};
-		el.showavatar = true;
+		el.showAvatar = true;
 		await el.updateComplete;
 
 		const elementShadowRoot = el.shadowRoot;
@@ -105,7 +105,7 @@ describe('d2l-note', () => {
 		el.user = {
 			name: 'Username'
 		};
-		el.showavatar = true;
+		el.showAvatar = true;
 		el.me = true;
 		await el.updateComplete;
 
@@ -120,7 +120,7 @@ describe('d2l-note', () => {
 		el.user = {
 			name: 'Username'
 		};
-		el.createdat = date.toISOString();
+		el.createdAt = date.toISOString();
 		await el.updateComplete;
 
 		const elementShadowRoot = el.shadowRoot;
@@ -163,7 +163,7 @@ describe('d2l-note', () => {
 	describe('context menu', () => {
 		it('has context menu if "canedit" is true', async() => {
 			const el = await fixture(html`<d2l-note></d2l-note>`);
-			el.canedit = true;
+			el.canEdit = true;
 			await el.updateComplete;
 
 			const elementShadowRoot = el.shadowRoot;
@@ -173,7 +173,7 @@ describe('d2l-note', () => {
 
 		it('has context menu if "candelete" is true', async() => {
 			const el = await fixture(html`<d2l-note></d2l-note>`);
-			el.candelete = true;
+			el.canDelete = true;
 			await el.updateComplete;
 
 			const elementShadowRoot = el.shadowRoot;
@@ -183,8 +183,8 @@ describe('d2l-note', () => {
 
 		it('does not have context menu if "canedit"/"candelete" are not true', async() => {
 			const el = await fixture(html`<d2l-note></d2l-note>`);
-			el.canedit = false;
-			el.candelete = false;
+			el.canEdit = false;
+			el.canDelete = false;
 			await el.updateComplete;
 
 			const elementShadowRoot = el.shadowRoot;
@@ -194,7 +194,7 @@ describe('d2l-note', () => {
 
 		it('has edit action if "canedit" is true', async() => {
 			const el = await fixture(html`<d2l-note></d2l-note>`);
-			el.canedit = true;
+			el.canEdit = true;
 			await el.updateComplete;
 
 			const elementShadowRoot = el.shadowRoot;
@@ -205,7 +205,7 @@ describe('d2l-note', () => {
 
 		it('does not have edit action if "canedit" is not true', async() => {
 			const el = await fixture(html`<d2l-note></d2l-note>`);
-			el.canedit = false;
+			el.canEdit = false;
 			await el.updateComplete;
 
 			const elementShadowRoot = el.shadowRoot;
@@ -215,7 +215,7 @@ describe('d2l-note', () => {
 
 		it('has delete action if "candelete" is true', async() => {
 			const el = await fixture(html`<d2l-note></d2l-note>`);
-			el.candelete = true;
+			el.canDelete = true;
 			await el.updateComplete;
 
 			const elementShadowRoot = el.shadowRoot;
@@ -225,7 +225,7 @@ describe('d2l-note', () => {
 
 		it('does not have delete action if "candelete" is not true', async() => {
 			const el = await fixture(html`<d2l-note></d2l-note>`);
-			el.candelete = false;
+			el.canDelete = false;
 			await el.updateComplete;
 
 			const elementShadowRoot = el.shadowRoot;
@@ -236,7 +236,7 @@ describe('d2l-note', () => {
 		describe('edit', () => {
 			it('shows d2l-note-edit when edit button is tapped', async() => {
 				const el = await fixture(html`<d2l-note></d2l-note>`);
-				el.canedit = true;
+				el.canEdit = true;
 				await el.updateComplete;
 
 				const elementShadowRoot = el.shadowRoot;
@@ -269,7 +269,7 @@ describe('d2l-note', () => {
 
 			it('fires d2l-note-delete when delete button is tapped', async() => {
 				const el = await fixture(html`<d2l-note></d2l-note>`);
-				el.candelete = true;
+				el.canDelete = true;
 				await el.updateComplete;
 				const elementShadowRoot = el.shadowRoot;
 				const elementDropdown = elementShadowRoot.querySelector('d2l-dropdown-more');
