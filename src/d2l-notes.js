@@ -56,83 +56,85 @@ import { LocalizeStaticMixin } from '@brightspace-ui/core/mixins/localize-static
  * ```
  */
 export class D2LNotes extends LocalizeStaticMixin(LitElement) {
-	static properties = {
-		/**
-		 * Array of notes to pass to d2l-note elements
-		 */
-		notes: { type: Array },
-		/**
-		 * Indicates this user can create new notes
-		 */
-		canCreate: { type: Boolean, attribute: 'can-create' },
-		/**
-		 * d2l-note-edit placeholder to show when creating
-		 */
-		editPlaceholder: { type: String, attribute: 'edit-placeholder' },
-		/**
-		 * TemplateResult containing description for d2l-note's in edit state and d2l-note-edit
-		 */
-		description: { type: Object },
-		/**
-		 * TemplateResult containing settings for d2l-note's in edit state and d2l-note-edit
-		 */
-		settings: { type: Object },
-		/**
-		 * Show the loadmore button regardless of number of items
-		 */
-		hasMore: { type: Boolean, attribute: 'has-more' },
-		/**
-		 * Load more/less collapsed state
-		 */
-		collapsed: { type: Boolean },
-		/**
-		 * Number of items to show before showing the load more button
-		 */
-		collapsedSize: { type: Number, attribute: 'collapsed-size' },
-		/**
-		 * dateformat in d2l-note's
-		 */
-		dateFormat: { type: String, attribute: 'date-format' },
-		/**
-		 * override loadmore button text
-		 */
-		loadMoreString: { type: String, attribute: 'load-more-string' },
-		/**
-		 * override loadless button text
-		 */
-		loadLessString: { type: String, attribute: 'load-less-string' },
-		/**
-		 * editstring in d2l-note's
-		 */
-		editString: { type: String, attribute: 'edit-string' },
-		/**
-		 * deletestring in d2l-note's
-		 */
-		deleteString: { type: String, attribute: 'delete-string' },
-		/**
-		 * privatelabel in d2l-note's
-		 */
-		privateLabel: { type: String, attribute: 'private-label' },
-		/**
-		 * addnotestring in d2l-note-edit
-		 */
-		addNoteString: { type: String, attribute: 'add-note-string' },
-		/**
-		 * savenotestring in d2l-note's
-		 */
-		saveNoteString: { type: String, attribute: 'save-note-string' },
-		/**
-		 * discardnotestring in d2l-note's and d2l-note-edit
-		 */
-		discardNoteString: { type: String, attribute: 'discard-note-string' },
-		/**
-		 * string to show when there are no notes to show. Set to '' to not show anything
-		 */
-		emptyString: { type: String, attribute: 'empty-string' },
-		/**
-		 * label for the 'enter notes' area, overridden by emptystring if there are no existing notes. Does not render if undefined
-		 */
-		enterNoteString: { type: String, attribute: 'enter-note-string' },
+	static get properties() {
+		return {
+			/**
+			 * Array of notes to pass to d2l-note elements
+			 */
+			notes: { type: Array },
+			/**
+			 * Indicates this user can create new notes
+			 */
+			canCreate: { type: Boolean, attribute: 'can-create' },
+			/**
+			 * d2l-note-edit placeholder to show when creating
+			 */
+			editPlaceholder: { type: String, attribute: 'edit-placeholder' },
+			/**
+			 * TemplateResult containing description for d2l-note's in edit state and d2l-note-edit
+			 */
+			description: { type: Object },
+			/**
+			 * TemplateResult containing settings for d2l-note's in edit state and d2l-note-edit
+			 */
+			settings: { type: Object },
+			/**
+			 * Show the loadmore button regardless of number of items
+			 */
+			hasMore: { type: Boolean, attribute: 'has-more' },
+			/**
+			 * Load more/less collapsed state
+			 */
+			collapsed: { type: Boolean },
+			/**
+			 * Number of items to show before showing the load more button
+			 */
+			collapsedSize: { type: Number, attribute: 'collapsed-size' },
+			/**
+			 * dateformat in d2l-note's
+			 */
+			dateFormat: { type: String, attribute: 'date-format' },
+			/**
+			 * override loadmore button text
+			 */
+			loadMoreString: { type: String, attribute: 'load-more-string' },
+			/**
+			 * override loadless button text
+			 */
+			loadLessString: { type: String, attribute: 'load-less-string' },
+			/**
+			 * editstring in d2l-note's
+			 */
+			editString: { type: String, attribute: 'edit-string' },
+			/**
+			 * deletestring in d2l-note's
+			 */
+			deleteString: { type: String, attribute: 'delete-string' },
+			/**
+			 * privatelabel in d2l-note's
+			 */
+			privateLabel: { type: String, attribute: 'private-label' },
+			/**
+			 * addnotestring in d2l-note-edit
+			 */
+			addNoteString: { type: String, attribute: 'add-note-string' },
+			/**
+			 * savenotestring in d2l-note's
+			 */
+			saveNoteString: { type: String, attribute: 'save-note-string' },
+			/**
+			 * discardnotestring in d2l-note's and d2l-note-edit
+			 */
+			discardNoteString: { type: String, attribute: 'discard-note-string' },
+			/**
+			 * string to show when there are no notes to show. Set to '' to not show anything
+			 */
+			emptyString: { type: String, attribute: 'empty-string' },
+			/**
+			 * label for the 'enter notes' area, overridden by emptystring if there are no existing notes. Does not render if undefined
+			 */
+			enterNoteString: { type: String, attribute: 'enter-note-string' },
+		};
 	}
 
 	constructor() {

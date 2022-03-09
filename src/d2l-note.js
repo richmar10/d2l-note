@@ -56,95 +56,97 @@ import { repeat } from 'lit/directives/repeat.js';
  */
 export class D2LNote extends LocalizeStaticMixin(LitElement) {
 
-	static properties = {
-		/**
-		 * Username and avatar to show
-		 * user.pic.url = <avatar url>
-		 * user.pic.requireTokenAuth <true/false>
-		 * user.name = <user name to show>
-		 */
-		user: { type: Object },
-		/**
-		 * Token to use in request when user.pic.requireTokenAuth is true
-		 */
-		token: { type: String },
-		/**
-		 * show avatar and username if true
-		 */
-		showAvatar: { type: Boolean, attribute: 'show-avatar' },
-		/**
-		 * Compact view. Removes padding
-		 */
-		compact: { type: Boolean },
-		/**
-		 * ISO datetime string of note creation
-		 */
-		createdAt: { type: String, attribute: 'created-at' },
-		/**
-		 * ISO datetime string of note update
-		 */
-		updatedAt: { type: String, attribute: 'updated-at' },
-		/**
-		 * Text of note
-		 */
-		text: { type: String },
-		/**
-		 * d2l-note-edit placeholder to show when editing
-		 */
-		editPlaceholder: { type: String, attribute: 'edit-placeholder' },
-		/**
-		 * Indicates note user is the current user
-		 */
-		me: { type: Boolean },
-		/**
-		 * Indicates this note is private
-		 */
-		private: { type: Boolean, reflect: true },
-		/**
-		 * Indicates this note can be edited by the current user
-		 */
-		canEdit: { type: Boolean, attribute: 'can-edit' },
-		/**
-		 * Indicates this note can be deleted by the current user
-		 */
-		canDelete: { type: Boolean, attribute: 'can-delete' },
-		/**
-		 * value for "format" property of @brightspace-ui/intl formatDateTime options
-		 */
-		dateFormat: { type: String, attribute: 'date-format' },
-		/**
-		 * Indicates whether the note is beting edited
-		 * Shows a d2l-note-edit component if true
-		 */
-		editing: { type: String },
-		/**
-		* Label for the edit/delete context menu
-		*/
-		contextMenuLabel: { type: String, attribute: 'context-menu-label' },
-		/**
-		 * Label of edit menu item
-		 */
-		editString: { type: String, attribute: 'edit-string' },
-		/**
-		 * Label of delete menu item
-		 */
-		deleteString: { type: String, attribute: 'delete-string' },
-		/**
-		 * Label of private indicator
-		 */
-		privateLabel: { type: String, attribute: 'private-label' },
-		/**
-		 * Text of 'Add' button in d2l-note-edit
-		 */
-		addNoteString: { type: String, attribute: 'add-note-string' },
-		/**
-		 * Text of 'Save' button in d2l-note-edit
-		 */
-		saveNoteString: { type: String, attribute: 'save-note-string' },
-		/**
-		 * Label of 'Discard' button in d2l-note-edit
-		 */
-		discardNoteString: { type: String, attribute: 'discard-note-string' },
+	static get properties() {
+		return {
+			/**
+			 * Username and avatar to show
+			 * user.pic.url = <avatar url>
+			 * user.pic.requireTokenAuth <true/false>
+			 * user.name = <user name to show>
+			 */
+			user: { type: Object },
+			/**
+			 * Token to use in request when user.pic.requireTokenAuth is true
+			 */
+			token: { type: String },
+			/**
+			 * show avatar and username if true
+			 */
+			showAvatar: { type: Boolean, attribute: 'show-avatar' },
+			/**
+			 * Compact view. Removes padding
+			 */
+			compact: { type: Boolean },
+			/**
+			 * ISO datetime string of note creation
+			 */
+			createdAt: { type: String, attribute: 'created-at' },
+			/**
+			 * ISO datetime string of note update
+			 */
+			updatedAt: { type: String, attribute: 'updated-at' },
+			/**
+			 * Text of note
+			 */
+			text: { type: String },
+			/**
+			 * d2l-note-edit placeholder to show when editing
+			 */
+			editPlaceholder: { type: String, attribute: 'edit-placeholder' },
+			/**
+			 * Indicates note user is the current user
+			 */
+			me: { type: Boolean },
+			/**
+			 * Indicates this note is private
+			 */
+			private: { type: Boolean, reflect: true },
+			/**
+			 * Indicates this note can be edited by the current user
+			 */
+			canEdit: { type: Boolean, attribute: 'can-edit' },
+			/**
+			 * Indicates this note can be deleted by the current user
+			 */
+			canDelete: { type: Boolean, attribute: 'can-delete' },
+			/**
+			 * value for "format" property of @brightspace-ui/intl formatDateTime options
+			 */
+			dateFormat: { type: String, attribute: 'date-format' },
+			/**
+			 * Indicates whether the note is beting edited
+			 * Shows a d2l-note-edit component if true
+			 */
+			editing: { type: String },
+			/**
+			* Label for the edit/delete context menu
+			*/
+			contextMenuLabel: { type: String, attribute: 'context-menu-label' },
+			/**
+			 * Label of edit menu item
+			 */
+			editString: { type: String, attribute: 'edit-string' },
+			/**
+			 * Label of delete menu item
+			 */
+			deleteString: { type: String, attribute: 'delete-string' },
+			/**
+			 * Label of private indicator
+			 */
+			privateLabel: { type: String, attribute: 'private-label' },
+			/**
+			 * Text of 'Add' button in d2l-note-edit
+			 */
+			addNoteString: { type: String, attribute: 'add-note-string' },
+			/**
+			 * Text of 'Save' button in d2l-note-edit
+			 */
+			saveNoteString: { type: String, attribute: 'save-note-string' },
+			/**
+			 * Label of 'Discard' button in d2l-note-edit
+			 */
+			discardNoteString: { type: String, attribute: 'discard-note-string' },
+		};
 	}
 
 	constructor() {

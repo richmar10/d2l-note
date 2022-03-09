@@ -34,50 +34,52 @@ import { LocalizeStaticMixin } from '@brightspace-ui/core/mixins/localize-static
  */
 export class D2LNoteEdit extends LocalizeStaticMixin(LitElement) {
 
-	static properties = {
-		/**
-		 * Indicates this control creates a new item
-		 */
-		new: { type: Boolean },
-		/**
-		 * Contents of note. Updates with change event on textarea
-		 */
-		value: { type: String },
-		/**
-		 * Placeholder for textarea
-		 */
-		placeholder: { type: String },
-		/**
-		 * Text for the 'Add' button. Defaults to langified 'Add'
-		 */
-		addNoteString: { type: String, attribute: 'add-note-string' },
-		/**
-		 * Text for the 'Save' button. Defaults to langified 'Save'
-		 */
-		saveNoteString: { type: String, attribute: 'save-note-string' },
-		/**
-		 * Label for the 'Discard' button. Defaults to langified 'Discard'
-		 */
-		discardNoteString: { type: String, attribute: 'discard-note-string' },
-		/**
-		 * True while a request is being made, disables the components, defaults to false
-		 */
-		_makingCall: { type: Boolean, state: true },
-		/**
-		 * Indicates whether the component is in its expanded state. If true,
-		 * The textarea is set to its maximum height, the controls are visible.
-		 */
-		expanded: { type: Boolean, reflect: true },
-		/**
-		 * The error message to show if set. Shows a d2l-alert component and
-		 * sets the color of the textarea to --d2l-alert-critical-color
-		 */
-		errorMessage: { type: String, attribute: 'error-message' },
-		/**
-		 * Indicates whether the component is in its focused state. If true,
-		 * The textarea is set to have its text area selected, and expanded.
-		 */
-		focused: { type: Boolean, reflect: true },
+	static get properties() {
+		return {
+			/**
+			 * Indicates this control creates a new item
+			 */
+			new: { type: Boolean },
+			/**
+			 * Contents of note. Updates with change event on textarea
+			 */
+			value: { type: String },
+			/**
+			 * Placeholder for textarea
+			 */
+			placeholder: { type: String },
+			/**
+			 * Text for the 'Add' button. Defaults to langified 'Add'
+			 */
+			addNoteString: { type: String, attribute: 'add-note-string' },
+			/**
+			 * Text for the 'Save' button. Defaults to langified 'Save'
+			 */
+			saveNoteString: { type: String, attribute: 'save-note-string' },
+			/**
+			 * Label for the 'Discard' button. Defaults to langified 'Discard'
+			 */
+			discardNoteString: { type: String, attribute: 'discard-note-string' },
+			/**
+			 * True while a request is being made, disables the components, defaults to false
+			 */
+			_makingCall: { type: Boolean, state: true },
+			/**
+			 * Indicates whether the component is in its expanded state. If true,
+			 * The textarea is set to its maximum height, the controls are visible.
+			 */
+			expanded: { type: Boolean, reflect: true },
+			/**
+			 * The error message to show if set. Shows a d2l-alert component and
+			 * sets the color of the textarea to --d2l-alert-critical-color
+			 */
+			errorMessage: { type: String, attribute: 'error-message' },
+			/**
+			 * Indicates whether the component is in its focused state. If true,
+			 * The textarea is set to have its text area selected, and expanded.
+			 */
+			focused: { type: Boolean, reflect: true },
+		};
 	}
 
 	constructor() {
