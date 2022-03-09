@@ -16,7 +16,7 @@
   "author": "D2L Corporation",
   "license": "Apache-2.0",
   "dependencies": {
-    "@brightspace-ui/core": "^1.176.3",
+    "@brightspace-ui/core": "^1.237.0",
     "@brightspace-ui/intl": "^3.0.1",
     "@d2l/user-elements": "^4.0.1",
     "d2l-users": "BrightspaceHypermediaComponents/users#semver:^2",

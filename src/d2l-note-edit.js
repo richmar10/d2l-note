@@ -11,7 +11,7 @@ import { css, html, LitElement } from 'lit';
 import { announce } from '@brightspace-ui/core/helpers/announce';
 import { inputStyles } from '@brightspace-ui/core/components/inputs/input-styles.js';
 import { langResources } from './lang';
-import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
+import { LocalizeStaticMixin } from '@brightspace-ui/core/mixins/localize-static-mixin.js';
 
 /**
  * d2l-note-edit component created with lit-element
@@ -32,7 +32,7 @@ import { LocalizeMixin } from '@brightspace-ui/core/mixins/localize-mixin.js';
  * </d2l-note-edit>
  * ```
  */
-export class D2LNoteEdit extends LocalizeMixin(LitElement) {
+export class D2LNoteEdit extends LocalizeStaticMixin(LitElement) {
 
 	static properties = {
 		/**
@@ -114,15 +114,8 @@ export class D2LNoteEdit extends LocalizeMixin(LitElement) {
 		this.EVENT_DISCARD = 'd2l-note-edit-discard';
 	}
 
-	static async getLocalizeResources(langs) {
-		for (let i = 0; i < langs.length; i++) {
-			if (langResources[langs[i]]) {
-				return {
-					resources: langResources[langs[i]],
-					language: langs[i],
-				};
-			}
-		}
+	static get resources() {
+		return langResources;
 	}
 
 	static styles = [inputStyles, css`
