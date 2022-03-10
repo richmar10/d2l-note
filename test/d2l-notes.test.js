@@ -1,6 +1,6 @@
 import '../src/d2l-notes';
 import { expect, fixture, html } from '@open-wc/testing';
-import { html as litHtml } from 'lit-element'; // prevent collision with @open-wc/testing html
+import { html as litHtml } from 'lit'; // prevent collision with @open-wc/testing html
 
 function listenOnce(et, evt, handler) {
 	const handle = (...args) => {
@@ -28,8 +28,8 @@ describe('d2l-notes', () => {
 	it('shows emptystring when notes is empty', async() => {
 		const el = await fixture(html`<d2l-notes></d2l-notes>`);
 		el.notes = [];
-		el.emptystring = 'HELLO MOTO';
-		el.enternotestring = 'NOT ME';
+		el.emptyString = 'HELLO MOTO';
+		el.enterNoteString = 'NOT ME';
 		await el.updateComplete;
 
 		const elementShadowRoot = el.shadowRoot;
@@ -41,7 +41,7 @@ describe('d2l-notes', () => {
 	it('shows enternotestring when notes is empty and no emptystring', async() => {
 		const el = await fixture(html`<d2l-notes></d2l-notes>`);
 		el.notes = [];
-		el.enternotestring = 'MEEEE';
+		el.enterNoteString = 'MEEEE';
 		await el.updateComplete;
 
 		const elementShadowRoot = el.shadowRoot;
@@ -64,8 +64,8 @@ describe('d2l-notes', () => {
 			canDelete: true,
 			private: false
 		}];
-		el.cancreate = true;
-		el.enternotestring = 'MEEEE';
+		el.canCreate = true;
+		el.enterNoteString = 'MEEEE';
 		await el.updateComplete;
 
 		const elementShadowRoot = el.shadowRoot;
@@ -88,8 +88,8 @@ describe('d2l-notes', () => {
 			canDelete: true,
 			private: false
 		}];
-		el.cancreate = false;
-		el.enternotestring = 'MEEEE';
+		el.canCreate = false;
+		el.enterNoteString = 'MEEEE';
 		await el.updateComplete;
 
 		const elementShadowRoot = el.shadowRoot;
@@ -99,7 +99,7 @@ describe('d2l-notes', () => {
 
 	it('has d2l-note-edit if "cancreate" is true', async() => {
 		const el = await fixture(html`<d2l-notes></d2l-notes>`);
-		el.cancreate = true;
+		el.canCreate = true;
 		await el.updateComplete;
 
 		const elementShadowRoot = el.shadowRoot;
@@ -110,7 +110,7 @@ describe('d2l-notes', () => {
 
 	it('passes description and settings slots to d2l-note-edit if "cancreate" is true', async() => {
 		const el = await fixture(html`<d2l-notes></d2l-notes>`);
-		el.cancreate = true;
+		el.canCreate = true;
 		el.description = () => litHtml`<span>Description</span>`;
 		el.settings = () => litHtml`<span>Settings</span>`;
 		await el.updateComplete;
@@ -133,7 +133,7 @@ describe('d2l-notes', () => {
 
 	it('does not have d2l-note-edit if "cancreate" is false', async() => {
 		const el = await fixture(html`<d2l-notes></d2l-notes>`);
-		el.cancreate = false;
+		el.canCreate = false;
 		await el.updateComplete;
 
 		const elementShadowRoot = el.shadowRoot;
@@ -193,7 +193,7 @@ describe('d2l-notes', () => {
 	it('shows load more button when "hasmore" is true', async() => {
 		const el = await fixture(html`<d2l-notes></d2l-notes>`);
 		el.notes = [];
-		el.hasmore = true;
+		el.hasMore = true;
 		await el.updateComplete;
 
 		expect(el.collapsed).to.be.true;
