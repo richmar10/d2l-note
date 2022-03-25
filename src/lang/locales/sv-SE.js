@@ -3,9 +3,9 @@
 
 export const svSe = {
 	"add": "Lägg till",
+	"cancel": "Avbryt",
 	"contextMenu": "Snabbmeny",
 	"delete": "Ta bort",
-	"discard": "Ta bort",
 	"edit": "Redigera",
 	"empty": "Inga kommentarer",
 	"less": "Läs in färre kommentarer",

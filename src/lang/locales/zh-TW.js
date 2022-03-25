@@ -3,9 +3,9 @@
 
 export const zhTw = {
 	"add": "新增",
+	"cancel": "取消",
 	"contextMenu": "內容功能表",
 	"delete": "刪除",
-	"discard": "捨棄",
 	"edit": "編輯",
 	"empty": "無註記",
 	"less": "載入較少註記",

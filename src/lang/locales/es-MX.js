@@ -3,9 +3,9 @@
 
 export const esMx = {
 	"add": "Agregar",
+	"cancel": "Cancelar",
 	"contextMenu": "Menú contextual",
 	"delete": "Eliminar",
-	"discard": "Descartar",
 	"edit": "Editar",
 	"empty": "Sin notas",
 	"less": "Cargar menos notas",

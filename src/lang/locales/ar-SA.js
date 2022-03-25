@@ -3,9 +3,9 @@
 
 export const arSa = {
 	"add": "إضافة",
+	"cancel": "إلغاء",
 	"contextMenu": "قائمة السياق",
 	"delete": "حذف",
-	"discard": "تجاهل",
 	"edit": "تحرير",
 	"empty": "ما من ملاحظات",
 	"less": "تحميل ملاحظات أقل",

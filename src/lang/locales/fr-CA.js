@@ -3,9 +3,9 @@
 
 export const frCa = {
 	"add": "Ajouter",
+	"cancel": "Annuler",
 	"contextMenu": "Menu contextuel",
 	"delete": "Supprimer",
-	"discard": "Effacer",
 	"edit": "Modifier",
 	"empty": "Pas de notes",
 	"less": "Charger moins de notes",

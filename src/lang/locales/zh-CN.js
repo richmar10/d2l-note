@@ -3,9 +3,9 @@
 
 export const zhCn = {
 	"add": "添加",
+	"cancel": "取消",
 	"contextMenu": "上下文菜单",
 	"delete": "删除",
-	"discard": "放弃",
 	"edit": "编辑",
 	"empty": "无备注",
 	"less": "加载更少备注",

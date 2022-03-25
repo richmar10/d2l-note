@@ -3,9 +3,9 @@
 
 export const jaJp = {
 	"add": "追加",
+	"cancel": "キャンセル",
 	"contextMenu": "コンテキストメニュー",
 	"delete": "削除",
-	"discard": "破棄",
 	"edit": "編集",
 	"empty": "メモなし",
 	"less": "読み込むメモの量を減らす",

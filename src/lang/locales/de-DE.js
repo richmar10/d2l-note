@@ -3,9 +3,9 @@
 
 export const deDe = {
 	"add": "Hinzufügen",
+	"cancel": "Abbrechen",
 	"contextMenu": "Kontextmenü",
 	"delete": "Löschen",
-	"discard": "Verwerfen",
 	"edit": "bearbeiten",
 	"empty": "Keine Notizen",
 	"less": "Weniger Notizen laden",

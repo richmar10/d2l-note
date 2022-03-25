@@ -3,9 +3,9 @@
 
 export const ptBr = {
 	"add": "Adicionar",
+	"cancel": "Cancelar",
 	"contextMenu": "Menu de contexto",
 	"delete": "Excluir",
-	"discard": "Descartar",
 	"edit": "Editar",
 	"empty": "Sem notas",
 	"less": "Carregar menos notas",

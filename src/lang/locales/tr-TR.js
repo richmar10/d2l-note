@@ -3,9 +3,9 @@
 
 export const trTr = {
 	"add": "Ekle",
+	"cancel": "İptal et",
 	"contextMenu": "İçerik Menüsü",
 	"delete": "Sil",
-	"discard": "At",
 	"edit": "Düzenle",
 	"empty": "Not Yok",
 	"less": "Daha Az Not Yükle",

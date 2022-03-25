@@ -3,9 +3,9 @@
 
 export const nlNl = {
 	"add": "Toevoegen",
+	"cancel": "Annuleren",
 	"contextMenu": "Contextmenu",
 	"delete": "Verwijderen",
-	"discard": "Weggooien",
 	"edit": "Bewerken",
 	"empty": "Geen notities",
 	"less": "Minder notities laden",
