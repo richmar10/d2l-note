@@ -1,14 +1,14 @@
 {
    "add" : "Ychwanegu",
    "cancel" : "Canslo",
-   "contextMenu" : "Context Menu",
-   "delete" : "Delete",
+   "contextMenu" : "Dewislen Cyd-destun",
+   "delete" : "Dileu",
    "edit" : "Golygu",
-   "empty" : "No Notes",
+   "empty" : "Dim Nodiadau",
    "less" : "Load Less Notes",
    "me" : "Fi",
-   "more" : "Load More Notes",
-   "private" : "Private",
-   "save" : "Save",
-   "subtextEdited" : "{0} (Edited)"
+   "more" : "Llwytho Mwy o Nodiadau",
+   "private" : "Preifat",
+   "save" : "Cadw",
+   "subtextEdited" : "{0} (Wedi golygu)"
 }

@@ -2,16 +2,17 @@
 /* eslint quotes: ["error", "double"] */
 
 export const esEs = {
-	"add": "Add",
+	"add": "Agregar",
 	"cancel": "Cancelar",
-	"contextMenu": "Context Menu",
+	"contextMenu": "Menú contextual",
 	"delete": "Eliminar",
-	"edit": "Edit",
-	"empty": "No Notes",
-	"less": "Load Less Notes",
+	"discard": "Descartar",
+	"edit": "Editar [0]",
+	"empty": "Sin notas",
+	"less": "Cargar menos notas",
 	"me": "Yo",
-	"more": "Load More Notes",
-	"private": "Private",
+	"more": "Cargar más notas",
+	"private": "Privado",
 	"save": "Guardar",
-	"subtextEdited": "{0} (Edited)"
+	"subtextEdited": "{0} (Editado)"
 };
