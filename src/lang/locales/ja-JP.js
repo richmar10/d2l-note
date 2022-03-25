@@ -6,7 +6,7 @@ export const jaJp = {
 	"cancel": "キャンセル",
 	"contextMenu": "コンテキストメニュー",
 	"delete": "削除",
-	"edit": "編集",
+	"edit": "の編集",
 	"empty": "メモなし",
 	"less": "読み込むメモの量を減らす",
 	"me": "自分",

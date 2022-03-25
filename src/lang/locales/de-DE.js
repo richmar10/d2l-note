@@ -6,7 +6,7 @@ export const deDe = {
 	"cancel": "Abbrechen",
 	"contextMenu": "Kontextmenü",
 	"delete": "Löschen",
-	"edit": "bearbeiten",
+	"edit": "Bearbeiten",
 	"empty": "Keine Notizen",
 	"less": "Weniger Notizen laden",
 	"me": "Ich",

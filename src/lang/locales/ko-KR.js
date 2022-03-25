@@ -5,7 +5,7 @@ export const koKr = {
 	"add": "추가",
 	"cancel": "취소",
 	"contextMenu": "컨텍스트 메뉴",
-	"delete": "삭제",
+	"delete": "을(를) 삭제",
 	"edit": "편집",
 	"empty": "메모 없음",
 	"less": "더 적게 메모 로드",

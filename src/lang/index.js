@@ -1,5 +1,6 @@
 import { arSa } from './locales/ar-SA';
 import { cyGb } from './locales/cy-GB';
+import { daDk } from './locales/da-DK';
 import { deDe } from './locales/de-DE';
 import { en } from './locales/en';
 import { esEs } from './locales/es-ES';
@@ -19,6 +20,7 @@ import { zhTw } from './locales/zh-TW';
 export const langResources = {
 	'ar': arSa,
 	'cy': cyGb,
+	'da': daDk,
 	'de': deDe,
 	'en': en,
 	'es': esMx,

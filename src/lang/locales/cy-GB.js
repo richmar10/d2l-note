@@ -8,7 +8,7 @@ export const cyGb = {
 	"delete": "Dileu",
 	"edit": "Golygu",
 	"empty": "Dim Nodiadau",
-	"less": "Load Less Notes",
+	"less": "Llwytho Llai o Nodiadau",
 	"me": "Fi",
 	"more": "Llwytho Mwy o Nodiadau",
 	"private": "Preifat",

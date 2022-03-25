@@ -11,7 +11,7 @@ export const frFr = {
 	"less": "Charger moins de notes",
 	"me": "Moi",
 	"more": "Charger plus de notes",
-	"private": "Personnel",
+	"private": "Privé",
 	"save": "Enregistrer",
 	"subtextEdited": "{0} (modifié)"
 };
