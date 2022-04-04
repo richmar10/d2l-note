@@ -8,7 +8,7 @@ import '@brightspace-ui/core/components/menu/menu-item.js';
 import '@d2l/user-elements/d2l-user';
 import 'd2l-users/components/d2l-profile-image';
 
-import './d2l-note-edit';
+import './d2l-note-edit.js';
 
 /**
  * Import LitElement base class, html helper function,
@@ -18,7 +18,7 @@ import { css, html, LitElement } from 'lit';
 
 import { bodyStandardStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime.js';
-import { langResources } from './lang';
+import { langResources } from './lang/index.js';
 import { LocalizeStaticMixin } from '@brightspace-ui/core/mixins/localize-static-mixin.js';
 import { repeat } from 'lit/directives/repeat.js';
 
@@ -55,7 +55,6 @@ import { repeat } from 'lit/directives/repeat.js';
  * ```
  */
 export class D2LNote extends LocalizeStaticMixin(LitElement) {
-
 	static get properties() {
 		return {
 			/**
@@ -147,29 +146,6 @@ export class D2LNote extends LocalizeStaticMixin(LitElement) {
 			 */
 			discardNoteString: { type: String, attribute: 'discard-note-string' },
 		};
-	}
-
-	constructor() {
-		super();
-		this.showAvatar = false;
-		this.compact = false;
-		this.editPlaceholder = '';
-		this.me = false;
-		this.private = false;
-		this.canEdit = false;
-		this.canDelete = false;
-		this.dateFormat = 'medium';
-		this.editing = false;
-
-		/**
-		 * Fired when delete menu item is tapped
-		 * @fires d2l-note-delete
-		 */
-		this.EVENT_DELETE = 'd2l-note-delete';
-	}
-
-	static get resources() {
-		return langResources;
 	}
 
 	static styles = [bodyStandardStyles, css`
@@ -330,6 +306,29 @@ export class D2LNote extends LocalizeStaticMixin(LitElement) {
 		}
 	`];
 
+	constructor() {
+		super();
+		this.showAvatar = false;
+		this.compact = false;
+		this.editPlaceholder = '';
+		this.me = false;
+		this.private = false;
+		this.canEdit = false;
+		this.canDelete = false;
+		this.dateFormat = 'medium';
+		this.editing = false;
+
+		/**
+		 * Fired when delete menu item is tapped
+		 * @fires d2l-note-delete
+		 */
+		this.EVENT_DELETE = 'd2l-note-delete';
+	}
+
+	static get resources() {
+		return langResources;
+	}
+
 	/**
 	 * Implement `render` to define a template for your element.
 	 */
@@ -441,14 +440,6 @@ export class D2LNote extends LocalizeStaticMixin(LitElement) {
 		`;
 	}
 
-	editSelectHandler() {
-		this.editing = true;
-	}
-
-	_handleFinished() {
-		this.editing = false;
-	}
-
 	deleteSelectHandler() {
 		this.dispatchEvent(new CustomEvent(this.EVENT_DELETE, {
 			bubbles: true,
@@ -458,5 +449,14 @@ export class D2LNote extends LocalizeStaticMixin(LitElement) {
 			}
 		}));
 	}
+
+	editSelectHandler() {
+		this.editing = true;
+	}
+
+	_handleFinished() {
+		this.editing = false;
+	}
+
 }
 customElements.define('d2l-note', D2LNote);

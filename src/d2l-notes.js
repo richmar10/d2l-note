@@ -1,6 +1,6 @@
 import '@brightspace-ui/core/components/button/button-subtle.js';
 import '@brightspace-ui/core/components/colors/colors.js';
-import './d2l-note';
+import './d2l-note.js';
 
 /**
  * Import LitElement base class, html helper function,
@@ -9,7 +9,7 @@ import './d2l-note';
 import { css, html, LitElement } from 'lit';
 
 import { bodyStandardStyles } from '@brightspace-ui/core/components/typography/styles.js';
-import { langResources } from './lang';
+import { langResources } from './lang/index.js';
 import { LocalizeStaticMixin } from '@brightspace-ui/core/mixins/localize-static-mixin.js';
 
 /**
@@ -137,35 +137,6 @@ export class D2LNotes extends LocalizeStaticMixin(LitElement) {
 		};
 	}
 
-	constructor() {
-		super();
-		this.notes = [];
-		this.canCreate = false;
-		this.editPlaceholder = '';
-		this.description = () => html`<div></div>`;
-		this.settings = () => html`<div></div>`;
-		this.hasMore = false;
-		this.collapsed = true;
-		this.collapsedSize = 4;
-
-		/**
-		 * Fired when load more is tapped
-		 * @fires d2l-notes-load-more
-		 */
-		this.EVENT_LOAD_MORE = 'd2l-notes-load-more';
-
-		/**
-		 * Fired when load less is tapped
-		 * @fires d2l-notes-load-less
-		 */
-		this.EVENT_LOAD_LESS = 'd2l-notes-load-less';
-
-	}
-
-	static get resources() {
-		return langResources;
-	}
-
 	static styles = [bodyStandardStyles, css`
 		:host {
 			--d2l-notes-note-margin-top: 6px;
@@ -243,6 +214,35 @@ export class D2LNotes extends LocalizeStaticMixin(LitElement) {
 			margin-bottom: 0.6rem;
 		}
 	`];
+
+	constructor() {
+		super();
+		this.notes = [];
+		this.canCreate = false;
+		this.editPlaceholder = '';
+		this.description = () => html`<div></div>`;
+		this.settings = () => html`<div></div>`;
+		this.hasMore = false;
+		this.collapsed = true;
+		this.collapsedSize = 4;
+
+		/**
+		 * Fired when load more is tapped
+		 * @fires d2l-notes-load-more
+		 */
+		this.EVENT_LOAD_MORE = 'd2l-notes-load-more';
+
+		/**
+		 * Fired when load less is tapped
+		 * @fires d2l-notes-load-less
+		 */
+		this.EVENT_LOAD_LESS = 'd2l-notes-load-less';
+
+	}
+
+	static get resources() {
+		return langResources;
+	}
 
 	/**
 	 * Implement `render` to define a template for your element.

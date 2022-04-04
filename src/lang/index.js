@@ -1,21 +1,21 @@
-import { arSa } from './locales/ar-SA';
-import { cyGb } from './locales/cy-GB';
-import { daDk } from './locales/da-DK';
-import { deDe } from './locales/de-DE';
-import { en } from './locales/en';
-import { esEs } from './locales/es-ES';
-import { esMx } from './locales/es-MX';
-import { frCa } from './locales/fr-CA';
-import { frFr } from './locales/fr-FR';
-import { hiHi } from './locales/hi-HI';
-import { jaJp } from './locales/ja-JP';
-import { koKr } from './locales/ko-KR';
-import { nlNl } from './locales/nl-NL';
-import { ptBr } from './locales/pt-BR';
-import { svSe } from './locales/sv-SE';
-import { trTr } from './locales/tr-TR';
-import { zhCn } from './locales/zh-CN';
-import { zhTw } from './locales/zh-TW';
+import { arSa } from './locales/ar-SA.js';
+import { cyGb } from './locales/cy-GB.js';
+import { daDk } from './locales/da-DK.js';
+import { deDe } from './locales/de-DE.js';
+import { en } from './locales/en.js';
+import { esEs } from './locales/es-ES.js';
+import { esMx } from './locales/es-MX.js';
+import { frCa } from './locales/fr-CA.js';
+import { frFr } from './locales/fr-FR.js';
+import { hiHi } from './locales/hi-HI.js';
+import { jaJp } from './locales/ja-JP.js';
+import { koKr } from './locales/ko-KR.js';
+import { nlNl } from './locales/nl-NL.js';
+import { ptBr } from './locales/pt-BR.js';
+import { svSe } from './locales/sv-SE.js';
+import { trTr } from './locales/tr-TR.js';
+import { zhCn } from './locales/zh-CN.js';
+import { zhTw } from './locales/zh-TW.js';
 
 export const langResources = {
 	'ar': arSa,

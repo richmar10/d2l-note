@@ -1,4 +1,4 @@
-import '../src/d2l-notes';
+import '../src/d2l-notes.js';
 import { expect, fixture, html } from '@open-wc/testing';
 import { html as litHtml } from 'lit'; // prevent collision with @open-wc/testing html
 

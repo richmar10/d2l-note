@@ -10,7 +10,7 @@ import { css, html, LitElement } from 'lit';
 
 import { announce } from '@brightspace-ui/core/helpers/announce';
 import { inputStyles } from '@brightspace-ui/core/components/inputs/input-styles.js';
-import { langResources } from './lang';
+import { langResources } from './lang/index.js';
 import { LocalizeStaticMixin } from '@brightspace-ui/core/mixins/localize-static-mixin.js';
 
 /**
@@ -33,7 +33,6 @@ import { LocalizeStaticMixin } from '@brightspace-ui/core/mixins/localize-static
  * ```
  */
 export class D2LNoteEdit extends LocalizeStaticMixin(LitElement) {
-
 	static get properties() {
 		return {
 			/**
@@ -80,44 +79,6 @@ export class D2LNoteEdit extends LocalizeStaticMixin(LitElement) {
 			 */
 			focused: { type: Boolean, reflect: true },
 		};
-	}
-
-	constructor() {
-		super();
-		this.new = false;
-		this.value = '';
-		this.placeholder = '';
-		this._makingCall = false;
-		this.expanded = false;
-		this.focused = false;
-
-		/**
-		 * Fired when edit is finished
-		 * @fires d2l-note-edit-finished
-		 */
-		this.EVENT_FINISHED = 'd2l-note-edit-finished';
-
-		/**
-		 * Fired when Add button is tapped
-		 * @fires d2l-note-edit-add
-		 */
-		this.EVENT_ADD = 'd2l-note-edit-add';
-
-		/**
-		 * Fired when Save button is tapped
-		 * @fires d2l-note-edit-save
-		 */
-		this.EVENT_SAVE = 'd2l-note-edit-save';
-
-		/**
-		 * Fired when Discard button is tapped
-		 * @fires d2l-note-edit-discard
-		 */
-		this.EVENT_DISCARD = 'd2l-note-edit-discard';
-	}
-
-	static get resources() {
-		return langResources;
 	}
 
 	static styles = [inputStyles, css`
@@ -246,10 +207,42 @@ export class D2LNoteEdit extends LocalizeStaticMixin(LitElement) {
 		}
 	`];
 
-	updated(changedProperties) {
-		if (changedProperties.has('errorMessage') && this.errorMessage) {
-			announce(this.errorMessage);
-		}
+	constructor() {
+		super();
+		this.new = false;
+		this.value = '';
+		this.placeholder = '';
+		this._makingCall = false;
+		this.expanded = false;
+		this.focused = false;
+
+		/**
+		 * Fired when edit is finished
+		 * @fires d2l-note-edit-finished
+		 */
+		this.EVENT_FINISHED = 'd2l-note-edit-finished';
+
+		/**
+		 * Fired when Add button is tapped
+		 * @fires d2l-note-edit-add
+		 */
+		this.EVENT_ADD = 'd2l-note-edit-add';
+
+		/**
+		 * Fired when Save button is tapped
+		 * @fires d2l-note-edit-save
+		 */
+		this.EVENT_SAVE = 'd2l-note-edit-save';
+
+		/**
+		 * Fired when Discard button is tapped
+		 * @fires d2l-note-edit-discard
+		 */
+		this.EVENT_DISCARD = 'd2l-note-edit-discard';
+	}
+
+	static get resources() {
+		return langResources;
 	}
 
 	/**
@@ -301,8 +294,40 @@ export class D2LNoteEdit extends LocalizeStaticMixin(LitElement) {
 		`;
 	}
 
-	_handleInput(e) {
-		this.value = e.target && (e.target).value;
+	updated(changedProperties) {
+		if (changedProperties.has('errorMessage') && this.errorMessage) {
+			announce(this.errorMessage);
+		}
+	}
+
+	_closeNote() {
+		this.value = '';
+		this._removeFocus();
+	}
+
+	_handleClick() {
+		this.errorMessage = undefined;
+		const discarded = this.dispatchEvent(new CustomEvent(this.EVENT_DISCARD, {
+			bubbles: true,
+			composed: true,
+			cancelable: true,
+			detail: {
+				id: this.id,
+				value: this.value
+			}
+		}));
+
+		if (discarded) {
+			this.dispatchEvent(new CustomEvent(this.EVENT_FINISHED, {
+				bubbles: true,
+				composed: true,
+				detail: {
+					id: this.id,
+					value: this.value
+				}
+			}));
+			this._closeNote();
+		}
 	}
 
 	_handleEditClick() {
@@ -352,44 +377,18 @@ export class D2LNoteEdit extends LocalizeStaticMixin(LitElement) {
 			finish();
 		}
 	}
-
-	_handleClick() {
-		this.errorMessage = undefined;
-		const discarded = this.dispatchEvent(new CustomEvent(this.EVENT_DISCARD, {
-			bubbles: true,
-			composed: true,
-			cancelable: true,
-			detail: {
-				id: this.id,
-				value: this.value
-			}
-		}));
-
-		if (discarded) {
-			this.dispatchEvent(new CustomEvent(this.EVENT_FINISHED, {
-				bubbles: true,
-				composed: true,
-				detail: {
-					id: this.id,
-					value: this.value
-				}
-			}));
-			this._closeNote();
-		}
-	}
-
 	_handleFocusin() {
 		this.focused = true;
+	}
+
+	_handleInput(e) {
+		this.value = e.target && (e.target).value;
 	}
 
 	_removeFocus() {
 		this.focused = false;
 	}
 
-	_closeNote() {
-		this.value = '';
-		this._removeFocus();
-	}
 }
 
 customElements.define('d2l-note-edit', D2LNoteEdit);

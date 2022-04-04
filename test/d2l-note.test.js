@@ -1,4 +1,4 @@
-import '../src/d2l-note';
+import '../src/d2l-note.js';
 import { expect, fixture, html } from '@open-wc/testing';
 
 import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime.js';

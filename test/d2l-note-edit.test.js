@@ -1,4 +1,4 @@
-import '../src/d2l-note-edit';
+import '../src/d2l-note-edit.js';
 import { expect, fixture, html } from '@open-wc/testing';
 
 function listenOnce(et, evt, handler) {
