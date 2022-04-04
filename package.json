@@ -26,10 +26,10 @@
   "devDependencies": {
     "@babel/core": "^7.17.8",
     "@babel/eslint-parser": "^7.17.0",
-    "@open-wc/testing": "^3.0.0-next.5",
+    "@open-wc/testing": "^3.1.2",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^5.17.0",
-    "@web/test-runner": "^0.13.21",
+    "@web/test-runner": "^0.13.27",
     "@web/test-runner-playwright": "^0.8.8",
     "@webcomponents/webcomponentsjs": "^2.0.0",
     "babel-eslint": "^10.1.0",
