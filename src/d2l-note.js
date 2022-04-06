@@ -18,8 +18,7 @@ import { css, html, LitElement } from 'lit';
 
 import { bodyStandardStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime.js';
-import { langResources } from './lang/index.js';
-import { LocalizeStaticMixin } from '@brightspace-ui/core/mixins/localize-static-mixin.js';
+import { LocalizeDynamicMixin } from '@brightspace-ui/core/mixins/localize-dynamic-mixin.js';
 import { repeat } from 'lit/directives/repeat.js';
 
 /**
@@ -54,7 +53,7 @@ import { repeat } from 'lit/directives/repeat.js';
  * </d2l-note>
  * ```
  */
-export class D2LNote extends LocalizeStaticMixin(LitElement) {
+export class D2LNote extends LocalizeDynamicMixin(LitElement) {
 	static get properties() {
 		return {
 			/**
@@ -325,8 +324,10 @@ export class D2LNote extends LocalizeStaticMixin(LitElement) {
 		this.EVENT_DELETE = 'd2l-note-delete';
 	}
 
-	static get resources() {
-		return langResources;
+	static get localizeConfig() {
+		return {
+			importFunc: async lang => (await import(`./lang/${lang}.js`)).default
+		};
 	}
 
 	/**

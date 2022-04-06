@@ -9,7 +9,6 @@
   "main": "src/d2l-note.js",
   "scripts": {
     "lint": "eslint --ext html,js demo src test",
-    "localize": "gulp localize",
     "start": "web-dev-server --open demo/ --node-resolve --watch ",
     "test": "web-test-runner --group default --playwright --browsers chromium"
   },
@@ -41,9 +40,6 @@
     "eslint-plugin-lit": "^1.6.1",
     "eslint-plugin-sort-class-members": "^1.14.1",
     "frau-ci": "^1.37.0",
-    "gulp": "^4.0.2",
-    "gulp-ejs": "^4.1.2",
-    "gulp-rename": "^1.4.0",
     "merge-stream": "^2.0.0",
     "require-dir": "^1.2.0",
     "typescript": "^3.4.4"
