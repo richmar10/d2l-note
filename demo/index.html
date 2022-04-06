@@ -3,13 +3,8 @@
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta charset="UTF-8">
+		<link rel="stylesheet" href="/node_modules/@brightspace-ui/core/components/demo/styles.css" type="text/css">
 		<style>
-			html {
-				font-size: 20px;
-			}
-			body {
-				margin: 0;
-			}
 			d2l-note {
 				--d2l-note-margin-horizontal: 0;
 			}
@@ -17,7 +12,6 @@
 		<script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
 		<script type="module">
 			import '@brightspace-ui/core/components/demo/demo-page.js';
-			import '@brightspace-ui/core/components/typography/typography.js';
 			import '../src/d2l-notes.js';
 		</script>
 	</head>
@@ -47,7 +41,7 @@
 			<d2l-demo-snippet>
 				<template>
 					<d2l-note
-						user='{"name":"Username","pic":{"url":"avatar.png"},"href":"123"}'
+						user='{"name":"Username 2","pic":{"url":"avatar.png"},"href":"123", "id": "2"}'
 						token="foozleberries"
 						show-avatar
 						created-at="2019-04-23T17:08:33.839Z"
@@ -67,7 +61,7 @@
 			<d2l-demo-snippet>
 				<template>
 					<d2l-note
-						user='{"name":"Username","pic":{"url":"avatar.png"},"href":"123"}'
+						user='{"name":"Username 3","pic":{"url":"avatar.png"},"href":"123", "id": "3"}'
 						token="foozleberries"
 						show-avatar
 						created-at="2019-04-23T17:08:33.839Z"
@@ -86,7 +80,7 @@
 			<d2l-demo-snippet>
 				<template>
 					<d2l-note
-						user='{"name":"Username","pic":{"url":"avatar.png"},"href":"123"}'
+						user='{"name":"Username","pic":{"url":"avatar.png"},"href":"123", "id": "5"}'
 						token="foozleberries"
 						show-avatar
 						created-at="2019-04-23T17:08:33.839Z"
@@ -101,7 +95,7 @@
 			<d2l-demo-snippet>
 				<template>
 					<d2l-note
-						user='{"name":"Username","pic":{"url":"avatar.png"},"href":"123"}'
+						user='{"name":"Username","href":"123", "id": "6"}'
 						token="foozleberries"
 						show-avatar
 						created-at="2019-04-23T17:08:33.839Z"
@@ -117,7 +111,7 @@
 			<d2l-demo-snippet>
 				<template>
 					<d2l-note
-						user='{"name":"Username","pic":{"url":"avatar.png"},"href":"123"}'
+						user='{"name":"Username","pic":{"url":"avatar.png"},"href":"123", "id": "7"}'
 						token="foozleberries"
 						show-avatar
 						created-at="2019-04-23T17:08:33.839Z"
@@ -130,7 +124,7 @@
 			<d2l-demo-snippet>
 				<template>
 					<d2l-note
-						user='{"name":"Username","pic":{"url":"avatar.png"},"href":"1234"}'
+						user='{"name":"Username","pic":{"url":"avatar.png"},"href":"1234", "id": "8"}'
 						token="foozleberries"
 						show-avatar
 						created-at="2019-04-23T17:08:33.839Z"
@@ -143,7 +137,7 @@
 			<d2l-demo-snippet>
 				<template>
 					<d2l-note
-						user='{"name":"Username","pic":{"url":"avatar.png"}}'
+						user='{"name":"Username","pic":{"url":"avatar.png"}, "id": "9"}'
 						show-avatar
 						created-at="2019-04-23T17:08:33.839Z"
 						text="This is some text"
@@ -210,7 +204,7 @@
 			</d2l-demo-snippet>
 		</d2l-demo-page>
 		<script type="module">
-			import { html } from '../../../lit-element/lit-element.js';
+			import { html } from '../../../node_modules/lit/html.js';
 			const notes = document.getElementById('notes');
 			notes.description = () => html`<span class="d2l-body-standard">Description</span>`;
 			notes.settings = () => html`<span class="d2l-body-standard">Settings</span>`;
@@ -220,11 +214,12 @@
 				notes.notes = [
 					{
 						user: {
-							'name':'Username',
+							'name':'Albert Aa',
 							'pic': {
 								'url':'avatar.png'
 							},
-							href: '123'
+							href: '123',
+							id: 1,
 						},
 						token: 'foozleberries',
 						createdAt: '2019-04-23T17:08:33.839Z',
@@ -232,11 +227,12 @@
 						text: 'note 1'
 					}, {
 						user: {
-							'name':'Username 2',
+							'name':'Bilberb T',
 							'pic': {
 								'url':'avatar.png'
 							},
-							href: '1234'
+							href: '1234',
+							id: 2,
 						},
 						token: 'foozleberries',
 						createdAt: '2019-04-24T17:08:33.839Z',
@@ -247,7 +243,8 @@
 							'pic': {
 								'url':'avatar.png'
 							},
-							href: '123'
+							href: '123',
+							id: 3,
 						},
 						token: 'foozleberries',
 						me: true,
@@ -260,7 +257,8 @@
 							'pic': {
 								'url':'avatar.png'
 							},
-							href: '123'
+							href: '123',
+							id: 4,
 						},
 						token: 'foozleberries',
 						createdAt: '2019-04-26T17:08:33.839Z',
@@ -271,7 +269,8 @@
 							'pic': {
 								'url':'avatar.png'
 							},
-							href: '123'
+							href: '123',
+							id: 5,
 						},
 						token: 'foozleberries',
 						createdAt: '2019-04-27T17:08:33.839Z',
@@ -290,7 +289,8 @@
 							'pic': {
 								'url':'avatar.png'
 							},
-							href: '123'
+							href: '123',
+							id: 6,
 						},
 						token: 'foozleberries',
 						showAvatar: false,
@@ -303,7 +303,8 @@
 							'pic': {
 								'url':'avatar.png'
 							},
-							href: '123'
+							href: '123',
+							id: 7,
 						},
 						token: 'foozleberries',
 						createdAt: '2019-04-24T17:08:33.839Z',
@@ -312,10 +313,8 @@
 					}, {
 						user: {
 							'name':'Username 3',
-							'pic': {
-								'url':'avatar.png'
-							},
-							href: '123'
+							href: '123',
+							id: 8,
 						},
 						token: 'foozleberries',
 						me: true,

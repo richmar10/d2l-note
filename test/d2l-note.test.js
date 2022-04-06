@@ -34,7 +34,7 @@ describe('d2l-note', () => {
 		expect(elementTextSkeleton).to.not.be.null;
 	});
 
-	it('has avatar supplied by "user" property', async() => {
+	it('has profile image from "user" property', async() => {
 		const el = await fixture(html`<d2l-note></d2l-note>`);
 		el.user = {
 			pic: {
@@ -52,7 +52,7 @@ describe('d2l-note', () => {
 		expect(elementUserSkeleton).to.be.null;
 	});
 
-	it('has avatar supplied by "user" property using specified "token"', async() => {
+	it('has profile image from "user" property using "token"', async() => {
 		const el = await fixture(html`<d2l-note></d2l-note>`);
 
 		el.token = 'foozleberries';
@@ -69,10 +69,10 @@ describe('d2l-note', () => {
 		const elementUser = elementShadowRoot.querySelector('d2l-user');
 
 		expect(elementUser.imageUrl).to.equal('fixtures/user.png');
-		expect(elementUser.imageToken).to.equal('foozleberries');
+		expect(elementUser.token).to.equal('foozleberries');
 	});
 
-	it('has no avatar supplied by "user" property when "showavatar" is false', async() => {
+	it('doesn\'t render profile image when "show-avatar" is false', async() => {
 		const el = await fixture(html`<d2l-note></d2l-note>`);
 		el.user = {
 			pic: {
@@ -97,13 +97,35 @@ describe('d2l-note', () => {
 
 		const elementShadowRoot = el.shadowRoot;
 		const elementUser = elementShadowRoot.querySelector('d2l-user');
-		expect(elementUser.name).to.equal('Username');
+		expect(elementUser.firstName).to.equal('Username');
+		expect(elementUser.lastName).to.be.empty;
+
+		const elementName = elementUser.shadowRoot.querySelector('.name');
+		expect(elementName.innerText).to.equal('Username');
 	});
 
-	it('has "Me" user name instead of supplied by "user" property when me is true', async() => {
+	it('correctly splits name into "firstName" and "lastName"', async() => {
 		const el = await fixture(html`<d2l-note></d2l-note>`);
 		el.user = {
-			name: 'Username'
+			name: 'First Last'
+		};
+		el.showAvatar = true;
+		await el.updateComplete;
+
+		const elementShadowRoot = el.shadowRoot;
+		const elementUser = elementShadowRoot.querySelector('d2l-user');
+		expect(elementUser.firstName).to.equal('First');
+		expect(elementUser.lastName).to.equal('Last');
+		expect(elementUser.displayName).to.be.empty;
+
+		const elementName = elementUser.shadowRoot.querySelector('.name');
+		expect(elementName.innerText).to.equal('First Last');
+	});
+
+	it('renders "Me" instead of user name when "me" is true', async() => {
+		const el = await fixture(html`<d2l-note></d2l-note>`);
+		el.user = {
+			name: 'First Last'
 		};
 		el.showAvatar = true;
 		el.me = true;
@@ -111,10 +133,15 @@ describe('d2l-note', () => {
 
 		const elementShadowRoot = el.shadowRoot;
 		const elementUser = elementShadowRoot.querySelector('d2l-user');
-		expect(elementUser.name).to.equal('Me');
+		expect(elementUser.firstName).to.equal('First');
+		expect(elementUser.lastName).to.equal('Last');
+		expect(elementUser.displayName).to.equal('Me');
+
+		const elementName = elementUser.shadowRoot.querySelector('.name');
+		expect(elementName.innerText).to.equal('Me');
 	});
 
-	it('has localized createdat date supplied by "createdat" property', async() => {
+	it('correctly localizes "created-at" date', async() => {
 		const el = await fixture(html`<d2l-note></d2l-note>`);
 		const date = new Date();
 		el.user = {
@@ -161,7 +188,7 @@ describe('d2l-note', () => {
 	});
 
 	describe('context menu', () => {
-		it('has context menu if "canedit" is true', async() => {
+		it('has context menu if "can-edit" is true', async() => {
 			const el = await fixture(html`<d2l-note></d2l-note>`);
 			el.canEdit = true;
 			await el.updateComplete;
@@ -171,7 +198,7 @@ describe('d2l-note', () => {
 			expect(elementDropdown).to.not.be.null;
 		});
 
-		it('has context menu if "candelete" is true', async() => {
+		it('has context menu if "can-delete" is true', async() => {
 			const el = await fixture(html`<d2l-note></d2l-note>`);
 			el.canDelete = true;
 			await el.updateComplete;
@@ -181,7 +208,7 @@ describe('d2l-note', () => {
 			expect(elementDropdown).to.not.be.null;
 		});
 
-		it('does not have context menu if "canedit"/"candelete" are not true', async() => {
+		it('does not have context menu if "can-edit"/"can-delete" are not true', async() => {
 			const el = await fixture(html`<d2l-note></d2l-note>`);
 			el.canEdit = false;
 			el.canDelete = false;
@@ -192,7 +219,7 @@ describe('d2l-note', () => {
 			expect(elementDropdown).to.be.null;
 		});
 
-		it('has edit action if "canedit" is true', async() => {
+		it('has edit action if "can-edit" is true', async() => {
 			const el = await fixture(html`<d2l-note></d2l-note>`);
 			el.canEdit = true;
 			await el.updateComplete;
@@ -203,7 +230,7 @@ describe('d2l-note', () => {
 			expect([].some.call(elementMenuItems, item => item.text.indexOf('Edit') !== -1)).to.be.true;
 		});
 
-		it('does not have edit action if "canedit" is not true', async() => {
+		it('does not have edit action if "can-edit" is not true', async() => {
 			const el = await fixture(html`<d2l-note></d2l-note>`);
 			el.canEdit = false;
 			await el.updateComplete;
@@ -213,7 +240,7 @@ describe('d2l-note', () => {
 			expect([].some.call(elementMenuItems, item => item.text.indexOf('Edit') !== -1)).to.be.false;
 		});
 
-		it('has delete action if "candelete" is true', async() => {
+		it('has delete action if "can-delete" is true', async() => {
 			const el = await fixture(html`<d2l-note></d2l-note>`);
 			el.canDelete = true;
 			await el.updateComplete;
@@ -223,7 +250,7 @@ describe('d2l-note', () => {
 			expect([].some.call(elementMenuItems, item => item.text.indexOf('Delete') !== -1)).to.be.true;
 		});
 
-		it('does not have delete action if "candelete" is not true', async() => {
+		it('does not have delete action if "can-delete" is not true', async() => {
 			const el = await fixture(html`<d2l-note></d2l-note>`);
 			el.canDelete = false;
 			await el.updateComplete;
@@ -266,8 +293,7 @@ describe('d2l-note', () => {
 		});
 
 		describe('delete', () => {
-
-			it('fires d2l-note-delete when delete button is tapped', async() => {
+			it('fires "d2l-note-delete" when delete button is tapped', async() => {
 				const el = await fixture(html`<d2l-note></d2l-note>`);
 				el.canDelete = true;
 				await el.updateComplete;

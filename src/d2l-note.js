@@ -5,8 +5,8 @@ import '@brightspace-ui/core/components/icons/icon.js';
 import '@brightspace-ui/core/components/more-less/more-less.js';
 import '@brightspace-ui/core/components/menu/menu.js';
 import '@brightspace-ui/core/components/menu/menu-item.js';
-import '@d2l/user-elements/d2l-user';
 import 'd2l-users/components/d2l-profile-image';
+import 'd2l-users/components/d2l-user';
 
 import './d2l-note-edit.js';
 
@@ -18,6 +18,7 @@ import { css, html, LitElement } from 'lit';
 
 import { bodyStandardStyles } from '@brightspace-ui/core/components/typography/styles.js';
 import { formatDateTime } from '@brightspace-ui/intl/lib/dateTime.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { LocalizeDynamicMixin } from '@brightspace-ui/core/mixins/localize-dynamic-mixin.js';
 import { repeat } from 'lit/directives/repeat.js';
 
@@ -351,36 +352,36 @@ export class D2LNote extends LocalizeDynamicMixin(LitElement) {
 		 * Use JavaScript expressions to include property values in
 		 * the element template.
 		 */
-		const imageUrl = (this.showAvatar && this.user && this.user.pic) ? this.user.pic.url : undefined;
-		const useImageAuthentication = !!(this.showAvatar && this.user && this.user.pic && this.user.pic.requireTokenAuth);
-		const userName = this.showAvatar ? this.me ? this.localize('me') : this.user ? this.user.name : undefined : undefined;
+		const imageUrl = (this.showAvatar && this.user?.pic) ? this.user.pic.url : undefined;
+		const useImageAuthentication = !!(this.showAvatar && this.user?.pic?.requireTokenAuth);
+		const displayName = this.me ? this.localize('me') : undefined;
+
+		let firstName, lastName;
+		if (this.user?.name) {
+			[firstName, lastName] = this.user.name.split(' ');
+		}
 
 		const createdAtDate = this.createdAt ? new Date(this.createdAt) : null;
 		const dateTime = createdAtDate ? formatDateTime(createdAtDate, { format: this.dateFormat || 'medium' }) : undefined;
 
 		const subText = dateTime ? this.updatedAt ? this.localize('subtextEdited', { '0': dateTime }) : dateTime : '';
 		const showDropdown = this.canEdit || this.canDelete;
+
 		return html`
 			<div class="d2l-note-main d2l-typography">
 				<div class="d2l-note-top">
 					${this.user ? html`
 						<d2l-user
-							.imageUrl="${imageUrl}"
-							.imageToken="${useImageAuthentication ? this.token : ''}"
-							.name="${userName}"
-							.subText="${subText}"
-							.useImageAuthentication=${useImageAuthentication}
-							.shouldHideImage=${!this.showAvatar}
-						>
-							${this.user.href ? html`
-								<d2l-profile-image
-									slot="avatar"
-									href="${this.user.href}"
-									token="${this.token}"
-									medium
-								></d2l-profile-image>
-							` : null}
-						</d2l-user>
+							display-name="${displayName}"
+							first-name="${firstName}"
+							last-name="${lastName}"
+							sub-text="${subText}"
+							token="${this.token}"
+							image-url="${ifDefined(imageUrl)}"
+							?use-image-authentication=${useImageAuthentication}
+							?hide-image=${!this.showAvatar}
+							user-id=${this.user.id}
+						></d2l-user>
 					` : html`
 						<div class="d2l-note-user-skeleton skeleton-user">
 							<div class="skeleton skeleton-avatar"></div>

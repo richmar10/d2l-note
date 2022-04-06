@@ -1,11 +1,11 @@
 {
   "name": "@d2l/note",
+  "version": "5.0.0",
   "description": "A Note",
   "repository": {
     "type": "git",
     "url": "https://github.com/Brightspace/d2l-note.git"
   },
-  "version": "4.12.0",
   "main": "src/d2l-note.js",
   "scripts": {
     "lint": "eslint --ext html,js demo src test",
@@ -15,20 +15,19 @@
   "author": "D2L Corporation",
   "license": "Apache-2.0",
   "dependencies": {
-    "@brightspace-ui/core": "^1",
+    "@brightspace-ui/core": "^2",
     "@brightspace-ui/intl": "^3.0.1",
-    "@d2l/user-elements": "^4.0.1",
-    "d2l-users": "BrightspaceHypermediaComponents/users#semver:^2",
+    "d2l-users": "github:BrightspaceHypermediaComponents/users#semver:^4",
     "intl-messageformat": "^2.2.0",
-    "lit": "^2.2.0"
+    "lit": "^2"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.8",
-    "@babel/eslint-parser": "^7.17.0",
-    "@open-wc/testing": "^3.1.2",
-    "@typescript-eslint/eslint-plugin": "^5.17.0",
-    "@typescript-eslint/parser": "^5.17.0",
-    "@web/test-runner": "^0.13.27",
+    "@babel/core": "^7",
+    "@babel/eslint-parser": "^7",
+    "@open-wc/testing": "^3",
+    "@typescript-eslint/eslint-plugin": "^5",
+    "@typescript-eslint/parser": "^5",
+    "@web/test-runner": "^0.13",
     "@web/test-runner-playwright": "^0.8.8",
     "@webcomponents/webcomponentsjs": "^2.0.0",
     "babel-eslint": "^10.1.0",
