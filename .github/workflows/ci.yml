@@ -1,0 +1,27 @@
+name: CI
+on: pull_request
+jobs:
+  test:
+    name: Lint/Test
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: Brightspace/third-party-actions@actions/checkout
+      - name: Set up node
+        uses: Brightspace/third-party-actions@actions/setup-node
+        with:
+          node-version: 14
+          registry-url: ${{secrets.ARTIFACTORY_NPM_REGISTRY}}
+          scope: '@d2l'
+      - name: Install dependencies
+        run: npm i
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.ARTIFACTORY_NPM_RO_TOKEN}}
+      - name: Lint
+        run: npm run lint
+      - name: Test
+        env:
+          SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY_DESIRE2LEARN }}
+          SAUCE_USERNAME: Desire2Learn
+        run: npm run test
