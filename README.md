@@ -1,36 +1,36 @@
 # d2l-note
-[![Build status][ci-image]][ci-url]
+[![Build Status](https://github.com/Brightspace/d2l-note/actions/workflows/ci.yml/badge.svg)](https://github.com/Brightspace/d2l-note/actions/workflows/ci.yml)
 
 A Note
 
-## Viewing Your Element
+## Developing
 
-```bash
-npm run start
+### Installing dependencies
+```shell
+npm i
 ```
-## Running Tests
 
-```bash
-npm run test
+### Running the demo
+```shell
+npm start
+```
+
+### Linting
+```shell
+npm start
+```
+
+### Testing
+```shell
+npm start
 ```
 
 ## Versioning
 
-Commits and PR merges to master will automatically do a minor version bump which will:
-* Update the version in `package.json`
-* Add a tag matching the new version
-* Create a github release matching the new version
+All version changes should obey [semantic versioning](https://semver.org/) rules.
 
-By using either **[increment major]** or **[increment patch]** notation inside your merge message, you can overwrite the default version upgrade of minor to the position of your choice.
+Releases use the [semantic-release](https://semantic-release.gitbook.io/) tooling and the [angular preset](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular) for commit message syntax. Upon release, the version in `package.json` is updated, a tag and GitHub release is created and a new package will be deployed to NPM.
 
-## Localization
+Commits prefixed with `feat` will trigger a minor release, while `fix` or `perf` will trigger a patch release. A commit containing `BREAKING CHANGE` will cause a major release to occur.
 
-This repo uses [Serge](https://docs.dev.d2l/index.php/Serge-Localize) for localization. On any changes to langterm data files (eg. due to adding new lang terms, or merging an automated PR that provides updated translations), you must run
-```bash
-npm run localize
-```
-to generate new modules with the updated data.
-
-
-[ci-url]: https://travis-ci.com/Brightspace/d2l-note
-[ci-image]: https://travis-ci.com/Brightspace/d2l-note.svg?token=zuyCdqqy8sVToprVBgAu&branch=master
+Other useful prefixes that will not trigger a release: `build`, `ci`, `docs`, `refactor`, `style` and `test`. More details in the [Angular Contribution Guidelines](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#type).
