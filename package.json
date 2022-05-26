@@ -6,6 +6,9 @@
     "type": "git",
     "url": "https://github.com/Brightspace/d2l-note.git"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "src/d2l-note.js",
   "scripts": {
     "lint": "eslint --ext html,js demo src test",
