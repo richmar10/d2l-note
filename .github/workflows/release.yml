@@ -21,7 +21,7 @@ jobs:
       - name: Add CodeArtifact npm registry
         uses: Brightspace/codeartifact-actions/npm/add-registry@main
         with:
-            auth-token: ${{secrets.CODEARTIFACT_AUTH_TOKEN}}
+            auth-token: ${{ secrets.CODEARTIFACT_AUTH_TOKEN }}
       - name: Get CodeArtifact Authorization Token
         uses: Brightspace/codeartifact-actions/get-authorization-token@main
         env:
